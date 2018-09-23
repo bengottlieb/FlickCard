@@ -9,14 +9,14 @@
 import UIKit
 
 class FlipCardStackView: UIView {
-	enum Style { case single, tight, loose, scattered }
+	enum Style { case single, tight, loose, scattered, tiered }
 	
 	let maxDragRotation: CGFloat = 0.2
 	let maxDragScale: CGFloat = 1.05
 	let dragAcceleration: CGFloat = 1.25
 	
 
-	var style: Style = .loose
+	var style: Style = .tiered
 	var cards: [FlipCard] = []
 	var visible: [FlipCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
 	let numberOfVisibleCards = 5
@@ -129,7 +129,13 @@ class FlipCardStackView: UIView {
 	}
 	
 	func calculateAlpha(for card: FlipCard, at position: Int) -> CGFloat {
-		return 1
+		switch self.style {
+		case .tiered:
+			return position == 0 ? 1.0 : 0.8
+			
+		default:
+			return 1
+		}
 	}
 	
 	func calculateTransform(for card: FlipCard, at position: Int) -> CGAffineTransform {
@@ -148,6 +154,11 @@ class FlipCardStackView: UIView {
 		case .scattered:
 			return CGAffineTransform(rotationAngle: CGFloat(seed) * 0.05 * (seed % 2 == 0 ? -1 : 1))
 
+		case .tiered:
+			let factor = 1.0 - CGFloat(position) * 0.05
+			let scale = CGAffineTransform(scaleX: factor, y: factor)
+			let translate = CGAffineTransform(translationX: 0, y: CGFloat(position) * 20 / factor)
+			return translate.concatenating(scale)
 		}
 		
 	}

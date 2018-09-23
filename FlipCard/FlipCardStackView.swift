@@ -55,6 +55,7 @@ class FlipCardStackView: UIView {
 			if self.view(for: card) == nil {
 				let cardView = card.buildCardView(ofSize: self.cardSize)
 				cardView.transform = self.calculateTransform(for: card, at: self.cardViews.count)
+				cardView.alpha = self.calculateAlpha(for: card, at: self.cardViews.count)
 				self.addSubview(cardView)
 				self.cardViews.append(cardView)
 			}
@@ -85,6 +86,7 @@ class FlipCardStackView: UIView {
 				for i in firstIndex..<self.cardViews.count {
 					let card = self.cardViews[i].card!
 					self.cardViews[i].transform = self.calculateTransform(for: card, at: i - firstIndex)
+					self.cardViews[i].alpha = self.calculateAlpha(for: card, at: i - firstIndex)
 					self.cardViews[i].center = center
 				}
 			}
@@ -126,8 +128,14 @@ class FlipCardStackView: UIView {
 		return nil
 	}
 	
+	func calculateAlpha(for card: FlipCard, at position: Int) -> CGFloat {
+		return 1
+	}
+	
 	func calculateTransform(for card: FlipCard, at position: Int) -> CGAffineTransform {
 		if position == 0 { return .identity }
+		
+		let seed = card.id.hashValue % 10
 		
 		switch self.style {
 		case .single: return .identity
@@ -135,10 +143,10 @@ class FlipCardStackView: UIView {
 			return CGAffineTransform(translationX: 0, y: (5 * CGFloat(position)))
 
 		case .loose:
-			return CGAffineTransform(rotationAngle: CGFloat(position) * 0.03 * (position % 2 == 0 ? -1 : 1))
+			return CGAffineTransform(rotationAngle: CGFloat(seed) * 0.015 * (seed % 2 == 0 ? -1 : 1))
 
 		case .scattered:
-			return CGAffineTransform(rotationAngle: CGFloat(position) * 0.1 * (position % 2 == 0 ? -1 : 1))
+			return CGAffineTransform(rotationAngle: CGFloat(seed) * 0.05 * (seed % 2 == 0 ? -1 : 1))
 
 		}
 		

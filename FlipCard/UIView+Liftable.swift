@@ -20,6 +20,8 @@ extension UIView: LiftableView {
 	public var percentageLifted: CGFloat {
 		set {
 			let radius = self.minShadowWidth + (self.maxShadowWidth - self.minShadowWidth) * newValue
+			self.layer.shadowColor = UIColor.black.cgColor
+			self.layer.shadowOpacity = Float(min(1.0, self.percentageLifted + 0.2))
 			self.layer.shadowRadius = radius
 			self.layer.shadowOffset = CGSize(width: radius, height: radius)
 		}

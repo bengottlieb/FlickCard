@@ -12,7 +12,6 @@ class FlipCardView: UIView {
 	weak var card: FlipCard!
 	var stackView: FlipCardStackView? { return self.superview as? FlipCardStackView }
 	var panGestureRecognizer: UIPanGestureRecognizer?
-	var minimumShadowRadius: CGFloat = 1
 	var dragStart = CGPoint.zero
 
 	 override init(frame: CGRect) {
@@ -33,11 +32,7 @@ class FlipCardView: UIView {
 		self.layer.borderColor = UIColor.black.cgColor
 		self.layer.borderWidth = 1
 		
-		self.layer.shadowColor = UIColor.black.cgColor
-		self.layer.shadowOpacity = 1.0
-		self.layer.shadowOffset = CGSize(width: 5, height: 5)
-		self.layer.shadowRadius = self.minimumShadowRadius
-
+		self.percentageLifted = 0.0
 	}
 
 	var gesturesEnabled: Bool = false {
@@ -80,12 +75,20 @@ class FlipCardView: UIView {
 
 		case .ended:
 			if recog.isMovingOffscreen {
+				let maxDuration: CGFloat = 0.5
 				let current = self.center
 				let velocity = recog.velocity(in: parent)
 				let speed = velocity.magnitudeFromOrigin
 				let distance = sqrt(parent.bounds.width * parent.bounds.width + parent.bounds.height * parent.bounds.height)
-				let duration = min(1, distance/speed)
-				let destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
+				var duration = distance/speed
+				var destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
+				
+				if duration > maxDuration {
+					let factor = maxDuration / duration
+					destination = CGPoint(x: current.x + velocity.x * duration * factor, y: current.y + velocity.y * duration * factor)
+					duration = maxDuration
+				}
+				
 				print("moving off at \(velocity) from \(current) -> \(destination)")
 				UIView.animate(withDuration: TimeInterval(duration), animations: {
 					self.center = destination

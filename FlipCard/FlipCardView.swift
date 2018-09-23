@@ -80,13 +80,13 @@ class FlipCardView: UIView {
 
 		case .ended:
 			if recog.isMovingOffscreen {
-				let current = recog.location(in: parent)
+				let current = self.center
 				let velocity = recog.velocity(in: parent)
 				let speed = velocity.magnitudeFromOrigin
-				let distance = parent.bounds.width + parent.bounds.height
-				let duration = distance/speed
+				let distance = sqrt(parent.bounds.width * parent.bounds.width + parent.bounds.height * parent.bounds.height)
+				let duration = min(1, distance/speed)
 				let destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
-				
+				print("moving off at \(velocity) from \(current) -> \(destination)")
 				UIView.animate(withDuration: TimeInterval(duration), animations: {
 					self.center = destination
 				}) { _ in
@@ -120,8 +120,9 @@ extension UIPanGestureRecognizer {
 		let velocity = self.velocity(in: self.view)
 		let delta = self.translation(in: self.view)
 		
-		if velocity == .zero || delta.magnitudeFromOrigin < view.bounds.width / 3 { return false }
+		
+		if velocity == .zero || delta.magnitudeFromOrigin < (view.bounds.width + view.bounds.height) / 6 { return false }
 
-		return ((velocity.x > 0) == (delta.x > 0)) && ((velocity.y > 0) == (delta.y > 0))
+		return ((velocity.x >= 0) == (delta.x >= 0)) && ((velocity.y >= 0) == (delta.y >= 0))
 	}
 }

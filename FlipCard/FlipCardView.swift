@@ -26,9 +26,6 @@ open class FlipCardView: UIView {
 	}
 	
 	func didInit() {
-		let colors: [UIColor] = [.yellow, .orange, .lightGray, .red, .magenta, .green]
-		self.backgroundColor = colors.randomElement()
-		
 		self.layer.cornerRadius = 10
 		self.layer.borderColor = UIColor.black.cgColor
 		self.layer.borderWidth = 1

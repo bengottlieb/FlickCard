@@ -33,17 +33,35 @@
                                     <action selector="reload" destination="BYZ-38-t0r" eventType="touchUpInside" id="ajJ-gh-qFM"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="4" translatesAutoresizingMaskIntoConstraints="NO" id="EZX-uK-aja">
+                                <rect key="frame" x="3" y="29" width="369" height="29"/>
+                                <segments>
+                                    <segment title="Single"/>
+                                    <segment title="Tight"/>
+                                    <segment title="Loose"/>
+                                    <segment title="Scattered"/>
+                                    <segment title="Tiered"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentsChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="ieT-h7-Hms"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7Ds-hb-y0f" secondAttribute="bottom" constant="7" id="3YR-tk-sqR"/>
+                            <constraint firstItem="EZX-uK-aja" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="3rc-wr-YDm"/>
                             <constraint firstItem="iZV-Hr-cWz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GNu-Mr-asd"/>
                             <constraint firstItem="iZV-Hr-cWz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="M3Y-8E-v5F"/>
+                            <constraint firstItem="EZX-uK-aja" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="ie2-qg-s94"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="EZX-uK-aja" secondAttribute="trailing" constant="3" id="qGD-Fn-iNr"/>
                             <constraint firstItem="7Ds-hb-y0f" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="rsS-zu-uhm"/>
+                            <constraint firstItem="EZX-uK-aja" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="3" id="uaK-PU-QWl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="arrangmentSegments" destination="EZX-uK-aja" id="c5J-nc-IlR"/>
                         <outlet property="cardStackView" destination="iZV-Hr-cWz" id="bSK-9e-93B"/>
                     </connections>
                 </viewController>

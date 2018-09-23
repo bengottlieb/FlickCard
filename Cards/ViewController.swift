@@ -10,14 +10,20 @@ import UIKit
 
 class ViewController: UIViewController {
 	@IBOutlet var cardStackView: FlipCardStackView!
-	
+	@IBOutlet var arrangmentSegments: UISegmentedControl!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
-		
 		self.reload()
+	}
+	
+	@IBAction func segmentsChanged() {
+		let arrangments: [FlipCardStackView.Arrangment] = [.single, .tight, .loose, .scattered, .tiered(15)]
 		
+		self.cardStackView.arrangement = arrangments[self.arrangmentSegments.selectedSegmentIndex]
+		UIView.animate(withDuration: 0.4, animations: {
+			self.cardStackView.layoutIfNeeded()
+		})
 	}
 
 	@IBAction func reload() {

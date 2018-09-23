@@ -95,7 +95,6 @@ open class FlipCardView: UIView {
 				duration = maxDuration
 			}
 			
-			print("moving off at \(velocity) from \(current) -> \(destination)")
 			UIView.animate(withDuration: TimeInterval(duration), animations: {
 				self.center = destination
 			}) { _ in

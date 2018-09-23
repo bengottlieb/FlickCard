@@ -9,17 +9,17 @@
 import UIKit
 
 class FlipCardStackView: UIView {
-	enum Style { case single, tight, loose, scattered, tiered }
+	enum Style { case single, tight, loose, scattered, tiered(CGFloat) }
 	
 	let maxDragRotation: CGFloat = 0.2
 	let maxDragScale: CGFloat = 1.05
 	let dragAcceleration: CGFloat = 1.25
 	
 
-	var style: Style = .tiered
+	var style: Style = .tiered(15) { didSet { self.updateUI() }}
+	var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
 	var cards: [FlipCard] = []
 	var visible: [FlipCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
-	let numberOfVisibleCards = 5
 	var cardSize: CGSize { return CGSize(width: self.bounds.size.width * 0.8, height: self.bounds.size.height * 0.8) }
 	
 	var animator: UIDynamicAnimator!
@@ -130,8 +130,8 @@ class FlipCardStackView: UIView {
 	
 	func calculateAlpha(for card: FlipCard, at position: Int) -> CGFloat {
 		switch self.style {
-		case .tiered:
-			return position == 0 ? 1.0 : 0.8
+		case .tiered(_):
+			return 1.0 - CGFloat(position) * 0.2
 			
 		default:
 			return 1
@@ -154,10 +154,10 @@ class FlipCardStackView: UIView {
 		case .scattered:
 			return CGAffineTransform(rotationAngle: CGFloat(seed) * 0.05 * (seed % 2 == 0 ? -1 : 1))
 
-		case .tiered:
+		case .tiered(let offset):
 			let factor = 1.0 - CGFloat(position) * 0.05
 			let scale = CGAffineTransform(scaleX: factor, y: factor)
-			let translate = CGAffineTransform(translationX: 0, y: CGFloat(position) * 20 / factor)
+			let translate = CGAffineTransform(translationX: 0, y: CGFloat(position) * offset / factor)
 			return translate.concatenating(scale)
 		}
 		

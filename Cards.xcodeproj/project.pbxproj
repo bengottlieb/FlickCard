@@ -12,6 +12,10 @@
 		B51C1CE82156640D002FD654 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CE62156640D002FD654 /* Main.storyboard */; };
 		B51C1CEA2156640E002FD654 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CE92156640E002FD654 /* Assets.xcassets */; };
 		B51C1CED2156640E002FD654 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CEB2156640E002FD654 /* LaunchScreen.storyboard */; };
+		B51C1CFB215664B4002FD654 /* FlipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C1CFA215664B4002FD654 /* FlipCard.swift */; };
+		B51C1D00215664E1002FD654 /* FlipCardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C1CFE215664E1002FD654 /* FlipCardStackView.swift */; };
+		B51C1D01215664E1002FD654 /* FlipCard.CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C1CFF215664E1002FD654 /* FlipCard.CardView.swift */; };
+		B5FC5AD721571F3100369FFB /* UIView+Liftable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC5AD621571F3100369FFB /* UIView+Liftable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		B51C1CE92156640E002FD654 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B51C1CEC2156640E002FD654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B51C1CEE2156640E002FD654 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B51C1CFA215664B4002FD654 /* FlipCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FlipCard.swift; path = FlipCard/FlipCard.swift; sourceTree = "<group>"; };
+		B51C1CFE215664E1002FD654 /* FlipCardStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlipCardStackView.swift; path = FlipCard/FlipCardStackView.swift; sourceTree = "<group>"; };
+		B51C1CFF215664E1002FD654 /* FlipCard.CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlipCard.CardView.swift; path = FlipCard/FlipCard.CardView.swift; sourceTree = "<group>"; };
+		B5FC5AD621571F3100369FFB /* UIView+Liftable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Liftable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +46,10 @@
 		B51C1CD62156640D002FD654 = {
 			isa = PBXGroup;
 			children = (
+				B51C1CFE215664E1002FD654 /* FlipCardStackView.swift */,
+				B51C1CFF215664E1002FD654 /* FlipCard.CardView.swift */,
+				B5FC5AD621571F3100369FFB /* UIView+Liftable.swift */,
+				B51C1CFA215664B4002FD654 /* FlipCard.swift */,
 				B51C1CE12156640D002FD654 /* Cards */,
 				B51C1CE02156640D002FD654 /* Products */,
 			);
@@ -136,7 +148,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B51C1CE52156640D002FD654 /* ViewController.swift in Sources */,
+				B51C1CFB215664B4002FD654 /* FlipCard.swift in Sources */,
 				B51C1CE32156640D002FD654 /* AppDelegate.swift in Sources */,
+				B51C1D01215664E1002FD654 /* FlipCard.CardView.swift in Sources */,
+				B51C1D00215664E1002FD654 /* FlipCardStackView.swift in Sources */,
+				B5FC5AD721571F3100369FFB /* UIView+Liftable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

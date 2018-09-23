@@ -16,12 +16,22 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		
-		for i in 0..<10 {
-			let card = FlipCard(id: "\(i)")
-			self.cardStackView.add(card: card)
-		}
+		self.reload()
+		
 	}
 
+	@IBAction func reload() {
+		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "ironman.png", "spider-man.png", "antman.png"]
+		var count = 0
+		
+		for name in imageNames {
+			let image = UIImage(named: name)!
+			let card = FlipCard(id: name + "-\(count)", cardViewController: SampleCardViewController(image: image))
+			self.cardStackView.add(card: card)
+			count += 1
+		}
+	}
+	
 
 }
 

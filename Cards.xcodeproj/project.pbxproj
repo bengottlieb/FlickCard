@@ -12,10 +12,12 @@
 		B51C1CE82156640D002FD654 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CE62156640D002FD654 /* Main.storyboard */; };
 		B51C1CEA2156640E002FD654 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CE92156640E002FD654 /* Assets.xcassets */; };
 		B51C1CED2156640E002FD654 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CEB2156640E002FD654 /* LaunchScreen.storyboard */; };
-		B51C1CFB215664B4002FD654 /* FlipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C1CFA215664B4002FD654 /* FlipCard.swift */; };
-		B51C1D00215664E1002FD654 /* FlipCardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C1CFE215664E1002FD654 /* FlipCardStackView.swift */; };
-		B51C1D01215664E1002FD654 /* FlipCard.CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C1CFF215664E1002FD654 /* FlipCard.CardView.swift */; };
-		B5FC5AD721571F3100369FFB /* UIView+Liftable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC5AD621571F3100369FFB /* UIView+Liftable.swift */; };
+		B5D3947D21572EDB00747AA3 /* FlipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947921572EDB00747AA3 /* FlipCard.swift */; };
+		B5D3947E21572EDB00747AA3 /* FlipCardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947A21572EDB00747AA3 /* FlipCardStackView.swift */; };
+		B5D3947F21572EDB00747AA3 /* UIView+Liftable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947B21572EDB00747AA3 /* UIView+Liftable.swift */; };
+		B5D3948021572EDB00747AA3 /* FlipCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947C21572EDB00747AA3 /* FlipCardView.swift */; };
+		B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D394812157300600747AA3 /* SampleCardViewController.swift */; };
+		B5D394842157300600747AA3 /* SampleCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D394822157300600747AA3 /* SampleCardViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,10 +28,12 @@
 		B51C1CE92156640E002FD654 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B51C1CEC2156640E002FD654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B51C1CEE2156640E002FD654 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B51C1CFA215664B4002FD654 /* FlipCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FlipCard.swift; path = FlipCard/FlipCard.swift; sourceTree = "<group>"; };
-		B51C1CFE215664E1002FD654 /* FlipCardStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlipCardStackView.swift; path = FlipCard/FlipCardStackView.swift; sourceTree = "<group>"; };
-		B51C1CFF215664E1002FD654 /* FlipCard.CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlipCard.CardView.swift; path = FlipCard/FlipCard.CardView.swift; sourceTree = "<group>"; };
-		B5FC5AD621571F3100369FFB /* UIView+Liftable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Liftable.swift"; sourceTree = "<group>"; };
+		B5D3947921572EDB00747AA3 /* FlipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipCard.swift; sourceTree = "<group>"; };
+		B5D3947A21572EDB00747AA3 /* FlipCardStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipCardStackView.swift; sourceTree = "<group>"; };
+		B5D3947B21572EDB00747AA3 /* UIView+Liftable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Liftable.swift"; sourceTree = "<group>"; };
+		B5D3947C21572EDB00747AA3 /* FlipCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipCardView.swift; sourceTree = "<group>"; };
+		B5D394812157300600747AA3 /* SampleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCardViewController.swift; sourceTree = "<group>"; };
+		B5D394822157300600747AA3 /* SampleCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SampleCardViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +50,7 @@
 		B51C1CD62156640D002FD654 = {
 			isa = PBXGroup;
 			children = (
-				B51C1CFE215664E1002FD654 /* FlipCardStackView.swift */,
-				B51C1CFF215664E1002FD654 /* FlipCard.CardView.swift */,
-				B5FC5AD621571F3100369FFB /* UIView+Liftable.swift */,
-				B51C1CFA215664B4002FD654 /* FlipCard.swift */,
+				B5D3947821572EDB00747AA3 /* FlipCard */,
 				B51C1CE12156640D002FD654 /* Cards */,
 				B51C1CE02156640D002FD654 /* Products */,
 			);
@@ -68,12 +69,25 @@
 			children = (
 				B51C1CE22156640D002FD654 /* AppDelegate.swift */,
 				B51C1CE42156640D002FD654 /* ViewController.swift */,
+				B5D394812157300600747AA3 /* SampleCardViewController.swift */,
+				B5D394822157300600747AA3 /* SampleCardViewController.xib */,
 				B51C1CE62156640D002FD654 /* Main.storyboard */,
 				B51C1CE92156640E002FD654 /* Assets.xcassets */,
 				B51C1CEB2156640E002FD654 /* LaunchScreen.storyboard */,
 				B51C1CEE2156640E002FD654 /* Info.plist */,
 			);
 			path = Cards;
+			sourceTree = "<group>";
+		};
+		B5D3947821572EDB00747AA3 /* FlipCard */ = {
+			isa = PBXGroup;
+			children = (
+				B5D3947921572EDB00747AA3 /* FlipCard.swift */,
+				B5D3947C21572EDB00747AA3 /* FlipCardView.swift */,
+				B5D3947A21572EDB00747AA3 /* FlipCardStackView.swift */,
+				B5D3947B21572EDB00747AA3 /* UIView+Liftable.swift */,
+			);
+			path = FlipCard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,6 +148,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5D394842157300600747AA3 /* SampleCardViewController.xib in Resources */,
 				B51C1CED2156640E002FD654 /* LaunchScreen.storyboard in Resources */,
 				B51C1CEA2156640E002FD654 /* Assets.xcassets in Resources */,
 				B51C1CE82156640D002FD654 /* Main.storyboard in Resources */,
@@ -147,12 +162,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5D3947E21572EDB00747AA3 /* FlipCardStackView.swift in Sources */,
 				B51C1CE52156640D002FD654 /* ViewController.swift in Sources */,
-				B51C1CFB215664B4002FD654 /* FlipCard.swift in Sources */,
+				B5D3948021572EDB00747AA3 /* FlipCardView.swift in Sources */,
+				B5D3947F21572EDB00747AA3 /* UIView+Liftable.swift in Sources */,
+				B5D3947D21572EDB00747AA3 /* FlipCard.swift in Sources */,
 				B51C1CE32156640D002FD654 /* AppDelegate.swift in Sources */,
-				B51C1D01215664E1002FD654 /* FlipCard.CardView.swift in Sources */,
-				B51C1D00215664E1002FD654 /* FlipCardStackView.swift in Sources */,
-				B5FC5AD721571F3100369FFB /* UIView+Liftable.swift in Sources */,
+				B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +317,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YY6CWUX533;
 				INFOPLIST_FILE = Cards/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -319,6 +336,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YY6CWUX533;
 				INFOPLIST_FILE = Cards/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

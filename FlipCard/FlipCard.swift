@@ -12,17 +12,33 @@ class FlipCard: CustomStringConvertible, Equatable {
 	typealias ID = String
 	
 	var id: ID
-	var cachedCard: CardView?
+	var cachedView: FlipCardView?
+	var cachedViewController: UIViewController?
 	
-	init(id: ID) {
+	init(id: ID, cardView: FlipCardView? = nil, cardViewController: UIViewController? = nil) {
 		self.id = id
+		self.cachedViewController = cardViewController
+		self.cachedView = cardView
 	}
 	
-	func buildCardView(ofSize size: CGSize) -> CardView {
-		if let cached = self.cachedCard, cached.bounds.size == size { return cached }
+	func buildCardView(ofSize size: CGSize) -> FlipCardView {
+		let newFrame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 		
-		let view = CardView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+		if let cachedController = self.cachedViewController, let view = cachedController.view as? FlipCardView {
+			view.bounds = newFrame
+			view.card = self
+			return view
+		}
+		
+		if let cached = self.cachedView {
+			cached.bounds = newFrame
+			cached.card = self
+			return cached
+		}
+		
+		let view = FlipCardView(frame: newFrame)
 		view.card = self
+		self.cachedView = view
 		return view
 	}
 }

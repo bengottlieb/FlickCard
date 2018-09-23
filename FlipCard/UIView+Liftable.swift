@@ -8,18 +8,15 @@
 
 import UIKit
 
-protocol LiftableView {
-	var maxShadowWidth: CGFloat { get }
-	var minShadowWidth: CGFloat { get }
-}
+protocol LiftableView { }
 
 extension UIView: LiftableView {
-	var maxShadowWidth: CGFloat { return 5}
-	var minShadowWidth: CGFloat { return 1}
+	static var maximumLiftedShadowWidth: CGFloat = 5
+	static var minimumLiftedShadowWidth: CGFloat = 1
 
 	public var percentageLifted: CGFloat {
 		set {
-			let radius = self.minShadowWidth + (self.maxShadowWidth - self.minShadowWidth) * newValue
+			let radius = UIView.minimumLiftedShadowWidth + (UIView.maximumLiftedShadowWidth - UIView.minimumLiftedShadowWidth) * newValue
 			self.layer.shadowColor = UIColor.black.cgColor
 			self.layer.shadowOpacity = Float(min(1.0, self.percentageLifted + 0.2))
 			self.layer.shadowRadius = radius
@@ -27,7 +24,7 @@ extension UIView: LiftableView {
 		}
 		
 		get {
-			return min(1, (self.layer.shadowRadius - self.minShadowWidth) / (self.maxShadowWidth - self.minShadowWidth))
+			return min(1, (self.layer.shadowRadius - UIView.minimumLiftedShadowWidth) / (UIView.maximumLiftedShadowWidth - UIView.minimumLiftedShadowWidth))
 		}
 	}
 }

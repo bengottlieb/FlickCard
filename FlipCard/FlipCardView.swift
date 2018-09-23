@@ -8,18 +8,19 @@
 
 import UIKit
 
-class FlipCardView: UIView {
-	weak var card: FlipCard!
+open class FlipCardView: UIView {
+	public weak var card: FlipCard!
+	
 	var stackView: FlipCardStackView? { return self.superview as? FlipCardStackView }
 	var panGestureRecognizer: UIPanGestureRecognizer?
 	var dragStart = CGPoint.zero
 
-	 override init(frame: CGRect) {
+	public override init(frame: CGRect) {
 		super.init(frame: frame)
 		self.didInit()
 	}
 	
-	required init?(coder aDecoder: NSCoder) {
+	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		self.didInit()
 	}
@@ -45,6 +46,7 @@ class FlipCardView: UIView {
 				self.addGestureRecognizer(self.panGestureRecognizer!)
 			} else {
 				if let pan = self.panGestureRecognizer { self.removeGestureRecognizer(pan) }
+				self.panGestureRecognizer = nil
 			}
 		}
 	}
@@ -73,40 +75,54 @@ class FlipCardView: UIView {
 			self.center = CGPoint(x: self.dragStart.x + delta.x * parent.dragAcceleration, y: self.dragStart.y + delta.y * parent.dragAcceleration)
 			self.transform = CGAffineTransform(rotationAngle: rotation).scaledBy(x: scaleBoost + 1, y: scaleBoost + 1)
 
-		case .ended:
-			if recog.isMovingOffscreen {
-				let maxDuration: CGFloat = 0.5
-				let current = self.center
-				let velocity = recog.velocity(in: parent)
-				let speed = velocity.magnitudeFromOrigin
-				let distance = sqrt(parent.bounds.width * parent.bounds.width + parent.bounds.height * parent.bounds.height)
-				var duration = distance/speed
-				var destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
-				
-				if duration > maxDuration {
-					let factor = maxDuration / duration
-					destination = CGPoint(x: current.x + velocity.x * duration * factor, y: current.y + velocity.y * duration * factor)
-					duration = maxDuration
-				}
-				
-				print("moving off at \(velocity) from \(current) -> \(destination)")
-				UIView.animate(withDuration: TimeInterval(duration), animations: {
-					self.center = destination
-				}) { _ in
-					parent.finishDragging(card: self.card, removed: true)
-				}
-			} else {
-				UIView.animate(withDuration: 0.2, animations: {
-					self.center = self.dragStart
-					self.transform = .identity
-					self.percentageLifted = 0
-				}) { _ in
-					parent.finishDragging(card: self.card, removed: false)
-				}
-			}
-			
+		case .ended: self.finishFlick(with: recog)
 			
 		default: break
+		}
+	}
+	
+	func finishFlick(with recog: UIPanGestureRecognizer) {
+		guard let parent = self.stackView else { return }
+		if recog.isMovingOffscreen {
+			let maxDuration: CGFloat = 0.5
+			let current = self.center
+			let velocity = recog.velocity(in: parent)
+			let speed = velocity.magnitudeFromOrigin
+			let distance = sqrt(parent.bounds.width * parent.bounds.width + parent.bounds.height * parent.bounds.height)
+			var duration = distance/speed
+			var destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
+			
+			if duration > maxDuration {
+				let factor = maxDuration / duration
+				destination = CGPoint(x: current.x + velocity.x * duration * factor, y: current.y + velocity.y * duration * factor)
+				duration = maxDuration
+			}
+			
+			print("moving off at \(velocity) from \(current) -> \(destination)")
+			UIView.animate(withDuration: TimeInterval(duration), animations: {
+				self.center = destination
+			}) { _ in
+				if parent.returnFlickedCardsToBackOfStack {
+					UIView.animate(withDuration: 0.2, animations: {
+						parent.sendSubviewToBack(self)
+						self.center = self.dragStart
+						self.transform = .identity
+						self.percentageLifted = 0
+					}, completion: { _ in
+						parent.finishDragging(card: self.card, removed: true)
+					})
+				} else {
+					parent.finishDragging(card: self.card, removed: true)
+				}
+			}
+		} else {
+			UIView.animate(withDuration: 0.2, animations: {
+				self.center = self.dragStart
+				self.transform = .identity
+				self.percentageLifted = 0
+			}) { _ in
+				parent.finishDragging(card: self.card, removed: false)
+			}
 		}
 	}
 }

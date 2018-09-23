@@ -8,38 +8,23 @@
 
 import UIKit
 
-class FlipCardStackView: UIView {
-	enum Style { case single, tight, loose, scattered, tiered(CGFloat) }
+open class FlipCardStackView: UIView {
+	public enum Arrangment { case single, tight, loose, scattered, tiered(CGFloat) }
 	
-	let maxDragRotation: CGFloat = 0.2
-	let maxDragScale: CGFloat = 1.05
-	let dragAcceleration: CGFloat = 1.25
+	public var maxDragRotation: CGFloat = 0.2
+	public var maxDragScale: CGFloat = 1.05
+	public var dragAcceleration: CGFloat = 1.25
+	public var returnFlickedCardsToBackOfStack = true
+	public var arrangement: Arrangment = .tiered(15) { didSet { self.updateUI() }}
+	public var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
+	public var cards: [FlipCard] = []
+	open var cardSize: CGSize { return CGSize(width: self.bounds.size.width * 0.8, height: self.bounds.size.height * 0.8) }
 	
-
-	var style: Style = .tiered(15) { didSet { self.updateUI() }}
-	var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
-	var cards: [FlipCard] = []
 	var visible: [FlipCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
-	var cardSize: CGSize { return CGSize(width: self.bounds.size.width * 0.8, height: self.bounds.size.height * 0.8) }
 	
-	var animator: UIDynamicAnimator!
 	var cardViews: [FlipCardView] = []
 	var isDragging = false
 	var cardsNeedLayout = false
-	
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-		self.postInit()
-	}
-	
-	required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-		self.postInit()
-	}
-
-	func postInit() {
-		self.animator = UIDynamicAnimator(referenceView: self)
-	}
 	
 	func updateUI() {
 		let visible = self.visible
@@ -76,7 +61,7 @@ class FlipCardStackView: UIView {
 		self.setNeedsLayout()
 	}
 	
-	override func layoutSubviews() {
+	override open func layoutSubviews() {
 		super.layoutSubviews()
 		if self.cardsNeedLayout {
 			let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
@@ -104,10 +89,15 @@ class FlipCardStackView: UIView {
 	
 	func finishDragging(card: FlipCard, removed: Bool) {
 		if removed {
-			self.remove(card: card)
+			if self.returnFlickedCardsToBackOfStack {
+				if let index = self.cards.index(of: card) { self.cards.remove(at: index) }
+				self.cards.append(card)
+			} else {
+				self.remove(card: card)
+			}
 		}
 		self.isDragging = false
-		self.updateUI()
+		DispatchQueue.main.async { self.updateUI() }
 	}
 	
 	func add(card: FlipCard) {
@@ -129,7 +119,7 @@ class FlipCardStackView: UIView {
 	}
 	
 	func calculateAlpha(for card: FlipCard, at position: Int) -> CGFloat {
-		switch self.style {
+		switch self.arrangement {
 		case .tiered(_):
 			return 1.0 - CGFloat(position) * 0.2
 			
@@ -143,7 +133,7 @@ class FlipCardStackView: UIView {
 		
 		let seed = card.id.hashValue % 10
 		
-		switch self.style {
+		switch self.arrangement {
 		case .single: return .identity
 		case .tight:
 			return CGAffineTransform(translationX: 0, y: (5 * CGFloat(position)))

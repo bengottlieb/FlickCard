@@ -8,14 +8,14 @@
 
 import UIKit
 
-class FlipCard: CustomStringConvertible, Equatable {
-	typealias ID = String
+open class FlipCard: CustomStringConvertible, Equatable {
+	public typealias ID = String
 	
-	var id: ID
-	var cachedView: FlipCardView?
-	var cachedViewController: UIViewController?
+	open var id: ID
+	public var cachedView: FlipCardView?
+	public var cachedViewController: UIViewController?
 	
-	init(id: ID, cardView: FlipCardView? = nil, cardViewController: UIViewController? = nil) {
+	public init(id: ID, cardView: FlipCardView? = nil, cardViewController: UIViewController? = nil) {
 		self.id = id
 		self.cachedViewController = cardViewController
 		self.cachedView = cardView
@@ -44,8 +44,8 @@ class FlipCard: CustomStringConvertible, Equatable {
 }
 
 extension FlipCard {
-	var description: String { return "[\(self.id)]" }
-	static func ==(lhs: FlipCard, rhs: FlipCard) -> Bool {
+	open var description: String { return "[\(self.id)]" }
+	public static func ==(lhs: FlipCard, rhs: FlipCard) -> Bool {
 		return lhs.id == rhs.id
 	}
 }

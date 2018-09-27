@@ -10,6 +10,7 @@ import UIKit
 
 class SampleCardViewController: UIViewController {
 	@IBOutlet var imageView: UIImageView!
+	@IBOutlet var indicatorLabel: UILabel!
 	
 	var image: UIImage?
 	
@@ -21,12 +22,17 @@ class SampleCardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		self.indicatorLabel.isHidden = true
 		self.imageView.image = self.image
 
         // Do any additional setup after loading the view.
     }
 	
-
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		self.indicatorLabel.isHidden = self.parent == nil
+	}
     /*
     // MARK: - Navigation
 

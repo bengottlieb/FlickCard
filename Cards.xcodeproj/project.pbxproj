@@ -18,6 +18,7 @@
 		B5D3948021572EDB00747AA3 /* FlipCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947C21572EDB00747AA3 /* FlipCardView.swift */; };
 		B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D394812157300600747AA3 /* SampleCardViewController.swift */; };
 		B5D394842157300600747AA3 /* SampleCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D394822157300600747AA3 /* SampleCardViewController.xib */; };
+		B5F7B66C215D16FC00BE1955 /* FlipCard+StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F7B66B215D16FC00BE1955 /* FlipCard+StackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		B5D3947C21572EDB00747AA3 /* FlipCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipCardView.swift; sourceTree = "<group>"; };
 		B5D394812157300600747AA3 /* SampleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCardViewController.swift; sourceTree = "<group>"; };
 		B5D394822157300600747AA3 /* SampleCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SampleCardViewController.xib; sourceTree = "<group>"; };
+		B5F7B66B215D16FC00BE1955 /* FlipCard+StackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlipCard+StackView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				B5D3947921572EDB00747AA3 /* FlipCard.swift */,
 				B5D3947C21572EDB00747AA3 /* FlipCardView.swift */,
 				B5D3947A21572EDB00747AA3 /* FlipCardStackView.swift */,
+				B5F7B66B215D16FC00BE1955 /* FlipCard+StackView.swift */,
 				B5D3947B21572EDB00747AA3 /* UIView+Liftable.swift */,
 			);
 			path = FlipCard;
@@ -166,6 +169,7 @@
 				B51C1CE52156640D002FD654 /* ViewController.swift in Sources */,
 				B5D3948021572EDB00747AA3 /* FlipCardView.swift in Sources */,
 				B5D3947F21572EDB00747AA3 /* UIView+Liftable.swift in Sources */,
+				B5F7B66C215D16FC00BE1955 /* FlipCard+StackView.swift in Sources */,
 				B5D3947D21572EDB00747AA3 /* FlipCard.swift in Sources */,
 				B51C1CE32156640D002FD654 /* AppDelegate.swift in Sources */,
 				B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */,

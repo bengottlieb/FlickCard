@@ -48,6 +48,12 @@ open class FlipCardView: UIView {
 		}
 	}
 	
+	func transformForAnimation(in parent: FlipCardStackView, location pt: CGPoint) {
+		let angle = pt.x > parent.bounds.midX ? parent.maxDragRotation : -parent.maxDragRotation
+		self.transform = CGAffineTransform(rotationAngle: angle)
+		self.percentageLifted = 1.0
+	}
+	
 	@objc func panned(recog: UIPanGestureRecognizer) {
 		guard let parent = self.stackView else { return }
 		switch recog.state {
@@ -79,7 +85,7 @@ open class FlipCardView: UIView {
 	}
 	
 	func finishFlick(with recog: UIPanGestureRecognizer) {
-		guard let parent = self.stackView else { return }
+		guard let parent = self.stackView, let card = self.card else { return }
 		if recog.isMovingOffscreen {
 			let maxDuration: CGFloat = 0.5
 			let current = self.center
@@ -95,24 +101,31 @@ open class FlipCardView: UIView {
 				duration = maxDuration
 			}
 			
+			parent.finishDragging(card: self.card, removed: true)
+			parent.animatingCardView = self
 			UIView.animate(withDuration: TimeInterval(duration), animations: {
 				self.center = destination
 			}) { _ in
+				parent.animatingCardView = nil
 				if parent.returnFlickedCardsToBackOfStack {
+					self.alpha = 0.5
 					UIView.animate(withDuration: 0.2, animations: {
 						parent.sendSubviewToBack(self)
 						self.center = self.dragStart
 						self.transform = .identity
 						self.percentageLifted = 0
 					}, completion: { _ in
-						parent.finishDragging(card: self.card, removed: true)
+						self.removeFromSuperview()
+						self.alpha = 1.0
+						parent.addReturnedCard(self.card)
 					})
 				} else {
-					parent.finishDragging(card: self.card, removed: true)
+					self.removeFromSuperview()
+					parent.didRemove(card: card, to: destination, viaFlick: true)
 				}
 			}
 		} else {
-			UIView.animate(withDuration: 0.2, animations: {
+			UIView.animate(withDuration: 0.1, animations: {
 				self.center = self.dragStart
 				self.transform = .identity
 				self.percentageLifted = 0

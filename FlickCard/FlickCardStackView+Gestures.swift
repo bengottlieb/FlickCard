@@ -94,13 +94,16 @@ extension FlickCardStackView {
 			}
 		} else {
 			let distance = cardView.dragStart.distance(to: cardView.center)
-			let time = distance / recog.velocity(in: self).distance(to: .zero)
+			let time = min(distance / recog.velocity(in: self).distance(to: .zero), 0.2)
 			UIView.animate(withDuration: TimeInterval(time), animations: {
 				cardView.center = cardView.dragStart
 				cardView.transform = .identity
 				cardView.percentageLifted = 0
 			}) { _ in
 				if cardView.superview != self {
+					let center = self.convert(cardView.center, from: cardView.superview)
+					cardView.removeFromSuperview()
+					cardView.center = center
 					self.addSubview(cardView)
 				}
 				parent.finishDragging(card: cardView.card, removed: false)

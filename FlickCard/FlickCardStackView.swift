@@ -35,6 +35,7 @@ open class FlickCardStackView: UIView {
 	var visible: [FlickCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
 	
 	var cardViews: [FlickCardView] = []
+	var panGestureRecognizer: UIPanGestureRecognizer!
 	var cardsNeedLayout = false
 	var firstCardIsInteracting: Bool { return self.state == .draggingTopCard }
 	weak var animatingCardView: UIView?
@@ -70,10 +71,10 @@ open class FlickCardStackView: UIView {
 			return cardView
 		}
 		
+		self.gesturesEnabled = self.cards.count > 0
 		for i in 0..<self.visible.count {
 			guard let view = self.view(for: self.cards[i]) else { continue }
 			
-			view.gesturesEnabled = i == 0
 			if i == 0 {
 				self.bringSubviewToFront(view)
 			} else {
@@ -115,6 +116,21 @@ open class FlickCardStackView: UIView {
 				self.bringSubviewToFront(animating)
 			}
 			self.cardsNeedLayout = false
+		}
+	}
+	
+	var gesturesEnabled: Bool = false {
+		didSet {
+			self.isUserInteractionEnabled = self.gesturesEnabled
+			if self.gesturesEnabled {
+				if self.panGestureRecognizer != nil { return }
+				
+				self.panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned))
+				self.addGestureRecognizer(self.panGestureRecognizer!)
+			} else {
+				if let pan = self.panGestureRecognizer { self.removeGestureRecognizer(pan) }
+				self.panGestureRecognizer = nil
+			}
 		}
 	}
 	

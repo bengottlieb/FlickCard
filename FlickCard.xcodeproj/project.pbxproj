@@ -12,30 +12,30 @@
 		B51C1CE82156640D002FD654 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CE62156640D002FD654 /* Main.storyboard */; };
 		B51C1CEA2156640E002FD654 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CE92156640E002FD654 /* Assets.xcassets */; };
 		B51C1CED2156640E002FD654 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CEB2156640E002FD654 /* LaunchScreen.storyboard */; };
-		B5D3947D21572EDB00747AA3 /* FlipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947921572EDB00747AA3 /* FlipCard.swift */; };
-		B5D3947E21572EDB00747AA3 /* FlipCardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947A21572EDB00747AA3 /* FlipCardStackView.swift */; };
+		B5D3947D21572EDB00747AA3 /* FlickCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947921572EDB00747AA3 /* FlickCard.swift */; };
+		B5D3947E21572EDB00747AA3 /* FlickCardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947A21572EDB00747AA3 /* FlickCardStackView.swift */; };
 		B5D3947F21572EDB00747AA3 /* UIView+Liftable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947B21572EDB00747AA3 /* UIView+Liftable.swift */; };
-		B5D3948021572EDB00747AA3 /* FlipCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947C21572EDB00747AA3 /* FlipCardView.swift */; };
+		B5D3948021572EDB00747AA3 /* FlickCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947C21572EDB00747AA3 /* FlickCardView.swift */; };
 		B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D394812157300600747AA3 /* SampleCardViewController.swift */; };
 		B5D394842157300600747AA3 /* SampleCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D394822157300600747AA3 /* SampleCardViewController.xib */; };
-		B5F7B66C215D16FC00BE1955 /* FlipCard+StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F7B66B215D16FC00BE1955 /* FlipCard+StackView.swift */; };
+		B5F7B66C215D16FC00BE1955 /* FlickCard+StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F7B66B215D16FC00BE1955 /* FlickCard+StackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B51C1CDF2156640D002FD654 /* Cards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cards.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B51C1CDF2156640D002FD654 /* FlickCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51C1CE22156640D002FD654 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B51C1CE42156640D002FD654 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B51C1CE72156640D002FD654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B51C1CE92156640E002FD654 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B51C1CEC2156640E002FD654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B51C1CEE2156640E002FD654 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B5D3947921572EDB00747AA3 /* FlipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipCard.swift; sourceTree = "<group>"; };
-		B5D3947A21572EDB00747AA3 /* FlipCardStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipCardStackView.swift; sourceTree = "<group>"; };
+		B5D3947921572EDB00747AA3 /* FlickCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickCard.swift; sourceTree = "<group>"; };
+		B5D3947A21572EDB00747AA3 /* FlickCardStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickCardStackView.swift; sourceTree = "<group>"; };
 		B5D3947B21572EDB00747AA3 /* UIView+Liftable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Liftable.swift"; sourceTree = "<group>"; };
-		B5D3947C21572EDB00747AA3 /* FlipCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipCardView.swift; sourceTree = "<group>"; };
+		B5D3947C21572EDB00747AA3 /* FlickCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickCardView.swift; sourceTree = "<group>"; };
 		B5D394812157300600747AA3 /* SampleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCardViewController.swift; sourceTree = "<group>"; };
 		B5D394822157300600747AA3 /* SampleCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SampleCardViewController.xib; sourceTree = "<group>"; };
-		B5F7B66B215D16FC00BE1955 /* FlipCard+StackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlipCard+StackView.swift"; sourceTree = "<group>"; };
+		B5F7B66B215D16FC00BE1955 /* FlickCard+StackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlickCard+StackView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 		B51C1CD62156640D002FD654 = {
 			isa = PBXGroup;
 			children = (
-				B5D3947821572EDB00747AA3 /* FlipCard */,
+				B5D3947821572EDB00747AA3 /* FlickCard */,
 				B51C1CE12156640D002FD654 /* Cards */,
 				B51C1CE02156640D002FD654 /* Products */,
 			);
@@ -61,7 +61,7 @@
 		B51C1CE02156640D002FD654 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B51C1CDF2156640D002FD654 /* Cards.app */,
+				B51C1CDF2156640D002FD654 /* FlickCard.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,24 +81,24 @@
 			path = Cards;
 			sourceTree = "<group>";
 		};
-		B5D3947821572EDB00747AA3 /* FlipCard */ = {
+		B5D3947821572EDB00747AA3 /* FlickCard */ = {
 			isa = PBXGroup;
 			children = (
-				B5D3947921572EDB00747AA3 /* FlipCard.swift */,
-				B5D3947C21572EDB00747AA3 /* FlipCardView.swift */,
-				B5D3947A21572EDB00747AA3 /* FlipCardStackView.swift */,
-				B5F7B66B215D16FC00BE1955 /* FlipCard+StackView.swift */,
+				B5D3947921572EDB00747AA3 /* FlickCard.swift */,
+				B5D3947C21572EDB00747AA3 /* FlickCardView.swift */,
+				B5D3947A21572EDB00747AA3 /* FlickCardStackView.swift */,
+				B5F7B66B215D16FC00BE1955 /* FlickCard+StackView.swift */,
 				B5D3947B21572EDB00747AA3 /* UIView+Liftable.swift */,
 			);
-			path = FlipCard;
+			path = FlickCard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B51C1CDE2156640D002FD654 /* Cards */ = {
+		B51C1CDE2156640D002FD654 /* FlickCard */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B51C1CF12156640E002FD654 /* Build configuration list for PBXNativeTarget "Cards" */;
+			buildConfigurationList = B51C1CF12156640E002FD654 /* Build configuration list for PBXNativeTarget "FlickCard" */;
 			buildPhases = (
 				B51C1CDB2156640D002FD654 /* Sources */,
 				B51C1CDC2156640D002FD654 /* Frameworks */,
@@ -108,9 +108,9 @@
 			);
 			dependencies = (
 			);
-			name = Cards;
+			name = FlickCard;
 			productName = Cards;
-			productReference = B51C1CDF2156640D002FD654 /* Cards.app */;
+			productReference = B51C1CDF2156640D002FD654 /* FlickCard.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -128,7 +128,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B51C1CDA2156640D002FD654 /* Build configuration list for PBXProject "Cards" */;
+			buildConfigurationList = B51C1CDA2156640D002FD654 /* Build configuration list for PBXProject "FlickCard" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -141,7 +141,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B51C1CDE2156640D002FD654 /* Cards */,
+				B51C1CDE2156640D002FD654 /* FlickCard */,
 			);
 		};
 /* End PBXProject section */
@@ -165,12 +165,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5D3947E21572EDB00747AA3 /* FlipCardStackView.swift in Sources */,
+				B5D3947E21572EDB00747AA3 /* FlickCardStackView.swift in Sources */,
 				B51C1CE52156640D002FD654 /* ViewController.swift in Sources */,
-				B5D3948021572EDB00747AA3 /* FlipCardView.swift in Sources */,
+				B5D3948021572EDB00747AA3 /* FlickCardView.swift in Sources */,
 				B5D3947F21572EDB00747AA3 /* UIView+Liftable.swift in Sources */,
-				B5F7B66C215D16FC00BE1955 /* FlipCard+StackView.swift in Sources */,
-				B5D3947D21572EDB00747AA3 /* FlipCard.swift in Sources */,
+				B5F7B66C215D16FC00BE1955 /* FlickCard+StackView.swift in Sources */,
+				B5D3947D21572EDB00747AA3 /* FlickCard.swift in Sources */,
 				B51C1CE32156640D002FD654 /* AppDelegate.swift in Sources */,
 				B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */,
 			);
@@ -326,7 +326,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.standalone.Cards;
+				PRODUCT_BUNDLE_IDENTIFIER = com.standalone.flickCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -345,7 +345,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.standalone.Cards;
+				PRODUCT_BUNDLE_IDENTIFIER = com.standalone.flickCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -355,7 +355,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B51C1CDA2156640D002FD654 /* Build configuration list for PBXProject "Cards" */ = {
+		B51C1CDA2156640D002FD654 /* Build configuration list for PBXProject "FlickCard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B51C1CEF2156640E002FD654 /* Debug */,
@@ -364,7 +364,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B51C1CF12156640E002FD654 /* Build configuration list for PBXNativeTarget "Cards" */ = {
+		B51C1CF12156640E002FD654 /* Build configuration list for PBXNativeTarget "FlickCard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B51C1CF22156640E002FD654 /* Debug */,

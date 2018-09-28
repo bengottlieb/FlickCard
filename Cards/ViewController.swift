@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-	@IBOutlet var cardStackView: FlipCardStackView!
+	@IBOutlet var cardStackView: FlickCardStackView!
 	@IBOutlet var arrangmentSegments: UISegmentedControl!
 	
 	override func viewDidLoad() {
@@ -21,7 +21,7 @@ class ViewController: UIViewController {
 	}
 	
 	@IBAction func segmentsChanged() {
-		let arrangments: [FlipCardStackView.Arrangment] = [.single, .tight, .loose, .scattered, .tiered(offset: -20, alphaStep: 0.1)]
+		let arrangments: [FlickCardStackView.Arrangment] = [.single, .tight, .loose, .scattered, .tiered(offset: -20, alphaStep: 0.1)]
 		
 		self.cardStackView.arrangement = arrangments[self.arrangmentSegments.selectedSegmentIndex]
 		UIView.animate(withDuration: 0.4, animations: {
@@ -33,25 +33,34 @@ class ViewController: UIViewController {
 	@IBAction func reload() {
 		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "ironman.png", "spider-man.png", "antman.png"]
 		
-		let cards: [FlipCard] = imageNames.map { name in
+		let cards: [FlickCard] = imageNames.map { name in
 			let image = UIImage(named: name)!
-			let card = FlipCard(id: name + "-\(self.count)", cardViewController: SampleCardViewController(image: image))
+			let card = FlickCard(id: name + "-\(self.count)", cardViewController: SampleCardViewController(image: image))
 			self.count += 1
 			return card
 		}
 		self.cardStackView.load(cards: cards, animated: true)
 	}
 	
+	@IBAction func removeTopCard() {
+		if let topCard = self.cardStackView.topCard {
+			self.cardStackView.animateCardOut(topCard, to: nil, duration: 1.0)
+		}
+	}
 
 }
 
-extension ViewController: FlipCardStackViewDelegate {
-	func willRemove(card: FlipCard, to: CGPoint?, viaFlick: Bool) {
+extension ViewController: FlickCardStackViewDelegate {
+	func willRemoveLastCard() {
+		
+	}
+	
+	func willRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
 		self.cardStackView.backgroundColor = .red
 		print("Will Remove \(card.id)")
 	}
 	
-	func didRemove(card: FlipCard, to: CGPoint?, viaFlick: Bool) {
+	func didRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
 		self.cardStackView.backgroundColor = .lightGray
 		print("Did Remove \(card.id)")
 	}

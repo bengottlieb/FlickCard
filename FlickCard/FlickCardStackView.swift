@@ -1,5 +1,5 @@
 //
-//  FlipCard.StackView.swift
+//  FlickCard.StackView.swift
 //  Cards
 //
 //  Created by Ben Gottlieb on 9/22/18.
@@ -8,13 +8,14 @@
 
 import UIKit
 
-public protocol FlipCardStackViewDelegate: class {
-	func willRemove(card: FlipCard, to: CGPoint?, viaFlick: Bool)
-	func didRemove(card: FlipCard, to: CGPoint?, viaFlick: Bool)
+public protocol FlickCardStackViewDelegate: class {
+	func willRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool)
+	func didRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool)
+	func willRemoveLastCard()
 	func didRemoveLastCard()
 }
 
-open class FlipCardStackView: UIView {
+open class FlickCardStackView: UIView {
 	public enum Arrangment { case single, tight, loose, scattered, tiered(offset: CGFloat, alphaStep: CGFloat) }
 	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn }
 	
@@ -24,23 +25,23 @@ open class FlipCardStackView: UIView {
 	public var returnFlickedCardsToBackOfStack = false
 	public var arrangement: Arrangment = .tiered(offset: -20, alphaStep: 0.05) { didSet { self.updateUI() }}
 	public var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
-	public private(set) var cards: [FlipCard] = []
+	public private(set) var cards: [FlickCard] = []
 	open var cardSize: CGSize { return CGSize(width: self.bounds.size.width - (self.cardSizeInset.left + self.cardSizeInset.right), height: self.bounds.size.height - (self.cardSizeInset.top + self.cardSizeInset.bottom)) }
-	public weak var delegate: FlipCardStackViewDelegate?
+	public weak var delegate: FlickCardStackViewDelegate?
 	open var defaultCardCenter: CGPoint { return CGPoint(x: self.bounds.midX, y: self.bounds.midY) }
 	open var state: State = .idle
 	var cardSizeInset = UIEdgeInsets.zero
 
-	var visible: [FlipCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
+	var visible: [FlickCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
 	
-	var cardViews: [FlipCardView] = []
+	var cardViews: [FlickCardView] = []
 	var cardsNeedLayout = false
-	var firstCardIsInteracting: Bool { return self.state == .draggingTopCard || self.state == .animatingTopCardIn || self.state == .animatingTopCardOut }
+	var firstCardIsInteracting: Bool { return self.state == .draggingTopCard }
 	weak var animatingCardView: UIView?
-	weak var lastFrontCard: FlipCard?
-	var topCard: FlipCard? { return self.cards.first }
+	weak var lastFrontCard: FlickCard?
+	var topCard: FlickCard? { return self.cards.first }
 
-	func load(cards: [FlipCard], animated: Bool = false) {
+	func load(cards: [FlickCard], animated: Bool = false) {
 		if animated, let first = cards.first {
 			self.add(card: first, toTop: false, animated: true, from: nil, duration: 0.2) {
 				self.load(cards: Array(cards[1...]), animated: true)
@@ -103,6 +104,7 @@ open class FlipCardStackView: UIView {
 			if firstIndex < self.cardViews.count {
 				for i in firstIndex..<self.cardViews.count {
 					let card = self.cardViews[i].card!
+					if self.cardViews[i] == self.animatingCardView { continue }
 					self.cardViews[i].transform = self.calculateTransform(for: card, at: i - firstIndex)
 					self.cardViews[i].alpha = self.calculateAlpha(for: card, at: i - firstIndex)
 					self.cardViews[i].center = center
@@ -116,7 +118,7 @@ open class FlipCardStackView: UIView {
 		}
 	}
 	
-	func startDragging(card: FlipCard) {
+	func startDragging(card: FlickCard) {
 		self.state = .draggingTopCard
 		self.updateUI()
 		UIView.animate(withDuration: 0.1) {
@@ -124,12 +126,12 @@ open class FlipCardStackView: UIView {
 		}
 	}
 	
-	func addReturnedCard(_ card: FlipCard) {
+	func addReturnedCard(_ card: FlickCard) {
 		self.cards.append(card)
 		self.updateUI()
 	}
 	
-	func finishDragging(card: FlipCard, removed: Bool) {
+	func finishDragging(card: FlickCard, removed: Bool) {
 		if removed {
 			self.willRemove(card: card, to: nil, viaFlick: true)
 			self.remove(card: card)
@@ -138,7 +140,7 @@ open class FlipCardStackView: UIView {
 		DispatchQueue.main.async { self.updateUI() }
 	}
 	
-	func add(card: FlipCard, toTop: Bool = false, animated: Bool = false, from source: CGPoint? = nil, duration: TimeInterval = 0.2, completion: (() -> Void)?) {
+	func add(card: FlickCard, toTop: Bool = false, animated: Bool = false, from source: CGPoint? = nil, duration: TimeInterval = 0.2, completion: (() -> Void)?) {
 		if self.cards.contains(card) { return }
 		var newCards = self.cards
 		if toTop { newCards.insert(card, at: 0) } else { newCards.append(card) }
@@ -165,46 +167,59 @@ open class FlipCardStackView: UIView {
 		}
 	}
 	
-	func animateCardOut(_ card: FlipCard, to destination: CGPoint?, duration: TimeInterval = 0.2) {
+	func animateCardOut(_ card: FlickCard, to destination: CGPoint?, duration: TimeInterval = 0.2) {
 		if let cardView = self.view(for: card) {
 			let dest = destination ?? CGPoint(x: self.bounds.width * 1, y: self.bounds.height * -1)
 			
 			self.willRemove(card: card, to: destination, viaFlick: false)
-			UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [.curveEaseIn], animations: {
-				cardView.center = dest
-				cardView.transformForAnimation(in: self, location: dest)
+			self.animatingCardView = cardView
+			self.remove(card: card)
+			self.state = .animatingTopCardOut
+			self.updateUI()
+			UIView.animate(withDuration: 0.1, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [.curveEaseIn], animations: {
+					cardView.transform = CGAffineTransform(translationX: 10, y: 30)
 			}) { _ in
-				cardView.removeFromSuperview()
-				self.updateUI()
-				self.didRemove(card: card, to: destination, viaFlick: false)
+					UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [.curveEaseIn], animations: {
+					self.layoutIfNeeded()
+					cardView.center = dest
+					cardView.transformForAnimation(in: self, location: dest)
+				}) { _ in
+					self.state = .idle
+					cardView.removeFromSuperview()
+					self.updateUI()
+					self.didRemove(card: card, to: destination, viaFlick: false)
+				}
 			}
 		}
 	}
 	
-	func remove(card: FlipCard) {
+	func remove(card: FlickCard) {
 		if let index = self.cards.index(of: card) { self.cards.remove(at: index) }
 		if let cardView = self.view(for: card) {
 			if let index = self.cardViews.index(of: cardView) { self.cardViews.remove(at: index) }
 		}
 	}
 	
-	func willRemove(card: FlipCard, to: CGPoint?, viaFlick: Bool) {
+	func willRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
 		self.delegate?.willRemove(card: card, to: to, viaFlick: viaFlick)
+		if self.cards.count == 1 {
+			self.delegate?.willRemoveLastCard()
+		}
 	}
 	
-	func didRemove(card: FlipCard, to: CGPoint?, viaFlick: Bool) {
+	func didRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
 		self.delegate?.didRemove(card: card, to: to, viaFlick: viaFlick)
 		if self.cards.count == 0 {
 			self.delegate?.didRemoveLastCard()
 		}
 	}
 	
-	func view(for card: FlipCard) -> FlipCardView? {
+	func view(for card: FlickCard) -> FlickCardView? {
 		for view in self.cardViews { if view.card == card { return view }}
 		return nil
 	}
 	
-	func calculateAlpha(for card: FlipCard, at position: Int) -> CGFloat {
+	func calculateAlpha(for card: FlickCard, at position: Int) -> CGFloat {
 		switch self.arrangement {
 		case .tiered(_, let alphaStep):
 			return 1.0 - CGFloat(position) * alphaStep
@@ -214,7 +229,7 @@ open class FlipCardStackView: UIView {
 		}
 	}
 	
-	func calculateTransform(for card: FlipCard, at position: Int) -> CGAffineTransform {
+	func calculateTransform(for card: FlickCard, at position: Int) -> CGAffineTransform {
 		if position == 0 { return .identity }
 		
 		let seed = card.id.hashValue % 10

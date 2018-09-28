@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iZV-Hr-cWz" customClass="FlipCardStackView" customModule="Cards" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iZV-Hr-cWz" customClass="FlickCardStackView" customModule="Cards" customModuleProvider="target">
                                 <rect key="frame" x="16" y="82" width="343" height="503"/>
                                 <color key="backgroundColor" red="0.97669745078358627" green="0.97669745078358627" blue="0.97669745078358627" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -46,12 +46,21 @@
                                     <action selector="segmentsChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="ieT-h7-Hms"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SeC-F0-vbj">
+                                <rect key="frame" x="274" y="630" width="85" height="30"/>
+                                <state key="normal" title="Remove Top"/>
+                                <connections>
+                                    <action selector="removeTopCard" destination="BYZ-38-t0r" eventType="touchUpInside" id="GeJ-zH-gFQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7Ds-hb-y0f" secondAttribute="bottom" constant="7" id="3YR-tk-sqR"/>
                             <constraint firstItem="EZX-uK-aja" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="3rc-wr-YDm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="SeC-F0-vbj" secondAttribute="trailing" constant="16" id="EmV-1R-7tV"/>
                             <constraint firstItem="iZV-Hr-cWz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GNu-Mr-asd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SeC-F0-vbj" secondAttribute="bottom" constant="7" id="LOo-U3-f4r"/>
                             <constraint firstItem="iZV-Hr-cWz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="M3Y-8E-v5F"/>
                             <constraint firstItem="EZX-uK-aja" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="ie2-qg-s94"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="EZX-uK-aja" secondAttribute="trailing" constant="3" id="qGD-Fn-iNr"/>

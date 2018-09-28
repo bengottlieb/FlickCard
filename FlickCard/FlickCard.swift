@@ -1,5 +1,5 @@
 //
-//  FlipCard.swift
+//  FlickCard.swift
 //  Cards
 //
 //  Created by Ben Gottlieb on 9/22/18.
@@ -8,23 +8,23 @@
 
 import UIKit
 
-open class FlipCard: CustomStringConvertible, Equatable {
+open class FlickCard: CustomStringConvertible, Equatable {
 	public typealias ID = String
 	
 	open var id: ID
-	public var cachedView: FlipCardView?
+	public var cachedView: FlickCardView?
 	public var cachedViewController: UIViewController?
 	
-	public init(id: ID, cardView: FlipCardView? = nil, cardViewController: UIViewController? = nil) {
+	public init(id: ID, cardView: FlickCardView? = nil, cardViewController: UIViewController? = nil) {
 		self.id = id
 		self.cachedViewController = cardViewController
 		self.cachedView = cardView
 	}
 	
-	func buildCardView(ofSize size: CGSize) -> FlipCardView {
+	func buildCardView(ofSize size: CGSize) -> FlickCardView {
 		let newFrame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 		
-		if let cachedController = self.cachedViewController, let view = cachedController.view as? FlipCardView {
+		if let cachedController = self.cachedViewController, let view = cachedController.view as? FlickCardView {
 			view.bounds = newFrame
 			view.card = self
 			return view
@@ -36,16 +36,16 @@ open class FlipCard: CustomStringConvertible, Equatable {
 			return cached
 		}
 		
-		let view = FlipCardView(frame: newFrame)
+		let view = FlickCardView(frame: newFrame)
 		view.card = self
 		self.cachedView = view
 		return view
 	}
 }
 
-extension FlipCard {
+extension FlickCard {
 	open var description: String { return "[\(self.id)]" }
-	public static func ==(lhs: FlipCard, rhs: FlipCard) -> Bool {
+	public static func ==(lhs: FlickCard, rhs: FlickCard) -> Bool {
 		return lhs.id == rhs.id
 	}
 }

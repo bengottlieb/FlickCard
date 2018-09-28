@@ -1,5 +1,5 @@
 //
-//  FlipCard.View.swift
+//  FlickCard.View.swift
 //  Cards
 //
 //  Created by Ben Gottlieb on 9/22/18.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-open class FlipCardView: UIView {
-	public weak var card: FlipCard!
+open class FlickCardView: UIView {
+	public weak var card: FlickCard!
 	
-	var stackView: FlipCardStackView? { return self.superview as? FlipCardStackView }
+	var stackView: FlickCardStackView? { return self.superview as? FlickCardStackView }
 	var panGestureRecognizer: UIPanGestureRecognizer?
 	var dragStart = CGPoint.zero
 
@@ -48,7 +48,7 @@ open class FlipCardView: UIView {
 		}
 	}
 	
-	func transformForAnimation(in parent: FlipCardStackView, location pt: CGPoint) {
+	func transformForAnimation(in parent: FlickCardStackView, location pt: CGPoint) {
 		let angle = pt.x > parent.bounds.midX ? parent.maxDragRotation : -parent.maxDragRotation
 		self.transform = CGAffineTransform(rotationAngle: angle)
 		self.percentageLifted = 1.0

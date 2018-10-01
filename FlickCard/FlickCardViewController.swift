@@ -18,7 +18,7 @@ open class FlickCardViewController: UIViewController {
 		self.cardView.cardController = self
 	}
 	
-	public func returnToStackview(in controller: UIViewController, duration: TimeInterval = 0) {
+	public func returnToStackview(in controller: UIViewController, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
 		guard let stackView = self.cardView.stackView, let finalFrame = self.originalFrame else { return }
 
 		self.willMove(toParent: controller)
@@ -26,6 +26,8 @@ open class FlickCardViewController: UIViewController {
 		DispatchQueue.main.async {
 			UIView.animate(withDuration: duration, animations: {
 				self.view.frame = stackView.convert(finalFrame, to: self.view.superview)
+				concurrentAnimations?()
+				self.view.layer.cornerRadius = FlickCardView.cornerRadius
 				self.view.layoutIfNeeded()
 			}) { _ in
 				controller.addChild(self)
@@ -38,7 +40,7 @@ open class FlickCardViewController: UIViewController {
 		}
 	}
 
-	public func makeFullScreen(in controller: UIViewController, duration: TimeInterval = 0) {
+	public func makeFullScreen(in controller: UIViewController, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
 		self.cardView.stackView?.state = .zoomingCard
 		self.originalFrame = self.view.frame
 		let startingFrame = self.view.convert(self.view.bounds, to: controller.view)
@@ -50,6 +52,8 @@ open class FlickCardViewController: UIViewController {
 		DispatchQueue.main.async {
 			UIView.animate(withDuration: duration, animations: {
 				self.view.frame = controller.view.bounds// finalFrame
+				self.view.layer.cornerRadius = 0
+				concurrentAnimations?()
 				self.view.layoutIfNeeded()
 			}) { _ in
 				self.view.frame = controller.view.bounds

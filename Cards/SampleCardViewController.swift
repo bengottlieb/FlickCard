@@ -38,9 +38,13 @@ class SampleCardViewController: FlickCardViewController {
 	
 	@IBAction func goFullScreen() {
 		if self.isZoomedToFullScreen {
-			self.returnToStackview(in: self.parentController!, duration: 2.0)
+			self.returnToStackview(in: self.parentController!, duration: 2.0) {
+				self.view.backgroundColor = .white
+			}
 		} else {
-			self.makeFullScreen(in: self.parentController!, duration: 2.0)
+			self.makeFullScreen(in: self.parentController!, duration: 2.0) {
+				self.view.backgroundColor = .black
+			}
 		}
 	}
     /*

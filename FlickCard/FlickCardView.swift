@@ -11,6 +11,10 @@ import UIKit
 open class FlickCardView: UIView {
 	public weak var card: FlickCard!
 	
+	static var cornerRadius: CGFloat = 10
+	static var borderWidth: CGFloat = 1
+	static var borderColor: UIColor = .black
+
 	var stackView: FlickCardStackView?
 	var cardController: FlickCardViewController!
 	
@@ -35,9 +39,9 @@ open class FlickCardView: UIView {
 	}
 	
 	func didInit() {
-		self.layer.cornerRadius = 10
-		self.layer.borderColor = UIColor.black.cgColor
-		self.layer.borderWidth = 1
+		self.layer.cornerRadius = FlickCardView.cornerRadius
+		self.layer.borderColor = FlickCardView.borderColor.cgColor
+		self.layer.borderWidth = FlickCardView.borderWidth
 		
 		self.percentageLifted = 0.0
 	}

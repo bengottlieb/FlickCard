@@ -37,7 +37,11 @@ class SampleCardViewController: FlickCardViewController {
 	}
 	
 	@IBAction func goFullScreen() {
-		self.makeFullScreen(in: self.parentController!, duration: 2.0)
+		if self.isZoomedToFullScreen {
+			self.returnToStackview(in: self.parentController!, duration: 2.0)
+		} else {
+			self.makeFullScreen(in: self.parentController!, duration: 2.0)
+		}
 	}
     /*
     // MARK: - Navigation

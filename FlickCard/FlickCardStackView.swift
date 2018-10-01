@@ -17,7 +17,7 @@ public protocol FlickCardStackViewDelegate: class {
 
 open class FlickCardStackView: UIView {
 	public enum Arrangment { case single, tight, loose, scattered, tiered(offset: CGFloat, alphaStep: CGFloat) }
-	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn }
+	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn, zoomingCard }
 	
 	public var maxDragRotation: CGFloat = 0.2
 	public var maxDragScale: CGFloat = 1.05

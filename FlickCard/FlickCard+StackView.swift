@@ -22,7 +22,8 @@ extension FlickCardStackView {
 
 extension FlickCard {
 	func willBecomeFrontCard(in stackView: FlickCardStackView, animated: Bool) {
-		guard let controller = self.cachedViewController, let parent = stackView.parentViewController else { return }
+		guard let parent = stackView.parentViewController else { return }
+		let controller = self.viewController
 		
 		controller.willMove(toParent: parent)
 		controller.viewWillAppear(animated)
@@ -32,8 +33,8 @@ extension FlickCard {
 	}
 
 	func didResignFrontCard(in stackView: FlickCardStackView, animated: Bool) {
-		guard let controller = self.cachedViewController else { return }
-		
+		let controller = self.viewController
+
 		controller.willMove(toParent: nil)
 		controller.viewWillDisappear(animated)
 		controller.removeFromParent()

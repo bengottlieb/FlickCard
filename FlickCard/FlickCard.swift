@@ -12,39 +12,25 @@ open class FlickCard: CustomStringConvertible, Equatable {
 	public typealias ID = String
 	
 	open var id: ID
-	public var cachedView: FlickCardView?
-	public var cachedViewController: UIViewController?
+	public var viewController: FlickCardViewController
 	
-	public init(id: ID, cardView: FlickCardView? = nil, cardViewController: UIViewController? = nil) {
+	public init(id: ID, controller: FlickCardViewController) {
 		self.id = id
-		self.cachedViewController = cardViewController
-		self.cachedView = cardView
+		self.viewController = controller
 	}
 	
 	func buildCardView(ofSize size: CGSize) -> FlickCardView {
 		let newFrame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 		
-		if let cachedController = self.cachedViewController, let view = cachedController.view as? FlickCardView {
-			view.bounds = newFrame
-			view.card = self
-			return view
-		}
-		
-		if let cached = self.cachedView {
-			cached.bounds = newFrame
-			cached.card = self
-			return cached
-		}
-		
-		let view = FlickCardView(frame: newFrame)
+		let view = self.viewController.cardView
+		view.bounds = newFrame
 		view.card = self
-		self.cachedView = view
 		return view
 	}
 }
 
 extension FlickCard {
-	open var description: String { return "[\(self.id)]" }
+	public var description: String { return "[\(self.id)]" }
 	public static func ==(lhs: FlickCard, rhs: FlickCard) -> Bool {
 		return lhs.id == rhs.id
 	}

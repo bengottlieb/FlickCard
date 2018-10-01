@@ -17,7 +17,7 @@ class ViewController: UIViewController {
 		self.cardStackView.cardSizeInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		self.cardStackView.delegate = self
 		self.cardStackView.backgroundColor = .lightGray
-		//self.reload()
+		self.reloadCards(animated: false)
 	}
 	
 	@IBAction func segmentsChanged() {
@@ -30,16 +30,18 @@ class ViewController: UIViewController {
 	}
 
 	var count = 0
-	@IBAction func reload() {
+	@IBAction func reload() { self.reloadCards(animated: true) }
+	
+	func reloadCards(animated: Bool) {
 		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "ironman.png", "spider-man.png", "antman.png"]
 		
 		let cards: [FlickCard] = imageNames.map { name in
 			let image = UIImage(named: name)!
-			let card = FlickCard(id: name + "-\(self.count)", cardViewController: SampleCardViewController(image: image))
+			let card = FlickCard(id: name + "-\(self.count)", controller: SampleCardViewController(image: image, parent: self))
 			self.count += 1
 			return card
 		}
-		self.cardStackView.load(cards: cards, animated: true)
+		self.cardStackView.load(cards: cards, animated: animated)
 	}
 	
 	@IBAction func removeTopCard() {

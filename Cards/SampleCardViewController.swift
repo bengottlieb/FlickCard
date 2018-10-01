@@ -8,17 +8,19 @@
 
 import UIKit
 
-class SampleCardViewController: UIViewController {
+class SampleCardViewController: FlickCardViewController {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var indicatorLabel: UILabel!
 	
 	var image: UIImage?
+	var parentController: UIViewController?
 	
-	convenience init(image: UIImage) {
+	convenience init(image: UIImage, parent: UIViewController) {
 		self.init(nibName: "SampleCardViewController", bundle: nil)
 		self.image = image
+		self.parentController = parent
 	}
-	
+		
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -32,6 +34,10 @@ class SampleCardViewController: UIViewController {
 		super.viewDidAppear(animated)
 		
 		self.indicatorLabel.isHidden = self.parent == nil
+	}
+	
+	@IBAction func goFullScreen() {
+		self.makeFullScreen(in: self.parentController!, duration: 2.0)
 	}
     /*
     // MARK: - Navigation

@@ -12,6 +12,8 @@ open class FlickCardView: UIView {
 	public weak var card: FlickCard!
 	
 	var stackView: FlickCardStackView?
+	var cardController: FlickCardViewController!
+	
 	var panGestureRecognizer: UIPanGestureRecognizer?
 	var dragStart = CGPoint.zero
 

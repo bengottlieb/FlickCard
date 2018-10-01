@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SampleCardViewController" customModule="Cards" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SampleCardViewController" customModule="FlickCard" customModuleProvider="target">
             <connections>
                 <outlet property="imageView" destination="4M9-cc-pmg" id="XuK-al-RJF"/>
                 <outlet property="indicatorLabel" destination="bu9-uU-A6J" id="FsR-m8-pxd"/>
@@ -18,7 +18,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="FlickCardView" customModule="Cards" customModuleProvider="target">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="FlickCardView" customModule="FlickCard" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -32,13 +32,22 @@
                     <color key="textColor" red="1" green="0.27394694590000002" blue="0.15318150129999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bD3-Ce-arb">
+                    <rect key="frame" x="279" y="617" width="76" height="30"/>
+                    <state key="normal" title="Full Screen"/>
+                    <connections>
+                        <action selector="goFullScreen" destination="-1" eventType="touchUpInside" id="emx-ll-zcI"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="4M9-cc-pmg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="0k3-of-hCi"/>
                 <constraint firstItem="bu9-uU-A6J" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="7eV-SX-5Me"/>
                 <constraint firstItem="bu9-uU-A6J" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="WQ5-aQ-WpA"/>
+                <constraint firstItem="bD3-Ce-arb" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-20" id="Zhi-7u-5oQ"/>
                 <constraint firstAttribute="bottom" secondItem="4M9-cc-pmg" secondAttribute="bottom" constant="10" id="dKM-ek-Ylw"/>
+                <constraint firstItem="bD3-Ce-arb" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-20" id="f85-eI-XhK"/>
                 <constraint firstItem="4M9-cc-pmg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="ikJ-tH-p3j"/>
                 <constraint firstAttribute="trailing" secondItem="4M9-cc-pmg" secondAttribute="trailing" constant="10" id="oij-Ib-n29"/>
             </constraints>

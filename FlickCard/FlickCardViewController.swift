@@ -49,18 +49,21 @@ open class FlickCardViewController: UIViewController {
 		controller.addChild(self)
 		self.view.frame = startingFrame
 		
-		DispatchQueue.main.async {
-			UIView.animate(withDuration: duration, animations: {
-				self.view.frame = controller.view.bounds// finalFrame
+		UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
+			UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.1, animations: {
+				self.view.transform = CGAffineTransform(translationX: 0, y: 20).scaledBy(x: 0.95, y: 0.95)
+			})
+			UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.9, animations: {
+				self.view.transform = .identity
+				self.view.frame = controller.view.bounds
 				self.view.layer.cornerRadius = 0
 				concurrentAnimations?()
-				self.view.layoutIfNeeded()
-			}) { _ in
-				self.view.frame = controller.view.bounds
-				controller.view.addSubview(self.view)
-				self.didMove(toParent: controller)
-				self.cardView.stackView?.state = .idle
-			}
+			})
+		}) { _ in
+			self.view.frame = controller.view.bounds
+			controller.view.addSubview(self.view)
+			self.didMove(toParent: controller)
+			self.cardView.stackView?.state = .idle
 		}
 	}
 }

@@ -11,53 +11,59 @@ import UIKit
 
 extension FlickCardStackView {
 	@objc func panned(recog: UIPanGestureRecognizer) {
-		let parent = self
 		guard let cardView = self.cardViews.first else { return }
 		
 		switch recog.state {
 		case .began:
 			let window = self.window
-			if let root = window?.rootViewController?.view {
-				let frame = root.convert(cardView.bounds, from: self)
-				cardView.removeFromSuperview()
-				root.addSubview(cardView)
-				cardView.frame = frame
+			if let root = window?.rootViewController?.view, let dragged = cardView.snapshotView(afterScreenUpdates: false) {
+				let center = root.convert(cardView.center, from: self)
+				cardView.isHidden = true
+				root.addSubview(dragged)
+				dragged.center = center
+				self.draggingView = dragged
+				self.dragStartPoint = center
+			} else {
+				self.draggingView = cardView
+				self.dragStartPoint = cardView.center
 			}
-			cardView.dragStart = cardView.center
-			parent.startDragging(card: cardView.card)
+			self.startDragging(card: cardView.card)
 			
 		case .changed:
+			guard let dragging = self.draggingView else { return }
 			let liftDistance: CGFloat = 20
-			let delta = recog.translation(in: parent)
+			let delta = recog.translation(in: self)
 			let dragDistance = delta.magnitudeFromOrigin
-			let maxDragScaleBoost = parent.maxDragScale - 1.0
-			cardView.percentageLifted = (dragDistance / liftDistance)
+			let maxDragScaleBoost = self.maxDragScale - 1.0
+			dragging.percentageLifted = (dragDistance / liftDistance)
 			
 			
-			let centerOnScreen = parent.convert(cardView.center, to: nil)
-			var rotation = min(abs(delta.x / (parent.bounds.width * 1.5)), parent.maxDragRotation)
+			let centerOnScreen = self.convert(dragging.center, to: nil)
+			var rotation = min(abs(delta.x / (self.bounds.width * 1.5)), self.maxDragRotation)
 			var scaleBoost = min(1, ((delta.magnitudeFromOrigin * 5) / centerOnScreen.magnitudeFromOrigin)) * maxDragScaleBoost
 			
 			if delta.x < 0 { rotation *= -1 }
 			if delta.y > 0 { scaleBoost = 0 }
-			cardView.center = CGPoint(x: cardView.dragStart.x + delta.x * parent.dragAcceleration, y: cardView.dragStart.y + delta.y * parent.dragAcceleration)
-			cardView.transform = CGAffineTransform(rotationAngle: rotation).scaledBy(x: scaleBoost + 1, y: scaleBoost + 1)
+			dragging.center = CGPoint(x: self.dragStartPoint.x + delta.x * self.dragAcceleration, y: self.dragStartPoint.y + delta.y * self.dragAcceleration)
+			dragging.transform = CGAffineTransform(rotationAngle: rotation).scaledBy(x: scaleBoost + 1, y: scaleBoost + 1)
 			
-		case .ended: self.finishFlick(with: recog)
+		case .ended, .cancelled, .failed:
+			self.finishFlick(with: recog)
 			
 		default: break
 		}
 	}
 	
 	func finishFlick(with recog: UIPanGestureRecognizer) {
-		let parent = self
-		guard let cardView = self.cardViews.first, let card = cardView.card else { return }
+		guard let cardView = self.cardViews.first, let card = cardView.card, let dragged = self.draggingView else {
+			return
+		}
 		if recog.isMovingOffscreen {
 			let maxDuration: CGFloat = 0.5
 			let current = self.center
-			let velocity = recog.velocity(in: parent)
+			let velocity = recog.velocity(in: self)
 			let speed = velocity.magnitudeFromOrigin * 0.5
-			let distance = sqrt(pow(cardView.bounds.width, 2) + pow(parent.bounds.height, 2)) * 2.5
+			let distance = sqrt(pow(self.bounds.width, 2) + pow(self.bounds.height, 2)) * 2.5
 			var duration = distance/speed
 			var destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
 			
@@ -67,46 +73,49 @@ extension FlickCardStackView {
 				duration = maxDuration
 			}
 			
-			parent.finishDragging(card: cardView.card, removed: true)
-			parent.animatingCardView = cardView
+			self.finishDragging(card: cardView.card, to: destination, removed: true)
+			self.animatingCardView = cardView
 			UIView.animate(withDuration: TimeInterval(duration), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
-				cardView.center = destination
+				dragged.center = destination
 			}) { _ in
-				parent.animatingCardView = nil
-				if parent.returnFlickedCardsToBackOfStack {
-					cardView.alpha = 0.5
+				self.animatingCardView = nil
+				if self.returnFlickedCardsToBackOfStack {
+					dragged.alpha = 0.5
 					UIView.animate(withDuration: 0.2, animations: {
-						parent.sendSubviewToBack(cardView)
-						cardView.center = cardView.dragStart
+						self.sendSubviewToBack(cardView)
+						cardView.center = self.dragStartPoint
 						cardView.transform = .identity
 						cardView.percentageLifted = 0
 					}, completion: { _ in
+						dragged.removeFromSuperview()
+						if dragged === self.draggingView { self.draggingView = nil }
 						cardView.removeFromSuperview()
 						cardView.alpha = 1.0
-						parent.addReturnedCard(cardView.card)
+						self.addReturnedCard(cardView.card)
 					})
 				} else {
-					DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-						cardView.removeFromSuperview()
-						parent.didRemove(card: card, to: destination, viaFlick: true)
-					}
+					cardView.removeFromSuperview()
+					self.didRemove(card: card, to: destination, viaFlick: true)
+					dragged.removeFromSuperview()
+					if dragged === self.draggingView { self.draggingView = nil }
 				}
 			}
 		} else {
-			let distance = cardView.dragStart.distance(to: cardView.center)
+			let distance = self.dragStartPoint.distance(to: cardView.center)
 			let time = min(distance / recog.velocity(in: self).distance(to: .zero), 0.2)
 			UIView.animate(withDuration: TimeInterval(time), animations: {
-				cardView.center = cardView.dragStart
-				cardView.transform = .identity
-				cardView.percentageLifted = 0
+				dragged.center = self.dragStartPoint
+				dragged.transform = .identity
+				dragged.percentageLifted = 0
 			}) { _ in
-				if cardView.superview != self {
-					let center = self.convert(cardView.center, from: cardView.superview)
-					cardView.removeFromSuperview()
+				if cardView != dragged {
+					let center = self.convert(dragged.center, from: dragged.superview)
 					cardView.center = center
-					self.addSubview(cardView)
+					cardView.isHidden = false
+					dragged.removeFromSuperview()
+					if dragged === self.draggingView { self.draggingView = nil }
 				}
-				parent.finishDragging(card: cardView.card, removed: false)
+				self.finishDragging(card: cardView.card, to: nil, removed: false)
 			}
 		}
 	}

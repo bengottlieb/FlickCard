@@ -31,7 +31,10 @@ open class FlickCardStackView: UIView {
 	open var defaultCardCenter: CGPoint { return CGPoint(x: self.bounds.midX, y: self.bounds.midY) }
 	open var state: State = .idle
 	var cardSizeInset = UIEdgeInsets.zero
-
+	
+	var draggingView: UIView!
+	var dragStartPoint = CGPoint.zero
+	
 	var visible: [FlickCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
 	
 	var cardViews: [FlickCardView] = []
@@ -41,11 +44,11 @@ open class FlickCardStackView: UIView {
 	weak var animatingCardView: UIView?
 	weak var lastFrontCard: FlickCard?
 	var topCard: FlickCard? { return self.cards.first }
-
+	
 	func load(cards: [FlickCard], animated: Bool = false) {
-		if animated, let first = cards.first {
-			self.add(card: first, toTop: false, animated: true, from: nil, duration: 0.2) {
-				self.load(cards: Array(cards[1...]), animated: true)
+		if animated {
+			for card in cards {
+				self.add(card: card, toTop: false, animated: true, from: nil, duration: 0.2) { }
 			}
 		} else {
 			self.cards += cards
@@ -147,26 +150,47 @@ open class FlickCardStackView: UIView {
 		self.updateUI()
 	}
 	
-	func finishDragging(card: FlickCard, removed: Bool) {
+	func finishDragging(card: FlickCard, to: CGPoint?, removed: Bool) {
 		if removed {
-			self.willRemove(card: card, to: nil, viaFlick: true)
+			self.willRemove(card: card, to: to, viaFlick: true)
 			self.remove(card: card)
 		}
 		self.state = .idle
 		DispatchQueue.main.async { self.updateUI() }
 	}
 	
+	var pendingCards: [PendingCard] = []
+	
+	struct PendingCard {
+		let card: FlickCard
+		let animated: Bool
+		let toTop: Bool
+		let source: CGPoint?
+		let duration: TimeInterval
+		let completion: (() -> Void)?
+	}
+	
 	func add(card: FlickCard, toTop: Bool = false, animated: Bool = false, from source: CGPoint? = nil, duration: TimeInterval = 0.2, completion: (() -> Void)?) {
 		if self.cards.contains(card) { return }
+		
+		
+		self.pendingCards.append(PendingCard(card: card, animated: animated, toTop: toTop, source: source, duration: duration, completion: completion))
+		self.handlePendingCards()
+	}
+	
+	func handlePendingCards() {
+		guard self.state == .idle, let first = self.pendingCards.first else { return }
+		self.pendingCards.removeFirst()
+		
 		var newCards = self.cards
-		if toTop { newCards.insert(card, at: 0) } else { newCards.append(card) }
-		if animated {
-			let cardView = card.buildCardView(ofSize: self.cardSize)
-			cardView.center = source ?? CGPoint(x: self.bounds.width / 2, y: -self.bounds.height)
-			if toTop { self.addSubview(cardView) } else { self.insertSubview(cardView, at: 0) }
+		if first.toTop { newCards.insert(first.card, at: 0) } else { newCards.append(first.card) }
+		if first.animated {
+			let cardView = first.card.buildCardView(ofSize: self.cardSize)
+			cardView.center = first.source ?? CGPoint(x: self.bounds.width / 2, y: -self.bounds.height)
+			if first.toTop { self.addSubview(cardView) } else { self.insertSubview(cardView, at: 0) }
 			self.state = .addingCards
 			cardView.transformForAnimation(in: self, location: cardView.center)
-			UIView.animate(withDuration: duration, animations: {
+			UIView.animate(withDuration: first.duration, animations: {
 				cardView.center = self.defaultCardCenter
 				cardView.percentageLifted = 0
 			}) { _ in
@@ -174,12 +198,14 @@ open class FlickCardStackView: UIView {
 				self.cardViews.append(cardView)
 				self.cards = newCards
 				self.updateUI()
-				completion?()
+				first.completion?()
+				self.handlePendingCards()
 			}
 		} else {
 			self.cards = newCards
 			self.updateUI()
-			completion?()
+			first.completion?()
+			DispatchQueue.main.async { self.handlePendingCards() }
 		}
 	}
 	

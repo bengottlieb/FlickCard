@@ -11,7 +11,7 @@ import UIKit
 open class FlickCardView: UIView {
 	public weak var card: FlickCard!
 	
-	var pileViewController: FlickCardPileViewController?
+	var cardParentController: FlickCardParentViewController?
 	var cardController: FlickCardViewController!
 	
 	var panGestureRecognizer: UIPanGestureRecognizer?

@@ -15,16 +15,19 @@ public protocol FlickCardPileViewDelegate: class {
 	func didRemoveLastCardFromPile()
 }
 
-open class FlickCardParentViewControlelr: UIViewController {
+open class FlickCardParentViewController: UIViewController {
+	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn, zoomingCard }
+	
 	func applyCardStyling(to cardView: FlickCardView) { }
+	open var state: State = .idle
+	
+	func targetView(for card: FlickCard) -> UIView? { return nil }
 }
 
-open class FlickCardPileViewController: FlickCardParentViewControlelr {
+open class FlickCardPileViewController: FlickCardParentViewController {
 	@IBOutlet var pileView: PileView!
 	
 	public enum Arrangment { case single, tight, loose, scattered, tiered(offset: CGFloat, alphaStep: CGFloat) }
-	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn, zoomingCard }
-	
 	public var maxDragRotation: CGFloat = 0.2
 	public var maxDragScale: CGFloat = 1.05
 	public var dragAcceleration: CGFloat = 1.25
@@ -33,9 +36,8 @@ open class FlickCardPileViewController: FlickCardParentViewControlelr {
 	public var avoidKeyboard = false { didSet { if self.avoidKeyboard != oldValue { self.updateKeyboardNotifications() }}}
 	public var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
 	public private(set) var cards: [FlickCard] = []
-	public weak var delegate: FlickCardPileViewDelegate?
+	public weak var flickCardPileViewDelegate: FlickCardPileViewDelegate?
 	open var defaultCardCenter: CGPoint { return CGPoint(x: self.firstCardFrame.midX, y: self.firstCardFrame.midY) }
-	open var state: State = .idle
 	public var cardSizeInset = UIEdgeInsets.zero
 	public var topCard: FlickCard? { return self.cards.first }
 	public var visibleCards: [FlickCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
@@ -51,6 +53,8 @@ open class FlickCardPileViewController: FlickCardParentViewControlelr {
 	weak var animatingCardView: UIView?
 	weak var lastFrontCard: FlickCard?
 	var pendingCards: [PendingCard] = []
+	override func targetView(for card: FlickCard) -> UIView? { return self.pileView }
+
 
 	open override func viewDidLoad() {
 		super.viewDidLoad()
@@ -247,16 +251,16 @@ open class FlickCardPileViewController: FlickCardParentViewControlelr {
 	}
 	
 	func willRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
-		self.delegate?.willRemoveFromPile(card: card, to: to, viaFlick: viaFlick)
+		self.flickCardPileViewDelegate?.willRemoveFromPile(card: card, to: to, viaFlick: viaFlick)
 		if self.cards.count == 1 {
-			self.delegate?.willRemoveLastCardFromPile()
+			self.flickCardPileViewDelegate?.willRemoveLastCardFromPile()
 		}
 	}
 	
 	func didRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
-		self.delegate?.didRemoveFromPile(card: card, to: to, viaFlick: viaFlick)
+		self.flickCardPileViewDelegate?.didRemoveFromPile(card: card, to: to, viaFlick: viaFlick)
 		if self.cards.count == 0 {
-			self.delegate?.didRemoveLastCardFromPile()
+			self.flickCardPileViewDelegate?.didRemoveLastCardFromPile()
 		}
 	}
 	

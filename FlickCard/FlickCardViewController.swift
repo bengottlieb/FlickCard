@@ -18,8 +18,8 @@ open class FlickCardViewController: UIViewController {
 		self.cardView.cardController = self
 	}
 	
-	public func returnToParentView(in controller: FlickCardParentViewControlelr, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
-		guard let pileView = self.cardView.pileViewController?.pileView, let finalFrame = self.originalFrame else { return }
+	public func returnToParentView(in controller: FlickCardParentViewController, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
+		guard let pileView = self.cardView.cardParentController?.targetView(for: self.cardView.card), let finalFrame = self.originalFrame else { return }
 
 		self.willMove(toParent: controller)
 		
@@ -34,14 +34,14 @@ open class FlickCardViewController: UIViewController {
 				pileView.addSubview(self.view)
 				self.view.frame = finalFrame
 				self.didMove(toParent: controller)
-				self.cardView.pileViewController?.state = .idle
+				self.cardView.cardParentController?.state = .idle
 				self.originalFrame = nil
 			}
 		}
 	}
 
 	public func makeFullScreen(in controller: UIViewController, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
-		self.cardView.pileViewController?.state = .zoomingCard
+		self.cardView.cardParentController?.state = .zoomingCard
 		self.originalFrame = self.view.frame
 		let startingFrame = self.view.convert(self.view.bounds, to: controller.view)
 		self.willMove(toParent: controller)
@@ -63,7 +63,7 @@ open class FlickCardViewController: UIViewController {
 			self.view.frame = controller.view.bounds
 			controller.view.addSubview(self.view)
 			self.didMove(toParent: controller)
-			self.cardView.pileViewController?.state = .idle
+			self.cardView.cardParentController?.state = .idle
 		}
 	}
 }

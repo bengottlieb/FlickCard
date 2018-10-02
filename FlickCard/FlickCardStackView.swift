@@ -24,14 +24,15 @@ open class FlickCardStackView: UIView {
 	public var dragAcceleration: CGFloat = 1.25
 	public var returnFlickedCardsToBackOfStack = false
 	public var arrangement: Arrangment = .tiered(offset: -20, alphaStep: 0.05) { didSet { self.updateUI() }}
+	public var avoidKeyboard = false { didSet { if self.avoidKeyboard != oldValue { self.updateKeyboardNotifications() }}}
 	public var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
 	public private(set) var cards: [FlickCard] = []
-	open var cardSize: CGSize { return CGSize(width: self.bounds.size.width - (self.cardSizeInset.left + self.cardSizeInset.right), height: self.bounds.size.height - (self.cardSizeInset.top + self.cardSizeInset.bottom)) }
 	public weak var delegate: FlickCardStackViewDelegate?
-	open var defaultCardCenter: CGPoint { return CGPoint(x: self.bounds.midX, y: self.bounds.midY) }
+	open var defaultCardCenter: CGPoint { return CGPoint(x: self.firstCardFrame.midX, y: self.firstCardFrame.midY) }
 	open var state: State = .idle
 	var cardSizeInset = UIEdgeInsets.zero
-	
+	var keyboardInsets = UIEdgeInsets.zero
+
 	var draggingView: UIView!
 	var dragStartPoint = CGPoint.zero
 	
@@ -39,7 +40,7 @@ open class FlickCardStackView: UIView {
 	
 	var cardViews: [FlickCardView] = []
 	var panGestureRecognizer: UIPanGestureRecognizer!
-	var cardsNeedLayout = false
+	var cardsNeedLayout = false { didSet { if self.cardsNeedLayout { self.setNeedsLayout() }}}
 	var firstCardIsInteracting: Bool { return self.state == .draggingTopCard }
 	weak var animatingCardView: UIView?
 	weak var lastFrontCard: FlickCard?
@@ -69,7 +70,7 @@ open class FlickCardStackView: UIView {
 		
 		self.cardViews = self.visible.map { card in
 			if let view = self.view(for: card ) { return view }
-			let cardView = card.buildCardView(ofSize: self.cardSize)
+			let cardView = card.buildCardView(ofSize: self.firstCardFrame.size)
 			self.addSubview(cardView)
 			return cardView
 		}
@@ -87,7 +88,6 @@ open class FlickCardStackView: UIView {
 		}
 
 		self.cardsNeedLayout = true
-		self.setNeedsLayout()
 		
 		let frontCard = self.cardViews.first?.card
 		if !self.firstCardIsInteracting {
@@ -104,11 +104,13 @@ open class FlickCardStackView: UIView {
 		if self.cardsNeedLayout {
 			let center = self.defaultCardCenter
 			let firstIndex = self.firstCardIsInteracting ? 1 : 0
-			
+			let cardFrame = self.firstCardFrame
+
 			if firstIndex < self.cardViews.count {
 				for i in firstIndex..<self.cardViews.count {
 					let card = self.cardViews[i].card!
 					if self.cardViews[i] == self.animatingCardView { continue }
+					self.cardViews[i].bounds.size = cardFrame.size
 					self.cardViews[i].transform = self.calculateTransform(for: card, at: i - firstIndex)
 					self.cardViews[i].alpha = self.calculateAlpha(for: card, at: i - firstIndex)
 					self.cardViews[i].center = center
@@ -185,7 +187,7 @@ open class FlickCardStackView: UIView {
 		var newCards = self.cards
 		if first.toTop { newCards.insert(first.card, at: 0) } else { newCards.append(first.card) }
 		if first.animated {
-			let cardView = first.card.buildCardView(ofSize: self.cardSize)
+			let cardView = first.card.buildCardView(ofSize: self.firstCardFrame.size)
 			cardView.center = first.source ?? CGPoint(x: self.bounds.width / 2, y: -self.bounds.height)
 			if first.toTop { self.addSubview(cardView) } else { self.insertSubview(cardView, at: 0) }
 			self.state = .addingCards
@@ -290,8 +292,10 @@ open class FlickCardStackView: UIView {
 		case .tiered(let offset, _):
 			let factor = 1.0 - CGFloat(position) * 0.05
 			let scale = CGAffineTransform(scaleX: factor, y: factor)
-			let translate = CGAffineTransform(translationX: 0, y: -1 * CGFloat(position) * offset / factor)
-			return translate.concatenating(scale)
+			let offsetFactor = 1 - (self.keyboardInsets.bottom / self.bounds.height)
+			let translation = -1 * CGFloat(position) * offset
+			let translate = CGAffineTransform(translationX: 0, y: translation * offsetFactor * 1.2)
+			return scale.concatenating(translate)
 		}
 		
 	}

@@ -120,5 +120,39 @@ extension FlickCardStackView {
 		}
 	}
 
+	func updateKeyboardNotifications() {
+		if self.avoidKeyboard {
+			NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChanged), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+		}
+	}
+	
+	@objc func keyboardFrameChanged(note: Notification) {
+		guard let keyboardFrame = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+			self.setNeedsLayout()
+			self.keyboardInsets = .zero
+			UIView.animate(withDuration: 0.2) {
+				self.layoutIfNeeded()
+			}
+			return
+		}
+		let fieldFrame = self.frame//.insetBy(dx: 0, dy: -10)
+		let finalFrame = self.convert(keyboardFrame, from: UIScreen.main.coordinateSpace)
+		let intersection = finalFrame.intersection(fieldFrame)
+		let duration = note.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0
+		
+		self.keyboardInsets.bottom = intersection.height
+		self.cardsNeedLayout = true
+		UIView.animate(withDuration: duration) {
+			self.layoutIfNeeded()
+		}
+
+	}
+	
+	var firstCardFrame: CGRect {
+		let total = UIEdgeInsets(top: self.cardSizeInset.top + self.keyboardInsets.top, left: self.cardSizeInset.left + self.keyboardInsets.left, bottom: self.cardSizeInset.bottom + self.keyboardInsets.bottom, right: self.cardSizeInset.right + self.keyboardInsets.right)
+		let size = CGSize(width: self.bounds.size.width - (total.left + total.right), height: self.bounds.size.height - (total.top + total.bottom))
+		
+		return CGRect(x: total.left, y: total.top, size: size)
+	}
 }
 

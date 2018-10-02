@@ -6,4 +6,17 @@
 //  Copyright © 2018 Ben Gottlieb. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+public protocol FlickCardListViewDelegate: class {
+	
+}
+
+public class FlickCardListView: UITableView {
+	public weak var flickCardDelegate: FlickCardListViewDelegate?
+	public var cardSizeInset = UIEdgeInsets.zero
+	
+	public func load(cards: [FlickCard]) {
+		
+	}
+}

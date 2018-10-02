@@ -15,7 +15,11 @@ public protocol FlickCardPileViewDelegate: class {
 	func didRemoveLastCardFromPile()
 }
 
-open class FlickCardPileViewController: UIViewController {
+open class FlickCardParentViewControlelr: UIViewController {
+	func applyCardStyling(to cardView: FlickCardView) { }
+}
+
+open class FlickCardPileViewController: FlickCardParentViewControlelr {
 	@IBOutlet var pileView: PileView!
 	
 	public enum Arrangment { case single, tight, loose, scattered, tiered(offset: CGFloat, alphaStep: CGFloat) }
@@ -69,7 +73,18 @@ open class FlickCardPileViewController: UIViewController {
 		}
 	}
 	
+	var cardCornerRadius: CGFloat = 10
+	var cardBorderWidth: CGFloat = 1
+	var cardBorderColor: UIColor = .black
 	
+	override func applyCardStyling(to view: FlickCardView) {
+		view.layer.cornerRadius = self.cardCornerRadius
+		view.layer.borderColor = self.cardBorderColor.cgColor
+		view.layer.borderWidth = self.cardBorderWidth
+	}
+	
+
+
 	func updateUI() {
 		let visible = self.visibleCards
 		
@@ -80,10 +95,11 @@ open class FlickCardPileViewController: UIViewController {
 			}
 		}
 		
+		
 		self.cardViews = self.visibleCards.map { card in
 			if let view = self.view(for: card ) { return view }
 			let cardView = card.buildCardView(ofSize: self.firstCardFrame.size)
-			cardView.applyPileStyling()
+			self.applyCardStyling(to: cardView)
 			self.pileView.addSubview(cardView)
 			return cardView
 		}

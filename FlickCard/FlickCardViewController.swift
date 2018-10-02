@@ -18,7 +18,7 @@ open class FlickCardViewController: UIViewController {
 		self.cardView.cardController = self
 	}
 	
-	public func returnToPileView(in controller: UIViewController, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
+	public func returnToParentView(in controller: FlickCardParentViewControlelr, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
 		guard let pileView = self.cardView.pileViewController?.pileView, let finalFrame = self.originalFrame else { return }
 
 		self.willMove(toParent: controller)
@@ -27,7 +27,7 @@ open class FlickCardViewController: UIViewController {
 			UIView.animate(withDuration: duration, animations: {
 				self.view.frame = pileView.convert(finalFrame, to: self.view.superview)
 				concurrentAnimations?()
-				self.view.layer.cornerRadius = FlickCardView.cornerRadius
+				controller.applyCardStyling(to: self.cardView)
 				self.view.layoutIfNeeded()
 			}) { _ in
 				controller.addChild(self)

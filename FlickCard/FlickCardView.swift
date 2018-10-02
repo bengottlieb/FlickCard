@@ -11,10 +11,6 @@ import UIKit
 open class FlickCardView: UIView {
 	public weak var card: FlickCard!
 	
-	static var cornerRadius: CGFloat = 10
-	static var borderWidth: CGFloat = 1
-	static var borderColor: UIColor = .black
-
 	var pileViewController: FlickCardPileViewController?
 	var cardController: FlickCardViewController!
 	
@@ -35,12 +31,6 @@ open class FlickCardView: UIView {
 		self.percentageLifted = 0.0
 	}
 	
-	open func applyPileStyling() {
-		self.layer.cornerRadius = FlickCardView.cornerRadius
-		self.layer.borderColor = FlickCardView.borderColor.cgColor
-		self.layer.borderWidth = FlickCardView.borderWidth
-	}
-
 	func transformForAnimation(in parent: FlickCardPileViewController, location pt: CGPoint) {
 		let angle = pt.x > parent.view.bounds.midX ? parent.maxDragRotation : -parent.maxDragRotation
 		self.transform = CGAffineTransform(rotationAngle: angle)

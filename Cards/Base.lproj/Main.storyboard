@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eFJ-f5-1MG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -86,24 +86,9 @@
                     <view key="view" contentMode="scaleToFill" id="XVH-sX-Bjd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6TT-rd-l8T" customClass="FlickCardListView" customModule="FlickCard" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="6TT-rd-l8T" firstAttribute="leading" secondItem="IWq-VQ-Gx0" secondAttribute="leading" id="1Y9-34-9jc"/>
-                            <constraint firstItem="IWq-VQ-Gx0" firstAttribute="bottom" secondItem="6TT-rd-l8T" secondAttribute="bottom" id="KaP-7Y-nnJ"/>
-                            <constraint firstItem="IWq-VQ-Gx0" firstAttribute="trailing" secondItem="6TT-rd-l8T" secondAttribute="trailing" id="MPd-vG-CiM"/>
-                            <constraint firstItem="6TT-rd-l8T" firstAttribute="top" secondItem="IWq-VQ-Gx0" secondAttribute="top" id="SVA-45-kLx"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="IWq-VQ-Gx0"/>
                     </view>
-                    <connections>
-                        <outlet property="cardListView" destination="6TT-rd-l8T" id="82P-oz-Ijr"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sB1-eT-nCt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

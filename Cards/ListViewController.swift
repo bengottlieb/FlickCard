@@ -8,14 +8,13 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
-	@IBOutlet var cardListView: FlickCardListView!
+class ListViewController: FlickCardListViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.cardListView.cardSizeInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-		self.cardListView.flickCardDelegate = self
-		self.cardListView.backgroundColor = .lightGray
+		self.cardSizeInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		self.flickCardDelegate = self
+		self.view.backgroundColor = .lightGray
 		self.reloadCards(animated: false)
 	}
 	
@@ -31,7 +30,7 @@ class ListViewController: UIViewController {
 			self.count += 1
 			return card
 		}
-		self.cardListView.load(cards: cards)
+		self.load(cards: cards)
 	}
 	
 }

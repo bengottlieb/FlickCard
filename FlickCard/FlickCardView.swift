@@ -39,11 +39,13 @@ open class FlickCardView: UIView {
 	}
 	
 	func didInit() {
+		self.percentageLifted = 0.0
+	}
+	
+	open func applyPileStyling() {
 		self.layer.cornerRadius = FlickCardView.cornerRadius
 		self.layer.borderColor = FlickCardView.borderColor.cgColor
 		self.layer.borderWidth = FlickCardView.borderWidth
-		
-		self.percentageLifted = 0.0
 	}
 
 	func transformForAnimation(in parent: FlickCardPileView, location pt: CGPoint) {

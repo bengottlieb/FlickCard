@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Pile View Controller-->
+        <!--Pile-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="PileViewController" customModule="FlickCard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Pile" title="Pile" id="BYZ-38-t0r" customClass="PileViewController" customModule="FlickCard" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -82,7 +82,7 @@
         <!--List View Controller-->
         <scene sceneID="lqM-xU-zep">
             <objects>
-                <viewController id="eFJ-f5-1MG" userLabel="List View Controller" customClass="ListViewController" customModule="FlickCard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="List" id="eFJ-f5-1MG" userLabel="List View Controller" customClass="ListViewController" customModule="FlickCard" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XVH-sX-Bjd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -107,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sB1-eT-nCt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-505" y="134"/>
+            <point key="canvasLocation" x="-516" y="134"/>
         </scene>
     </scenes>
 </document>

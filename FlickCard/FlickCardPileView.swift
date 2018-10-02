@@ -71,6 +71,7 @@ open class FlickCardPileView: UIView {
 		self.cardViews = self.visible.map { card in
 			if let view = self.view(for: card ) { return view }
 			let cardView = card.buildCardView(ofSize: self.firstCardFrame.size)
+			cardView.applyPileStyling()
 			self.addSubview(cardView)
 			return cardView
 		}

@@ -38,7 +38,7 @@ class SampleCardViewController: FlickCardViewController {
 	
 	@IBAction func goFullScreen() {
 		if self.isZoomedToFullScreen {
-			self.returnToStackview(in: self.parentController!, duration: 0.3) {
+			self.returnToPileView(in: self.parentController!, duration: 0.3) {
 				self.view.backgroundColor = .white
 			}
 		} else {

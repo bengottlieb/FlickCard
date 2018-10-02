@@ -8,24 +8,24 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-	@IBOutlet var cardStackView: FlickCardStackView!
+class PileViewController: UIViewController {
+	@IBOutlet var cardPileView: FlickCardPileView!
 	@IBOutlet var arrangmentSegments: UISegmentedControl!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.cardStackView.cardSizeInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-		self.cardStackView.delegate = self
-		self.cardStackView.backgroundColor = .lightGray
+		self.cardPileView.cardSizeInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		self.cardPileView.delegate = self
+		self.cardPileView.backgroundColor = .lightGray
 		self.reloadCards(animated: false)
 	}
 	
 	@IBAction func segmentsChanged() {
-		let arrangments: [FlickCardStackView.Arrangment] = [.single, .tight, .loose, .scattered, .tiered(offset: -20, alphaStep: 0.1)]
+		let arrangments: [FlickCardPileView.Arrangment] = [.single, .tight, .loose, .scattered, .tiered(offset: -20, alphaStep: 0.1)]
 		
-		self.cardStackView.arrangement = arrangments[self.arrangmentSegments.selectedSegmentIndex]
+		self.cardPileView.arrangement = arrangments[self.arrangmentSegments.selectedSegmentIndex]
 		UIView.animate(withDuration: 0.4, animations: {
-			self.cardStackView.layoutIfNeeded()
+			self.cardPileView.layoutIfNeeded()
 		})
 	}
 
@@ -41,34 +41,34 @@ class ViewController: UIViewController {
 			self.count += 1
 			return card
 		}
-		self.cardStackView.load(cards: cards, animated: animated)
+		self.cardPileView.load(cards: cards, animated: animated)
 	}
 	
 	@IBAction func removeTopCard() {
-		if let topCard = self.cardStackView.topCard {
-			self.cardStackView.animateCardOut(topCard, to: nil, duration: 1.0)
+		if let topCard = self.cardPileView.topCard {
+			self.cardPileView.animateCardOut(topCard, to: nil, duration: 1.0)
 		}
 	}
 
 }
 
-extension ViewController: FlickCardStackViewDelegate {
+extension PileViewController: FlickCardPileViewDelegate {
 	func willRemoveLastCard() {
 		
 	}
 	
 	func willRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
-		self.cardStackView.backgroundColor = .red
+		self.cardPileView.backgroundColor = .red
 		print("Will Remove \(card.id)")
 	}
 	
 	func didRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
-		self.cardStackView.backgroundColor = .lightGray
+		self.cardPileView.backgroundColor = .lightGray
 		print("Did Remove \(card.id)")
 	}
 	
 	func didRemoveLastCard() {
-		self.cardStackView.backgroundColor = .green
+		self.cardPileView.backgroundColor = .green
 	}
 	
 	

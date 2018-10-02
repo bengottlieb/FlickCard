@@ -1,5 +1,5 @@
 //
-//  FlickCardStackView+Gestures.swift
+//  FlickCardPileView+Gestures.swift
 //  FlickCard
 //
 //  Created by Ben Gottlieb on 9/27/18.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension FlickCardStackView {
+extension FlickCardPileView {
 	@objc func panned(recog: UIPanGestureRecognizer) {
 		guard let cardView = self.cardViews.first else { return }
 		
@@ -79,7 +79,7 @@ extension FlickCardStackView {
 				dragged.center = destination
 			}) { _ in
 				self.animatingCardView = nil
-				if self.returnFlickedCardsToBackOfStack {
+				if self.returnFlickedCardsToBackOfPile {
 					dragged.alpha = 0.5
 					UIView.animate(withDuration: 0.2, animations: {
 						self.sendSubviewToBack(cardView)

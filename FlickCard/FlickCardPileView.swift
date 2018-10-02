@@ -1,5 +1,5 @@
 //
-//  FlickCard.StackView.swift
+//  FlickCardPileView.swift
 //  Cards
 //
 //  Created by Ben Gottlieb on 9/22/18.
@@ -8,26 +8,26 @@
 
 import UIKit
 
-public protocol FlickCardStackViewDelegate: class {
+public protocol FlickCardPileViewDelegate: class {
 	func willRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool)
 	func didRemove(card: FlickCard, to: CGPoint?, viaFlick: Bool)
 	func willRemoveLastCard()
 	func didRemoveLastCard()
 }
 
-open class FlickCardStackView: UIView {
+open class FlickCardPileView: UIView {
 	public enum Arrangment { case single, tight, loose, scattered, tiered(offset: CGFloat, alphaStep: CGFloat) }
 	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn, zoomingCard }
 	
 	public var maxDragRotation: CGFloat = 0.2
 	public var maxDragScale: CGFloat = 1.05
 	public var dragAcceleration: CGFloat = 1.25
-	public var returnFlickedCardsToBackOfStack = false
+	public var returnFlickedCardsToBackOfPile = false
 	public var arrangement: Arrangment = .tiered(offset: -20, alphaStep: 0.05) { didSet { self.updateUI() }}
 	public var avoidKeyboard = false { didSet { if self.avoidKeyboard != oldValue { self.updateKeyboardNotifications() }}}
 	public var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
 	public private(set) var cards: [FlickCard] = []
-	public weak var delegate: FlickCardStackViewDelegate?
+	public weak var delegate: FlickCardPileViewDelegate?
 	open var defaultCardCenter: CGPoint { return CGPoint(x: self.firstCardFrame.midX, y: self.firstCardFrame.midY) }
 	open var state: State = .idle
 	var cardSizeInset = UIEdgeInsets.zero

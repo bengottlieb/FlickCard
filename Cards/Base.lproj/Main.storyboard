@@ -10,15 +10,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Pile View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Cards" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="PileViewController" customModule="FlickCard" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iZV-Hr-cWz" customClass="FlickCardStackView" customModule="Cards" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iZV-Hr-cWz" customClass="FlickCardPileView" customModule="FlickCard" customModuleProvider="target">
                                 <rect key="frame" x="16" y="82" width="343" height="503"/>
                                 <color key="backgroundColor" red="0.97669745078358627" green="0.97669745078358627" blue="0.97669745078358627" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -71,7 +71,7 @@
                     </view>
                     <connections>
                         <outlet property="arrangmentSegments" destination="EZX-uK-aja" id="c5J-nc-IlR"/>
-                        <outlet property="cardStackView" destination="iZV-Hr-cWz" id="bSK-9e-93B"/>
+                        <outlet property="cardPileView" destination="iZV-Hr-cWz" id="W2p-OO-uby"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

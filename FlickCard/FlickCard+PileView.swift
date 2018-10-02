@@ -1,5 +1,5 @@
 //
-//  FlickCard+StackView.swift
+//  FlickCard+PileView.swift
 //  Bee
 //
 //  Created by Ben Gottlieb on 9/25/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension FlickCardStackView {
+extension FlickCardPileView {
 	var parentViewController: UIViewController? {
 		var next = self.next
 		
@@ -21,8 +21,8 @@ extension FlickCardStackView {
 }
 
 extension FlickCard {
-	func willBecomeFrontCard(in stackView: FlickCardStackView, animated: Bool) {
-		guard let parent = stackView.parentViewController else { return }
+	func willBecomeFrontCard(in pileView: FlickCardPileView, animated: Bool) {
+		guard let parent = pileView.parentViewController else { return }
 		let controller = self.viewController
 		
 		controller.willMove(toParent: parent)
@@ -32,7 +32,7 @@ extension FlickCard {
 		controller.viewDidAppear(animated)
 	}
 
-	func didResignFrontCard(in stackView: FlickCardStackView, animated: Bool) {
+	func didResignFrontCard(in pileView: FlickCardPileView, animated: Bool) {
 		let controller = self.viewController
 
 		controller.willMove(toParent: nil)

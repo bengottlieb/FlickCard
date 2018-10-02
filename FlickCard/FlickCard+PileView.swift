@@ -8,21 +8,8 @@
 
 import UIKit
 
-extension FlickCardPileView {
-	var parentViewController: UIViewController? {
-		var next = self.next
-		
-		while next != nil {
-			if let vc = next as? UIViewController { return vc }
-			next = next?.next
-		}
-		return nil
-	}
-}
-
 extension FlickCard {
-	func willBecomeFrontCard(in pileView: FlickCardPileView, animated: Bool) {
-		guard let parent = pileView.parentViewController else { return }
+	func willBecomeFrontCard(in parent: FlickCardPileViewController, animated: Bool) {
 		let controller = self.viewController
 		
 		controller.willMove(toParent: parent)
@@ -32,7 +19,7 @@ extension FlickCard {
 		controller.viewDidAppear(animated)
 	}
 
-	func didResignFrontCard(in pileView: FlickCardPileView, animated: Bool) {
+	func didResignFrontCard(in pileView: FlickCardPileViewController, animated: Bool) {
 		let controller = self.viewController
 
 		controller.willMove(toParent: nil)

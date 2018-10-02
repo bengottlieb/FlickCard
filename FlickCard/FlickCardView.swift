@@ -15,7 +15,7 @@ open class FlickCardView: UIView {
 	static var borderWidth: CGFloat = 1
 	static var borderColor: UIColor = .black
 
-	var pileView: FlickCardPileView?
+	var pileViewController: FlickCardPileViewController?
 	var cardController: FlickCardViewController!
 	
 	var panGestureRecognizer: UIPanGestureRecognizer?
@@ -31,13 +31,6 @@ open class FlickCardView: UIView {
 		self.didInit()
 	}
 	
-	open override func didMoveToSuperview() {
-		super.didMoveToSuperview()
-		if let pile = self.superview as? FlickCardPileView {
-			self.pileView = pile
-		}
-	}
-	
 	func didInit() {
 		self.percentageLifted = 0.0
 	}
@@ -48,8 +41,8 @@ open class FlickCardView: UIView {
 		self.layer.borderWidth = FlickCardView.borderWidth
 	}
 
-	func transformForAnimation(in parent: FlickCardPileView, location pt: CGPoint) {
-		let angle = pt.x > parent.bounds.midX ? parent.maxDragRotation : -parent.maxDragRotation
+	func transformForAnimation(in parent: FlickCardPileViewController, location pt: CGPoint) {
+		let angle = pt.x > parent.view.bounds.midX ? parent.maxDragRotation : -parent.maxDragRotation
 		self.transform = CGAffineTransform(rotationAngle: angle)
 		self.percentageLifted = 1.0
 	}

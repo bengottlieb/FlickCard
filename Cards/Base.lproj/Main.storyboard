@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eFJ-f5-1MG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iZV-Hr-cWz" customClass="FlickCardPileView" customModule="FlickCard" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iZV-Hr-cWz" customClass="FlickCardPileViewControllerPileView">
                                 <rect key="frame" x="16" y="82" width="343" height="503"/>
                                 <color key="backgroundColor" red="0.97669745078358627" green="0.97669745078358627" blue="0.97669745078358627" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -72,7 +72,7 @@
                     </view>
                     <connections>
                         <outlet property="arrangmentSegments" destination="EZX-uK-aja" id="c5J-nc-IlR"/>
-                        <outlet property="cardPileView" destination="iZV-Hr-cWz" id="W2p-OO-uby"/>
+                        <outlet property="pileView" destination="iZV-Hr-cWz" id="fef-aY-M8E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

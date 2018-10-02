@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-extension FlickCardPileView {
+extension FlickCardPileViewController {
 	@objc func panned(recog: UIPanGestureRecognizer) {
 		guard let cardView = self.cardViews.first else { return }
 		
 		switch recog.state {
 		case .began:
-			let window = self.window
+			let window = self.view.window
 			if let root = window?.rootViewController?.view, let dragged = cardView.snapshotView(afterScreenUpdates: false) {
-				let center = root.convert(cardView.center, from: self)
+				let center = root.convert(cardView.center, from: self.pileView)
 				cardView.isHidden = true
 				root.addSubview(dragged)
 				dragged.center = center
@@ -32,14 +32,14 @@ extension FlickCardPileView {
 		case .changed:
 			guard let dragging = self.draggingView else { return }
 			let liftDistance: CGFloat = 20
-			let delta = recog.translation(in: self)
+			let delta = recog.translation(in: self.pileView)
 			let dragDistance = delta.magnitudeFromOrigin
 			let maxDragScaleBoost = self.maxDragScale - 1.0
 			dragging.percentageLifted = (dragDistance / liftDistance)
 			
 			
-			let centerOnScreen = self.convert(dragging.center, to: nil)
-			var rotation = min(abs(delta.x / (self.bounds.width * 1.5)), self.maxDragRotation)
+			let centerOnScreen = self.pileView.convert(dragging.center, to: nil)
+			var rotation = min(abs(delta.x / (self.pileView.bounds.width * 1.5)), self.maxDragRotation)
 			var scaleBoost = min(1, ((delta.magnitudeFromOrigin * 5) / centerOnScreen.magnitudeFromOrigin)) * maxDragScaleBoost
 			
 			if delta.x < 0 { rotation *= -1 }
@@ -60,10 +60,10 @@ extension FlickCardPileView {
 		}
 		if recog.isMovingOffscreen {
 			let maxDuration: CGFloat = 0.5
-			let current = self.center
-			let velocity = recog.velocity(in: self)
+			let current = self.pileView.center
+			let velocity = recog.velocity(in: self.pileView)
 			let speed = velocity.magnitudeFromOrigin * 0.5
-			let distance = sqrt(pow(self.bounds.width, 2) + pow(self.bounds.height, 2)) * 2.5
+			let distance = sqrt(pow(self.pileView.bounds.width, 2) + pow(self.pileView.bounds.height, 2)) * 2.5
 			var duration = distance/speed
 			var destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
 			
@@ -82,7 +82,7 @@ extension FlickCardPileView {
 				if self.returnFlickedCardsToBackOfPile {
 					dragged.alpha = 0.5
 					UIView.animate(withDuration: 0.2, animations: {
-						self.sendSubviewToBack(cardView)
+						self.pileView.sendSubviewToBack(cardView)
 						cardView.center = self.dragStartPoint
 						cardView.transform = .identity
 						cardView.percentageLifted = 0
@@ -102,14 +102,14 @@ extension FlickCardPileView {
 			}
 		} else {
 			let distance = self.dragStartPoint.distance(to: cardView.center)
-			let time = min(distance / recog.velocity(in: self).distance(to: .zero), 0.2)
+			let time = min(distance / recog.velocity(in: self.pileView).distance(to: .zero), 0.2)
 			UIView.animate(withDuration: TimeInterval(time), animations: {
 				dragged.center = self.dragStartPoint
 				dragged.transform = .identity
 				dragged.percentageLifted = 0
 			}) { _ in
 				if cardView != dragged {
-					let center = self.convert(dragged.center, from: dragged.superview)
+					let center = self.pileView.convert(dragged.center, from: dragged.superview)
 					cardView.center = center
 					cardView.isHidden = false
 					dragged.removeFromSuperview()
@@ -128,29 +128,29 @@ extension FlickCardPileView {
 	
 	@objc func keyboardFrameChanged(note: Notification) {
 		guard let keyboardFrame = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-			self.setNeedsLayout()
+			self.pileView.setNeedsLayout()
 			self.keyboardInsets = .zero
 			UIView.animate(withDuration: 0.2) {
-				self.layoutIfNeeded()
+				self.pileView.layoutIfNeeded()
 			}
 			return
 		}
-		let fieldFrame = self.frame//.insetBy(dx: 0, dy: -10)
-		let finalFrame = self.convert(keyboardFrame, from: UIScreen.main.coordinateSpace)
+		let fieldFrame = self.pileView.frame//.insetBy(dx: 0, dy: -10)
+		let finalFrame = self.pileView.convert(keyboardFrame, from: UIScreen.main.coordinateSpace)
 		let intersection = finalFrame.intersection(fieldFrame)
 		let duration = note.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0
 		
 		self.keyboardInsets.bottom = intersection.height
 		self.cardsNeedLayout = true
 		UIView.animate(withDuration: duration) {
-			self.layoutIfNeeded()
+			self.pileView.layoutIfNeeded()
 		}
 
 	}
 	
 	var firstCardFrame: CGRect {
 		let total = UIEdgeInsets(top: self.cardSizeInset.top + self.keyboardInsets.top, left: self.cardSizeInset.left + self.keyboardInsets.left, bottom: self.cardSizeInset.bottom + self.keyboardInsets.bottom, right: self.cardSizeInset.right + self.keyboardInsets.right)
-		let size = CGSize(width: self.bounds.size.width - (total.left + total.right), height: self.bounds.size.height - (total.top + total.bottom))
+		let size = CGSize(width: self.pileView.bounds.size.width - (total.left + total.right), height: self.pileView.bounds.size.height - (total.top + total.bottom))
 		
 		return CGRect(x: total.left, y: total.top, width: size.width, height: size.height)
 	}

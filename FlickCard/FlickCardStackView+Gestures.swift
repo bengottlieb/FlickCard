@@ -152,7 +152,7 @@ extension FlickCardStackView {
 		let total = UIEdgeInsets(top: self.cardSizeInset.top + self.keyboardInsets.top, left: self.cardSizeInset.left + self.keyboardInsets.left, bottom: self.cardSizeInset.bottom + self.keyboardInsets.bottom, right: self.cardSizeInset.right + self.keyboardInsets.right)
 		let size = CGSize(width: self.bounds.size.width - (total.left + total.right), height: self.bounds.size.height - (total.top + total.bottom))
 		
-		return CGRect(x: total.left, y: total.top, size: size)
+		return CGRect(x: total.left, y: total.top, width: size.width, height: size.height)
 	}
 }
 

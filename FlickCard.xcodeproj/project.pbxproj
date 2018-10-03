@@ -16,7 +16,7 @@
 		B51C1CEA2156640E002FD654 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CE92156640E002FD654 /* Assets.xcassets */; };
 		B51C1CED2156640E002FD654 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CEB2156640E002FD654 /* LaunchScreen.storyboard */; };
 		B5B79286216231D0001AB808 /* FlickCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B79285216231D0001AB808 /* FlickCardController.swift */; };
-		B5B7928821637CE7001AB808 /* FlickCardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7928721637CE7001AB808 /* FlickCardListViewController.swift */; };
+		B5B7928821637CE7001AB808 /* FlickCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7928721637CE7001AB808 /* FlickCardTableViewController.swift */; };
 		B5B7928A21637E7C001AB808 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7928921637E7C001AB808 /* ListViewController.swift */; };
 		B5B7928C21638283001AB808 /* FlickCardListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7928B21638283001AB808 /* FlickCardListTableViewCell.swift */; };
 		B5D3947E21572EDB00747AA3 /* FlickCardPileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947A21572EDB00747AA3 /* FlickCardPileViewController.swift */; };
@@ -39,7 +39,7 @@
 		B51C1CEC2156640E002FD654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B51C1CEE2156640E002FD654 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5B79285216231D0001AB808 /* FlickCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickCardController.swift; sourceTree = "<group>"; };
-		B5B7928721637CE7001AB808 /* FlickCardListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickCardListViewController.swift; sourceTree = "<group>"; };
+		B5B7928721637CE7001AB808 /* FlickCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickCardTableViewController.swift; sourceTree = "<group>"; };
 		B5B7928921637E7C001AB808 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		B5B7928B21638283001AB808 /* FlickCardListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickCardListTableViewCell.swift; sourceTree = "<group>"; };
 		B5D3947A21572EDB00747AA3 /* FlickCardPileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickCardPileViewController.swift; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 				B5B79285216231D0001AB808 /* FlickCardController.swift */,
 				B50CDF9D2164321B00399540 /* FlickCardContainerViewController.swift */,
 				B5D3947A21572EDB00747AA3 /* FlickCardPileViewController.swift */,
-				B5B7928721637CE7001AB808 /* FlickCardListViewController.swift */,
+				B5B7928721637CE7001AB808 /* FlickCardTableViewController.swift */,
 				B5B7928B21638283001AB808 /* FlickCardListTableViewCell.swift */,
 				B5F7B66E215DC12D00BE1955 /* FlickCardPileView+UX.swift */,
 				B5F7B66B215D16FC00BE1955 /* FlickCard+PileView.swift */,
@@ -195,7 +195,7 @@
 				B5F7B66C215D16FC00BE1955 /* FlickCard+PileView.swift in Sources */,
 				B51C1CE32156640D002FD654 /* AppDelegate.swift in Sources */,
 				B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */,
-				B5B7928821637CE7001AB808 /* FlickCardListViewController.swift in Sources */,
+				B5B7928821637CE7001AB808 /* FlickCardTableViewController.swift in Sources */,
 				B5F7B66F215DC12D00BE1955 /* FlickCardPileView+UX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

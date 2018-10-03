@@ -1,5 +1,5 @@
 //
-//  FlickCardListView.swift
+//  FlickCardTableViewController.swift
 //  FlickCard
 //
 //  Created by Ben Gottlieb on 10/2/18.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-public protocol FlickCardListViewDelegate: class {
+public protocol FlickCardTableViewControllerDelegate: class {
 	
 }
 
-open class FlickCardListViewController: FlickCardContainerViewController {
+open class FlickCardTableViewController: FlickCardContainerViewController {
 	@IBOutlet public var tableView: UITableView!
-	open weak var flickCardDelegate: FlickCardListViewDelegate?
+	open weak var flickCardDelegate: FlickCardTableViewControllerDelegate?
 	open var cardInset = UIEdgeInsets.zero
 	open var cards: [FlickCardController] = []
 	
@@ -65,7 +65,7 @@ open class FlickCardListViewController: FlickCardContainerViewController {
 }
 
 
-extension FlickCardListViewController: UITableViewDataSource {
+extension FlickCardTableViewController: UITableViewDataSource {
 	open func numberOfSections(in tableView: UITableView) -> Int { return 1 }
 	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return self.cards.count
@@ -94,5 +94,5 @@ extension FlickCardListViewController: UITableViewDataSource {
 	
 }
 
-extension FlickCardListViewController: UITableViewDelegate {
+extension FlickCardTableViewController: UITableViewDelegate {
 }

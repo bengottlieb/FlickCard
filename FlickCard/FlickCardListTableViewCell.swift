@@ -12,7 +12,7 @@ class FlickCardListTableViewCell: UITableViewCell {
 	static let identifier = "FlickCardListTableViewCell"
 	var card: FlickCardController? { didSet { self.updateUI() }}
 	var cardView: UIView?
-	var listViewController: FlickCardListViewController?
+	var listViewController: FlickCardTableViewController?
 	override var backgroundColor: UIColor? { didSet { self.contentView.backgroundColor = self.backgroundColor }}
 	
 	override func prepareForReuse() {

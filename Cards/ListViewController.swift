@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListViewController: FlickCardListViewController {
+class ListViewController: FlickCardTableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -38,6 +38,6 @@ class ListViewController: FlickCardListViewController {
 	
 }
 
-extension ListViewController: FlickCardListViewDelegate {
+extension ListViewController: FlickCardTableViewControllerDelegate {
 	
 }

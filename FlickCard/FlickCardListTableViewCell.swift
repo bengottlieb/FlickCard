@@ -10,16 +10,18 @@ import UIKit
 
 class FlickCardListTableViewCell: UITableViewCell {
 	static let identifier = "FlickCardListTableViewCell"
-	var card: FlickCardViewController? { didSet { self.updateUI() }}
-	var cardView: FlickCardView?
+	var card: FlickCardController? { didSet { self.updateUI() }}
+	var cardView: UIView?
 	var listViewController: FlickCardListViewController?
 	override var backgroundColor: UIColor? { didSet { self.contentView.backgroundColor = self.backgroundColor }}
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
-//		self.cardView?.removeFromSuperview()
-//		self.cardView = nil
-//		self.card = nil
+		if self.cardView?.superview == self.contentView {
+			self.cardView?.removeFromSuperview()
+		}
+		self.cardView = nil
+		self.card = nil
 	}
 	
 	func updateUI() {
@@ -27,9 +29,9 @@ class FlickCardListTableViewCell: UITableViewCell {
 		if self.cardView?.superview == self.contentView { self.cardView?.removeFromSuperview() }
 		
 		guard let card = self.card else { return }
-		self.cardView = card.cardView
+		self.cardView = card.view
 		if let height = self.card?.listViewHeight { self.cardView?.heightConstraint.constant = height }
-		self.cardView?.cardParentController = self.listViewController
+		self.card?.containerController = self.listViewController
 
 		if let controller = self.listViewController {
 			self.backgroundColor = controller.tableView.backgroundColor

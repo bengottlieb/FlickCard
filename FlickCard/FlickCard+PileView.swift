@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension FlickCardViewController {
+extension FlickCardController {
 	func willBecomeFrontCard(in parent: FlickCardPileViewController, animated: Bool) {
 		let controller = self
 		

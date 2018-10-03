@@ -1,5 +1,5 @@
 //
-//  FlickCardViewController.swift
+//  FlickCardController.swift
 //  FlickCard
 //
 //  Created by Ben Gottlieb on 10/1/18.
@@ -8,34 +8,30 @@
 
 import UIKit
 
-open class FlickCardViewController: UIViewController {
+open class FlickCardController: UIViewController {
 	public typealias ID = String
 	
 	open var id: ID!
 
-	public var cardView: FlickCardView { return self.view as! FlickCardView }
 	public var listViewHeight: CGFloat? { return nil }
 
+	var containerController: FlickCardContainerViewController?
 	var originalFrame: CGRect?
 	var isZoomedToFullScreen: Bool { return self.originalFrame != nil }
 	
-	open override func viewDidLoad() {
-		super.viewDidLoad()
-		self.cardView.cardController = self
-	}
-	
 	public func returnToParentView(duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
-		guard let parent = (self.parent as? FlickCardParentViewController), let targetView = parent.targetView(for: self), let finalFrame = self.originalFrame else { return }
+		guard let parent = (self.parent as? FlickCardContainerViewController), let targetView = parent.targetView(for: self), let finalFrame = self.originalFrame else { return }
 
 		self.willMove(toParent: parent)
 		self.view.heightConstraint.constant = finalFrame.height
 		self.view.widthConstraint.constant = finalFrame.width
 
-		UIView.animate(withDuration: duration, animations: {
-			self.view.frame = targetView.convert(finalFrame, to: self.view.superview)
-			concurrentAnimations?()
-			parent.applyCardStyling(to: self.cardView)
-			self.view.layoutIfNeeded()
+		UIView.animateKeyframes(withDuration: duration * 10, delay: 0, options: [.layoutSubviews], animations: {
+			UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0, animations: {
+				self.view.frame = targetView.convert(finalFrame, to: self.view.superview)
+				concurrentAnimations?()
+				parent.applyCardStyling(to: self.view)
+			})
 		}) { _ in
 			parent.restore(self, in: targetView)
 			self.originalFrame = nil
@@ -43,7 +39,7 @@ open class FlickCardViewController: UIViewController {
 	}
 
 	public func makeFullScreen(in controller: UIViewController, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
-		self.cardView.cardParentController?.state = .zoomingCard
+		self.containerController?.state = .zoomingCard
 		self.originalFrame = self.view.frame
 		let startingFrame = self.view.convert(self.view.bounds, to: controller.view)
 		self.willMove(toParent: controller)
@@ -68,7 +64,7 @@ open class FlickCardViewController: UIViewController {
 			self.view.frame = controller.view.bounds
 			controller.view.addSubview(self.view)
 			self.didMove(toParent: controller)
-			self.cardView.cardParentController?.state = .idle
+			self.containerController?.state = .idle
 		}
 	}
 }

@@ -11,8 +11,8 @@ import UIKit
 
 extension FlickCardPileViewController {
 	@objc func panned(recog: UIPanGestureRecognizer) {
-		guard let cardViewController = self.cards.first else { return }
-		let cardView = cardViewController.cardView
+		guard let cardViewController = self.cards.first, let cardView = cardViewController.view else { return }
+		
 		
 		switch recog.state {
 		case .began:
@@ -56,11 +56,10 @@ extension FlickCardPileViewController {
 	}
 	
 	func finishFlick(with recog: UIPanGestureRecognizer) {
-		guard let cardViewController = self.cards.first, let dragged = self.draggingView else {
+		guard let cardViewController = self.cards.first, let cardView = cardViewController.view, let dragged = self.draggingView else {
 			return
 		}
 		
-		let cardView = cardViewController.cardView
 		if recog.isMovingOffscreen {
 			let maxDuration: CGFloat = 0.5
 			let current = self.pileView.center

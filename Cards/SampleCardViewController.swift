@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SampleCardViewController: FlickCardViewController {
+class SampleCardViewController: FlickCardController {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var indicatorLabel: UILabel!
 	

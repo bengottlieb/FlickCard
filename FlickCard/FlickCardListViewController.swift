@@ -12,11 +12,11 @@ public protocol FlickCardListViewDelegate: class {
 	
 }
 
-open class FlickCardListViewController: FlickCardParentViewController {
+open class FlickCardListViewController: FlickCardContainerViewController {
 	@IBOutlet public var tableView: UITableView!
 	open weak var flickCardDelegate: FlickCardListViewDelegate?
 	open var cardInset = UIEdgeInsets.zero
-	open var cards: [FlickCardViewController] = []
+	open var cards: [FlickCardController] = []
 	
 	open override func viewDidLoad() {
 		if self.tableView == nil {
@@ -34,21 +34,21 @@ open class FlickCardListViewController: FlickCardParentViewController {
 		}
 	}
 	
-	open func load(cards: [FlickCardViewController]) {
+	open func load(cards: [FlickCardController]) {
 		self.cards = cards
 		self.tableView.reloadData()
 	}
 
-	func cell(for card: FlickCardViewController) -> FlickCardListTableViewCell? {
+	func cell(for card: FlickCardController) -> FlickCardListTableViewCell? {
 		for cell in self.tableView.visibleCells as? [FlickCardListTableViewCell] ?? [] {
 			if cell.card == card { return cell }
 		}
 		return nil
 	}
 	
-	override public func targetView(for card: FlickCardViewController) -> UIView? { return self.cell(for: card)?.contentView }
+	override public func targetView(for card: FlickCardController) -> UIView? { return self.cell(for: card)?.contentView }
 	
-	override public func restore(_ controller: FlickCardViewController, in targetView: UIView) {
+	override public func restore(_ controller: FlickCardController, in targetView: UIView) {
 		if let cell = self.cell(for: controller) {
 			cell.updateUI()
 		}
@@ -78,7 +78,7 @@ extension FlickCardListViewController: UITableViewDataSource {
 		return 200
 	}
 	
-	func indexPath(for card: FlickCardViewController) -> IndexPath? {
+	func indexPath(for card: FlickCardController) -> IndexPath? {
 		if let index = self.cards.index(of: card) {
 			return IndexPath(row: index, section: 0)
 		}

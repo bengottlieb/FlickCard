@@ -1,5 +1,5 @@
 //
-//  FlickCardParentViewController.swift
+//  FlickCardContainerViewController.swift
 //  FlickCard
 //
 //  Created by Ben Gottlieb on 10/2/18.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-open class FlickCardParentViewController: UIViewController {
+open class FlickCardContainerViewController: UIViewController {
 	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn, zoomingCard }
 	
-	public func applyCardStyling(to cardView: FlickCardView) { }
+	public func applyCardStyling(to cardView: UIView) { }
 	open var state: State = .idle
 	
-	public func targetView(for card: FlickCardViewController) -> UIView? { return nil }
-	public func restore(_ card: FlickCardViewController, in targetView: UIView) { }
+	public func targetView(for card: FlickCardController) -> UIView? { return nil }
+	public func restore(_ card: FlickCardController, in targetView: UIView) { }
 
 	public var cardCornerRadius: CGFloat = 10
 	public var cardBorderWidth: CGFloat = 1

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SampleFixedCardViewController: FlickCardViewController {
+class SampleFixedCardViewController: FlickCardController {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var indicatorLabel: UILabel!
 	
@@ -40,7 +40,7 @@ class SampleFixedCardViewController: FlickCardViewController {
 	}
 	
 	@IBAction func goFullScreen() {
-		guard let parent = self.parentController as? FlickCardParentViewController else { return }
+		guard let parent = self.parentController as? FlickCardContainerViewController else { return }
 		
 		if self.isZoomedToFullScreen {
 			self.returnToParentView(duration: 0.3) {

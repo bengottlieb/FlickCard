@@ -16,7 +16,7 @@ open class FlickCardListViewController: FlickCardParentViewController {
 	@IBOutlet public var tableView: UITableView!
 	open weak var flickCardDelegate: FlickCardListViewDelegate?
 	open var cardInset = UIEdgeInsets.zero
-	open var cards: [FlickCard] = []
+	open var cards: [FlickCardViewController] = []
 	
 	open override func viewDidLoad() {
 		if self.tableView == nil {
@@ -34,26 +34,26 @@ open class FlickCardListViewController: FlickCardParentViewController {
 		}
 	}
 	
-	open func load(cards: [FlickCard]) {
+	open func load(cards: [FlickCardViewController]) {
 		self.cards = cards
 		self.tableView.reloadData()
 	}
 
-	func cell(for card: FlickCard) -> FlickCardListTableViewCell? {
+	func cell(for card: FlickCardViewController) -> FlickCardListTableViewCell? {
 		for cell in self.tableView.visibleCells as? [FlickCardListTableViewCell] ?? [] {
 			if cell.card == card { return cell }
 		}
 		return nil
 	}
 	
-//	override public func targetView(for card: FlickCardViewController) -> UIView? { return self.cell(for: card)?.contentView }
+	override public func targetView(for card: FlickCardViewController) -> UIView? { return self.cell(for: card)?.contentView }
 	
-//	override public func restore(_ controller: FlickCardViewController, in targetView: UIView) {
-//		if let cell = self.cell(for: controller.card) {
-//			cell.card = controller.card
-//		}
-//		self.state = .idle
-//	}
+	override public func restore(_ controller: FlickCardViewController, in targetView: UIView) {
+		if let cell = self.cell(for: controller) {
+			cell.updateUI()
+		}
+		self.state = .idle
+	}
 
 }
 
@@ -72,13 +72,13 @@ extension FlickCardListViewController: UITableViewDataSource {
 	}
 	
 	open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-		if let height = self.cards[indexPath.row].viewController.listViewHeight {
+		if let height = self.cards[indexPath.row].listViewHeight {
 			return height + self.cardInset.bottom + self.cardInset.top
 		}
 		return 200
 	}
 	
-	func indexPath(for card: FlickCard) -> IndexPath? {
+	func indexPath(for card: FlickCardViewController) -> IndexPath? {
 		if let index = self.cards.index(of: card) {
 			return IndexPath(row: index, section: 0)
 		}

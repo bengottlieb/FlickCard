@@ -70,7 +70,7 @@ extension FlickCardPileViewController {
 			var duration = distance/speed
 			var destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
 			
-			if duration > maxDuration && duration < maxDuration {
+			if duration > maxDuration {
 				let factor = maxDuration / duration
 				destination = CGPoint(x: current.x + velocity.x * duration * factor, y: current.y + velocity.y * duration * factor)
 				duration = maxDuration

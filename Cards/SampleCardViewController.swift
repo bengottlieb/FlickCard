@@ -15,9 +15,10 @@ class SampleCardViewController: FlickCardViewController {
 	var image: UIImage?
 	var parentController: UIViewController?
 	
-	convenience init(image: UIImage, parent: UIViewController) {
+	convenience init(image: UIImage, parent: UIViewController, id: ID) {
 		self.init(nibName: "SampleCardViewController", bundle: nil)
 		self.image = image
+		self.id = id
 		self.parentController = parent
 	}
 		

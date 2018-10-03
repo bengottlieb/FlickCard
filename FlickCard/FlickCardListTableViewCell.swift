@@ -10,7 +10,7 @@ import UIKit
 
 class FlickCardListTableViewCell: UITableViewCell {
 	static let identifier = "FlickCardListTableViewCell"
-	var card: FlickCard? { didSet { if self.card != oldValue || self.cardView?.superview != self.contentView { self.updateUI() }}}
+	var card: FlickCardViewController? { didSet { if self.card != oldValue || self.cardView?.superview != self.contentView { self.updateUI() }}}
 	var cardView: FlickCardView?
 	var listViewController: FlickCardListViewController?
 	override var backgroundColor: UIColor? { didSet { self.contentView.backgroundColor = self.backgroundColor }}
@@ -27,8 +27,8 @@ class FlickCardListTableViewCell: UITableViewCell {
 		self.cardView?.removeFromSuperview()
 		
 		guard let card = self.card else { return }
-		self.cardView = card.viewController.cardView
-		if let height = self.card?.viewController.listViewHeight { self.cardView?.heightConstraint.constant = height }
+		self.cardView = card.cardView
+		if let height = self.card?.listViewHeight { self.cardView?.heightConstraint.constant = height }
 		self.cardView?.cardParentController = self.listViewController
 
 		if let controller = self.listViewController {

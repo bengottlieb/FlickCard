@@ -36,9 +36,10 @@ class PileViewController: FlickCardPileViewController {
 
 		let cards: [FlickCardViewController] = imageNames.map { name in
 			let image = UIImage(named: name)!
-			let card = FlickCard(id: name + "-\(self.count)", controller: SampleCardViewController(image: image, parent: self))
+			let controller = SampleCardViewController(image: image, parent: self, id: name + "-\(self.count)")
+			
 			self.count += 1
-			return card.viewController
+			return controller
 		}
 		self.load(cards: cards, animated: animated)
 	}

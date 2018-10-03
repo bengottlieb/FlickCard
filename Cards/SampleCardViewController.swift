@@ -27,6 +27,9 @@ class SampleCardViewController: FlickCardController {
 		
 		self.indicatorLabel.isHidden = true
 		self.imageView.image = self.image
+		
+		self.imageView.layer.borderColor = UIColor.black.cgColor
+		self.imageView.layer.borderWidth = 1
 
         // Do any additional setup after loading the view.
     }
@@ -46,7 +49,7 @@ class SampleCardViewController: FlickCardController {
 			}
 		} else {
 			self.makeFullScreen(in: parent, duration: 0.3) {
-				self.view.backgroundColor = .black
+				self.view.backgroundColor = .clear
 			}
 		}
 	}

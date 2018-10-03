@@ -29,8 +29,8 @@ class SampleFixedCardViewController: FlickCardController {
 		
 		self.indicatorLabel.isHidden = true
 		self.imageView.image = self.image
-
-        // Do any additional setup after loading the view.
+		self.imageView.layer.borderColor = UIColor.black.cgColor
+		self.imageView.layer.borderWidth = 1
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -48,7 +48,7 @@ class SampleFixedCardViewController: FlickCardController {
 			}
 		} else {
 			self.makeFullScreen(in: parent, duration: 0.3) {
-				self.view.backgroundColor = .black
+				self.view.backgroundColor = .clear
 			}
 		}
 	}

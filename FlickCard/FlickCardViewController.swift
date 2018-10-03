@@ -9,7 +9,10 @@
 import UIKit
 
 open class FlickCardViewController: UIViewController {
-	public weak var card: FlickCard!
+	public typealias ID = String
+	
+	open var id: ID!
+
 	public var cardView: FlickCardView { return self.view as! FlickCardView }
 	public var listViewHeight: CGFloat? { return nil }
 
@@ -22,7 +25,7 @@ open class FlickCardViewController: UIViewController {
 	}
 	
 	public func returnToParentView(duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
-		guard let parent = (self.parent as? FlickCardParentViewController), let targetView = parent.targetView(for: self.card), let finalFrame = self.originalFrame else { return }
+		guard let parent = (self.parent as? FlickCardParentViewController), let targetView = parent.targetView(for: self), let finalFrame = self.originalFrame else { return }
 
 		self.willMove(toParent: parent)
 		self.view.heightConstraint.constant = finalFrame.height

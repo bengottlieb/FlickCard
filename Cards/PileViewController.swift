@@ -34,11 +34,11 @@ class PileViewController: FlickCardPileViewController {
 	func reloadCards(animated: Bool) {
 		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "aquaman.png", "he-man.png", "superman.png"]
 
-		let cards: [FlickCard] = imageNames.map { name in
+		let cards: [FlickCardViewController] = imageNames.map { name in
 			let image = UIImage(named: name)!
 			let card = FlickCard(id: name + "-\(self.count)", controller: SampleCardViewController(image: image, parent: self))
 			self.count += 1
-			return card
+			return card.viewController
 		}
 		self.load(cards: cards, animated: animated)
 	}
@@ -56,14 +56,14 @@ extension PileViewController: FlickCardPileViewDelegate {
 		
 	}
 	
-	func willRemoveFromPile(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
+	func willRemoveFromPile(card: FlickCardViewController, to: CGPoint?, viaFlick: Bool) {
 		self.pileView.backgroundColor = .red
-		print("Will Remove \(card.id)")
+		print("Will Remove \(card.id!)")
 	}
 	
-	func didRemoveFromPile(card: FlickCard, to: CGPoint?, viaFlick: Bool) {
+	func didRemoveFromPile(card: FlickCardViewController, to: CGPoint?, viaFlick: Bool) {
 		self.pileView.backgroundColor = .lightGray
-		print("Did Remove \(card.id)")
+		print("Did Remove \(card.id!)")
 	}
 	
 	func didRemoveLastCardFromPile() {

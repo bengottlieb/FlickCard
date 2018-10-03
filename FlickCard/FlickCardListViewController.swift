@@ -46,14 +46,14 @@ open class FlickCardListViewController: FlickCardParentViewController {
 		return nil
 	}
 	
-	override public func targetView(for card: FlickCard) -> UIView? { return self.cell(for: card)?.contentView }
+//	override public func targetView(for card: FlickCardViewController) -> UIView? { return self.cell(for: card)?.contentView }
 	
-	override public func restore(_ controller: FlickCardViewController, in targetView: UIView) {
-		if let cell = self.cell(for: controller.card) {
-			cell.card = controller.card
-		}
-		self.state = .idle
-	}
+//	override public func restore(_ controller: FlickCardViewController, in targetView: UIView) {
+//		if let cell = self.cell(for: controller.card) {
+//			cell.card = controller.card
+//		}
+//		self.state = .idle
+//	}
 
 }
 

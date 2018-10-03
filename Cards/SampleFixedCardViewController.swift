@@ -13,7 +13,7 @@ class SampleFixedCardViewController: FlickCardViewController {
 	@IBOutlet var indicatorLabel: UILabel!
 	
 	var listHeight: CGFloat = 200
-	override var listViewHeight: CGFloat { return self.listHeight }
+	//override var listViewHeight: CGFloat { return self.listHeight }
 	var image: UIImage?
 	var parentController: UIViewController?
 	

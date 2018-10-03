@@ -17,14 +17,12 @@ open class FlickCard: CustomStringConvertible, Equatable {
 	public init(id: ID, controller: FlickCardViewController) {
 		self.id = id
 		self.viewController = controller
-		controller.card = self
 	}
 	
 	func buildCardViewController(ofSize size: CGSize) -> FlickCardViewController {
 		let newFrame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 		
 		let view = self.viewController.cardView
-		self.viewController.card = self
 		view.bounds = newFrame
 		return self.viewController
 	}

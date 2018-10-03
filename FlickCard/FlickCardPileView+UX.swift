@@ -11,7 +11,7 @@ import UIKit
 
 extension FlickCardPileViewController {
 	@objc func panned(recog: UIPanGestureRecognizer) {
-		guard let cardViewController = self.cardViewControllers.first else { return }
+		guard let cardViewController = self.cards.first else { return }
 		let cardView = cardViewController.cardView
 		
 		switch recog.state {
@@ -28,7 +28,7 @@ extension FlickCardPileViewController {
 				self.draggingView = cardView
 				self.dragStartPoint = cardView.center
 			}
-			self.startDragging(card: cardViewController.card)
+			self.startDragging(card: cardViewController)
 			
 		case .changed:
 			guard let dragging = self.draggingView else { return }
@@ -56,7 +56,7 @@ extension FlickCardPileViewController {
 	}
 	
 	func finishFlick(with recog: UIPanGestureRecognizer) {
-		guard let cardViewController = self.cardViewControllers.first, let card = cardViewController.card, let dragged = self.draggingView else {
+		guard let cardViewController = self.cards.first, let dragged = self.draggingView else {
 			return
 		}
 		
@@ -76,7 +76,7 @@ extension FlickCardPileViewController {
 				duration = maxDuration
 			}
 			
-			self.finishDragging(card: cardViewController.card, to: destination, removed: true)
+			self.finishDragging(card: cardViewController, to: destination, removed: true)
 			self.animatingCardView = cardView
 			UIView.animate(withDuration: TimeInterval(duration), delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
 				dragged.center = destination
@@ -94,11 +94,11 @@ extension FlickCardPileViewController {
 						if dragged === self.draggingView { self.draggingView = nil }
 						cardView.removeFromSuperview()
 						cardView.alpha = 1.0
-						self.addReturnedCard(cardViewController.card)
+						self.addReturnedCard(cardViewController)
 					})
 				} else {
 					cardView.removeFromSuperview()
-					self.didRemove(card: card, to: destination, viaFlick: true)
+					self.didRemove(card: cardViewController, to: destination, viaFlick: true)
 					dragged.removeFromSuperview()
 					if dragged === self.draggingView { self.draggingView = nil }
 				}
@@ -118,7 +118,7 @@ extension FlickCardPileViewController {
 					dragged.removeFromSuperview()
 					if dragged === self.draggingView { self.draggingView = nil }
 				}
-				self.finishDragging(card: cardViewController.card, to: nil, removed: false)
+				self.finishDragging(card: cardViewController, to: nil, removed: false)
 			}
 		}
 	}

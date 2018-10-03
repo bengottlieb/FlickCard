@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension FlickCard {
+extension FlickCardViewController {
 	func willBecomeFrontCard(in parent: FlickCardPileViewController, animated: Bool) {
-		let controller = self.viewController
+		let controller = self
 		
 		controller.willMove(toParent: parent)
 		controller.viewWillAppear(animated)
@@ -20,7 +20,7 @@ extension FlickCard {
 	}
 
 	func didResignFrontCard(in pileView: FlickCardPileViewController, animated: Bool) {
-		let controller = self.viewController
+		let controller = self
 
 		controller.willMove(toParent: nil)
 		controller.viewWillDisappear(animated)

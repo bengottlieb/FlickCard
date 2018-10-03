@@ -14,8 +14,8 @@ open class FlickCardParentViewController: UIViewController {
 	public func applyCardStyling(to cardView: FlickCardView) { }
 	open var state: State = .idle
 	
-	public func targetView(for card: FlickCard) -> UIView? { return nil }
-	public func restore(_ cardViewController: FlickCardViewController, in targetView: UIView) { }
+	public func targetView(for card: FlickCardViewController) -> UIView? { return nil }
+	public func restore(_ card: FlickCardViewController, in targetView: UIView) { }
 
 	public var cardCornerRadius: CGFloat = 10
 	public var cardBorderWidth: CGFloat = 1

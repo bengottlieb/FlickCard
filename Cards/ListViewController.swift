@@ -12,7 +12,7 @@ class ListViewController: FlickCardTableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.cardInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		self.cardInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
 		self.flickCardDelegate = self
 		self.reloadCards(animated: false)
 	}

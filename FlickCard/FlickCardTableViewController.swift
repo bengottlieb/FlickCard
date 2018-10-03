@@ -17,6 +17,7 @@ open class FlickCardTableViewController: FlickCardContainerViewController {
 	open weak var flickCardDelegate: FlickCardTableViewControllerDelegate?
 	open var cardInset = UIEdgeInsets.zero
 	open var cards: [FlickCardController] = []
+	public var shadowGlowRadius: CGFloat = 5
 	
 	open override func viewDidLoad() {
 		if self.tableView == nil {

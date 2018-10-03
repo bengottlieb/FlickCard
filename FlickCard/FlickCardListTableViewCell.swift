@@ -21,14 +21,30 @@ class FlickCardListTableViewCell: UITableViewCell {
 		if self.cardView?.superview == self.cardContainer {
 			self.cardView?.removeFromSuperview()
 		}
+		self.setHighlighted(false, animated: false)
 		self.cardView = nil
 		self.card = nil
+	}
+	
+	var isDrawnDepressed: Bool { return self.isHighlighted || self.isSelected }
+	
+	open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+		let amount: CGFloat = highlighted ? 0.96 : 1.0
+
+		UIView.animate(withDuration: 0.1) {
+			self.cardContainer.transform = CGAffineTransform(scaleX: amount, y: amount)
+			if let listController = self.listViewController {
+				let radius = listController.shadowGlowRadius * (highlighted ? 0.5 : 1.0)
+				self.cardContainer.layer.shadowRadius = radius
+			}
+		}
 	}
 	
 	func updateUI() {
 		guard let listController = self.listViewController else { return }
 		if self.cardView?.superview == self.cardContainer { self.cardView?.removeFromSuperview() }
 		
+		self.selectionStyle = .none
 		let insets = listController.cardInset
 		guard let card = self.card else { return }
 		
@@ -42,8 +58,16 @@ class FlickCardListTableViewCell: UITableViewCell {
 			self.cardContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -insets.right).isActive = true
 			self.cardContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: insets.top).isActive = true
 			self.cardContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -insets.bottom).isActive = true
+			self.cardContainer.layer.cornerRadius = listController.cardCornerRadius
 		}
 		
+		self.cardContainer.layer.masksToBounds = false
+	//	self.cardContainer.layer.shadowPath = UIBezierPath(rect: self.cardContainer.bounds).cgPath
+		self.cardContainer.layer.shadowRadius = listController.shadowGlowRadius
+		self.cardContainer.layer.shadowOffset = .zero
+		self.cardContainer.layer.shadowColor = UIColor.black.cgColor
+		self.cardContainer.layer.shadowOpacity = 0.5
+
 		self.cardView = card.view
 		if let height = self.card?.listViewHeight { self.cardView?.heightConstraint.constant = height }
 		self.card?.containerController = self.listViewController

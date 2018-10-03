@@ -24,20 +24,6 @@ open class FlickCardController: UIViewController {
 		guard let parent = (self.parent as? FlickCardContainerViewController), let targetView = parent.targetView(for: self), let finalFrame = self.originalFrame else { return }
 
 		self.willMove(toParent: parent)
-
-//		UIView.animate(withDuration: duration * 10, animations: {
-//			self.zoomContainer.frame = finalFrame
-//			concurrentAnimations?()
-//			parent.applyCardStyling(to: self.view)
-//			self.view.setNeedsLayout()
-//		}) { _ in
-//			self.view.heightConstraint.constant = finalFrame.height
-//			self.view.widthConstraint.constant = finalFrame.width
-//			parent.restore(self, in: targetView)
-//			self.originalFrame = nil
-//			self.zoomContainer.removeFromSuperview()
-//			self.zoomContainer = nil
-//		}
 		
 		UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
 			UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0, animations: {
@@ -51,17 +37,6 @@ open class FlickCardController: UIViewController {
 			self.originalFrame = nil
 			self.zoomContainer.removeFromSuperview()
 		}
-
-//		UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
-//			UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0, animations: {
-//				self.view.frame = targetView.convert(finalFrame, to: self.view.superview)
-//				concurrentAnimations?()
-//				parent.applyCardStyling(to: self.view)
-//			})
-//		}) { _ in
-//			parent.restore(self, in: targetView)
-//			self.originalFrame = nil
-//		}
 	}
 
 	public func makeFullScreen(in controller: UIViewController, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {

@@ -22,10 +22,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="257"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4M9-cc-pmg">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="4M9-cc-pmg">
                     <rect key="frame" x="16" y="56" width="168" height="181"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="181" id="ETE-hq-UH2"/>
                         <constraint firstAttribute="width" constant="168" id="o2c-Oi-50T"/>
                     </constraints>
                 </imageView>

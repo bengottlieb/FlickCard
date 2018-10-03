@@ -12,20 +12,23 @@ class FlickCardListTableViewCell: UITableViewCell {
 	static let identifier = "FlickCardListTableViewCell"
 	var card: FlickCard? { didSet { if self.card != oldValue || self.cardView?.superview != self.contentView { self.updateUI() }}}
 	var cardView: FlickCardView?
-	var heightConstraint: NSLayoutConstraint!
 	var listViewController: FlickCardListViewController?
 	override var backgroundColor: UIColor? { didSet { self.contentView.backgroundColor = self.backgroundColor }}
+	
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		self.cardView?.removeFromSuperview()
+		self.cardView = nil
+		self.card = nil
+	}
 	
 	func updateUI() {
 		guard let insets = self.listViewController?.cardInset else { return }
 		self.cardView?.removeFromSuperview()
-		if self.heightConstraint == nil {
-			self.heightConstraint = self.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60)
-			self.heightConstraint.isActive = true
-		}
 		
 		guard let card = self.card else { return }
 		self.cardView = card.viewController.cardView
+		if let height = self.card?.viewController.listViewHeight { self.cardView?.heightConstraint.constant = height }
 		self.cardView?.cardParentController = self.listViewController
 
 		if let controller = self.listViewController {

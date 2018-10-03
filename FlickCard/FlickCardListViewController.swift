@@ -72,7 +72,10 @@ extension FlickCardListViewController: UITableViewDataSource {
 	}
 	
 	open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 300
+		if let height = self.cards[indexPath.row].viewController.listViewHeight {
+			return height + self.cardInset.bottom + self.cardInset.top
+		}
+		return 200
 	}
 	
 	func indexPath(for card: FlickCard) -> IndexPath? {

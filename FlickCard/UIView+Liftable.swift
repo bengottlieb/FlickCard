@@ -36,3 +36,30 @@ extension UIView: LiftableView {
 		}
 	}
 }
+
+extension UIView {
+	var heightConstraint: NSLayoutConstraint {
+		if let constraint = self.dimensionConstraint(for: .height) { return constraint }
+		let constraint = self.heightAnchor.constraint(equalToConstant:  self.bounds.height)
+		constraint.isActive = true
+		constraint.priority = UILayoutPriority(1000)
+		return constraint
+	}
+
+	var widthConstraint: NSLayoutConstraint {
+		if let constraint = self.dimensionConstraint(for: .width) { return constraint }
+		let constraint = self.widthAnchor.constraint(equalToConstant: self.bounds.width)
+		constraint.isActive = true
+		constraint.priority = UILayoutPriority(1000)
+		return constraint
+	}
+	
+	func dimensionConstraint(for attribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint? {
+		for constraint in self.constraints {
+			if constraint.firstAttribute == attribute, constraint.firstItem === self, constraint.secondItem == nil {
+				return constraint
+			}
+		}
+		return nil
+	}
+}

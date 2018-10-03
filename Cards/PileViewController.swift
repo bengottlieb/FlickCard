@@ -32,8 +32,8 @@ class PileViewController: FlickCardPileViewController {
 	@IBAction func reload() { self.reloadCards(animated: true) }
 	
 	func reloadCards(animated: Bool) {
-		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "ironman.png", "spider-man.png", "antman.png"]
-		
+		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "aquaman.png", "he-man.png", "superman.png"]
+
 		let cards: [FlickCard] = imageNames.map { name in
 			let image = UIImage(named: name)!
 			let card = FlickCard(id: name + "-\(self.count)", controller: SampleCardViewController(image: image, parent: self))

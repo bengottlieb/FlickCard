@@ -11,6 +11,8 @@ import UIKit
 open class FlickCardViewController: UIViewController {
 	public weak var card: FlickCard!
 	public var cardView: FlickCardView { return self.view as! FlickCardView }
+	public var listViewHeight: CGFloat? { return nil }
+
 	var originalFrame: CGRect?
 	var isZoomedToFullScreen: Bool { return self.originalFrame != nil }
 	
@@ -23,17 +25,17 @@ open class FlickCardViewController: UIViewController {
 		guard let parent = (self.parent as? FlickCardParentViewController), let targetView = parent.targetView(for: self.card), let finalFrame = self.originalFrame else { return }
 
 		self.willMove(toParent: parent)
-		
-		DispatchQueue.main.async {
-			UIView.animate(withDuration: duration, animations: {
-				self.view.frame = targetView.convert(finalFrame, to: self.view.superview)
-				concurrentAnimations?()
-				parent.applyCardStyling(to: self.cardView)
-				self.view.layoutIfNeeded()
-			}) { _ in
-				parent.restore(self, in: targetView)
-				self.originalFrame = nil
-			}
+		self.view.heightConstraint.constant = finalFrame.height
+		self.view.widthConstraint.constant = finalFrame.width
+
+		UIView.animate(withDuration: duration, animations: {
+			self.view.frame = targetView.convert(finalFrame, to: self.view.superview)
+			concurrentAnimations?()
+			parent.applyCardStyling(to: self.cardView)
+			self.view.layoutIfNeeded()
+		}) { _ in
+			parent.restore(self, in: targetView)
+			self.originalFrame = nil
 		}
 	}
 
@@ -51,6 +53,9 @@ open class FlickCardViewController: UIViewController {
 				self.view.transform = CGAffineTransform(translationX: 0, y: 20).scaledBy(x: 0.95, y: 0.95)
 			})
 			UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.9, animations: {
+				self.view.heightConstraint.constant = controller.view.bounds.height
+				self.view.widthConstraint.constant = controller.view.bounds.width
+
 				self.view.transform = .identity
 				self.view.frame = controller.view.bounds
 				self.view.layer.cornerRadius = 0

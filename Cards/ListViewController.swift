@@ -21,11 +21,16 @@ class ListViewController: FlickCardListViewController {
 	@IBAction func reload() { self.reloadCards(animated: true) }
 	
 	func reloadCards(animated: Bool) {
-		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "ironman.png", "spider-man.png", "antman.png"]
+		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "aquaman.png", "he-man.png", "superman.png"]
+		
+		var height: CGFloat = 250
 		
 		let cards: [FlickCard] = imageNames.map { name in
 			let image = UIImage(named: name)!
-			let card = FlickCard(id: name + "-\(self.count)", controller: SampleFixedCardViewController(image: image, parent: self))
+			let controller = SampleFixedCardViewController(image: image, parent: self)
+			let card = FlickCard(id: name + "-\(self.count)", controller: controller)
+			controller.listHeight = height
+			height += 30
 			self.count += 1
 			return card
 		}

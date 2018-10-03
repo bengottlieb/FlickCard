@@ -15,13 +15,14 @@ public protocol FlickCardListViewDelegate: class {
 open class FlickCardListViewController: FlickCardParentViewController {
 	@IBOutlet public var tableView: UITableView!
 	open weak var flickCardDelegate: FlickCardListViewDelegate?
-	open var cardSizeInset = UIEdgeInsets.zero
+	open var cardInset = UIEdgeInsets.zero
 	open var cards: [FlickCard] = []
 	
 	open override func viewDidLoad() {
 		if self.tableView == nil {
 			self.tableView = UITableView(frame: self.view.bounds)
 			self.view.addSubview(self.tableView)
+			self.tableView.separatorStyle = .none
 			self.tableView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 		}
 		
@@ -48,6 +49,7 @@ extension FlickCardListViewController: UITableViewDataSource {
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: FlickCardListTableViewCell.identifier, for: indexPath) as! FlickCardListTableViewCell
 		
+		cell.listViewController = self
 		cell.card = self.cards[indexPath.row]
 		return cell
 	}
@@ -58,5 +60,4 @@ extension FlickCardListViewController: UITableViewDataSource {
 }
 
 extension FlickCardListViewController: UITableViewDelegate {
-	
 }

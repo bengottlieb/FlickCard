@@ -13,7 +13,7 @@ class PileViewController: FlickCardPileViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.cardSizeInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		self.cardInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		self.flickCardPileViewDelegate = self
 		self.pileView.backgroundColor = .lightGray
 		self.reloadCards(animated: false)

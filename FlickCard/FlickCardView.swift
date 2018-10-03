@@ -28,7 +28,6 @@ open class FlickCardView: UIView {
 	}
 	
 	func didInit() {
-		self.percentageLifted = 0.0
 	}
 	
 	func transformForAnimation(in parent: FlickCardPileViewController, location pt: CGPoint) {

@@ -12,9 +12,8 @@ class ListViewController: FlickCardListViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.cardSizeInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		self.cardInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		self.flickCardDelegate = self
-		self.view.backgroundColor = .lightGray
 		self.reloadCards(animated: false)
 	}
 	
@@ -26,7 +25,7 @@ class ListViewController: FlickCardListViewController {
 		
 		let cards: [FlickCard] = imageNames.map { name in
 			let image = UIImage(named: name)!
-			let card = FlickCard(id: name + "-\(self.count)", controller: SampleCardViewController(image: image, parent: self))
+			let card = FlickCard(id: name + "-\(self.count)", controller: SampleFixedCardViewController(image: image, parent: self))
 			self.count += 1
 			return card
 		}

@@ -15,15 +15,6 @@ public protocol FlickCardPileViewDelegate: class {
 	func didRemoveLastCardFromPile()
 }
 
-open class FlickCardParentViewController: UIViewController {
-	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn, zoomingCard }
-	
-	func applyCardStyling(to cardView: FlickCardView) { }
-	open var state: State = .idle
-	
-	func targetView(for card: FlickCard) -> UIView? { return nil }
-}
-
 open class FlickCardPileViewController: FlickCardParentViewController {
 	@IBOutlet var pileView: PileView!
 	
@@ -38,7 +29,7 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 	public private(set) var cards: [FlickCard] = []
 	public weak var flickCardPileViewDelegate: FlickCardPileViewDelegate?
 	open var defaultCardCenter: CGPoint { return CGPoint(x: self.firstCardFrame.midX, y: self.firstCardFrame.midY) }
-	public var cardSizeInset = UIEdgeInsets.zero
+	public var cardInset = UIEdgeInsets.zero
 	public var topCard: FlickCard? { return self.cards.first }
 	public var visibleCards: [FlickCard] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
 	
@@ -53,7 +44,7 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 	weak var animatingCardView: UIView?
 	weak var lastFrontCard: FlickCard?
 	var pendingCards: [PendingCard] = []
-	override func targetView(for card: FlickCard) -> UIView? { return self.pileView }
+	override open func targetView(for card: FlickCard) -> UIView? { return self.pileView }
 
 
 	open override func viewDidLoad() {
@@ -77,11 +68,7 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 		}
 	}
 	
-	var cardCornerRadius: CGFloat = 10
-	var cardBorderWidth: CGFloat = 1
-	var cardBorderColor: UIColor = .black
-	
-	override func applyCardStyling(to view: FlickCardView) {
+	override public func applyCardStyling(to view: FlickCardView) {
 		view.layer.cornerRadius = self.cardCornerRadius
 		view.layer.borderColor = self.cardBorderColor.cgColor
 		view.layer.borderWidth = self.cardBorderWidth

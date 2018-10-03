@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B50CDF9B21642E4400399540 /* SampleFixedCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CDF9921642E4400399540 /* SampleFixedCardViewController.swift */; };
+		B50CDF9C21642E4400399540 /* SampleFixedCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50CDF9A21642E4400399540 /* SampleFixedCardViewController.xib */; };
+		B50CDF9E2164321B00399540 /* FlickCardParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CDF9D2164321B00399540 /* FlickCardParentViewController.swift */; };
 		B51C1CE32156640D002FD654 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C1CE22156640D002FD654 /* AppDelegate.swift */; };
 		B51C1CE52156640D002FD654 /* PileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C1CE42156640D002FD654 /* PileViewController.swift */; };
 		B51C1CE82156640D002FD654 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51C1CE62156640D002FD654 /* Main.storyboard */; };
@@ -27,6 +30,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B50CDF9921642E4400399540 /* SampleFixedCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleFixedCardViewController.swift; sourceTree = "<group>"; };
+		B50CDF9A21642E4400399540 /* SampleFixedCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SampleFixedCardViewController.xib; sourceTree = "<group>"; };
+		B50CDF9D2164321B00399540 /* FlickCardParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickCardParentViewController.swift; sourceTree = "<group>"; };
 		B51C1CDF2156640D002FD654 /* FlickCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51C1CE22156640D002FD654 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B51C1CE42156640D002FD654 /* PileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PileViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +88,8 @@
 				B51C1CE22156640D002FD654 /* AppDelegate.swift */,
 				B51C1CE42156640D002FD654 /* PileViewController.swift */,
 				B5B7928921637E7C001AB808 /* ListViewController.swift */,
+				B50CDF9921642E4400399540 /* SampleFixedCardViewController.swift */,
+				B50CDF9A21642E4400399540 /* SampleFixedCardViewController.xib */,
 				B5D394812157300600747AA3 /* SampleCardViewController.swift */,
 				B5D394822157300600747AA3 /* SampleCardViewController.xib */,
 				B51C1CE62156640D002FD654 /* Main.storyboard */,
@@ -96,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				B5D3947A21572EDB00747AA3 /* FlickCardPileViewController.swift */,
+				B50CDF9D2164321B00399540 /* FlickCardParentViewController.swift */,
 				B5B7928721637CE7001AB808 /* FlickCardListViewController.swift */,
 				B5D3947921572EDB00747AA3 /* FlickCard.swift */,
 				B5D3947C21572EDB00747AA3 /* FlickCardView.swift */,
@@ -166,6 +175,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B50CDF9C21642E4400399540 /* SampleFixedCardViewController.xib in Resources */,
 				B5D394842157300600747AA3 /* SampleCardViewController.xib in Resources */,
 				B51C1CED2156640E002FD654 /* LaunchScreen.storyboard in Resources */,
 				B51C1CEA2156640E002FD654 /* Assets.xcassets in Resources */,
@@ -185,8 +195,10 @@
 				B51C1CE52156640D002FD654 /* PileViewController.swift in Sources */,
 				B5B7928A21637E7C001AB808 /* ListViewController.swift in Sources */,
 				B5D3948021572EDB00747AA3 /* FlickCardView.swift in Sources */,
+				B50CDF9E2164321B00399540 /* FlickCardParentViewController.swift in Sources */,
 				B5D3947F21572EDB00747AA3 /* UIView+Liftable.swift in Sources */,
 				B5B79286216231D0001AB808 /* FlickCardViewController.swift in Sources */,
+				B50CDF9B21642E4400399540 /* SampleFixedCardViewController.swift in Sources */,
 				B5F7B66C215D16FC00BE1955 /* FlickCard+PileView.swift in Sources */,
 				B5D3947D21572EDB00747AA3 /* FlickCard.swift in Sources */,
 				B51C1CE32156640D002FD654 /* AppDelegate.swift in Sources */,

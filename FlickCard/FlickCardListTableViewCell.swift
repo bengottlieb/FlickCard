@@ -26,6 +26,7 @@ class FlickCardListTableViewCell: UITableViewCell {
 		
 		guard let card = self.card else { return }
 		self.cardView = card.viewController.cardView
+		self.cardView?.cardParentController = self.listViewController
 
 		if let controller = self.listViewController {
 			self.backgroundColor = controller.tableView.backgroundColor

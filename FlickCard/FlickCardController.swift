@@ -25,20 +25,33 @@ open class FlickCardController: UIViewController {
 
 		self.willMove(toParent: parent)
 
-		UIView.animate(withDuration: duration * 10, animations: {
-			self.zoomContainer.frame = finalFrame
-			concurrentAnimations?()
-			parent.applyCardStyling(to: self.view)
-			self.view.setNeedsLayout()
-		}) { _ in
+//		UIView.animate(withDuration: duration * 10, animations: {
+//			self.zoomContainer.frame = finalFrame
+//			concurrentAnimations?()
+//			parent.applyCardStyling(to: self.view)
+//			self.view.setNeedsLayout()
+//		}) { _ in
 //			self.view.heightConstraint.constant = finalFrame.height
 //			self.view.widthConstraint.constant = finalFrame.width
 //			parent.restore(self, in: targetView)
 //			self.originalFrame = nil
 //			self.zoomContainer.removeFromSuperview()
 //			self.zoomContainer = nil
-		}
+//		}
 		
+		UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
+			UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0, animations: {
+				self.zoomContainer.frame = finalFrame
+				concurrentAnimations?()
+				parent.applyCardStyling(to: self.view)
+				self.view.setNeedsLayout()
+			})
+		}) { _ in
+			parent.restore(self, in: targetView)
+			self.originalFrame = nil
+			self.zoomContainer.removeFromSuperview()
+		}
+
 //		UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
 //			UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0, animations: {
 //				self.view.frame = targetView.convert(finalFrame, to: self.view.superview)
@@ -70,13 +83,13 @@ open class FlickCardController: UIViewController {
 		self.view.topAnchor.constraint(equalTo: self.zoomContainer.topAnchor).isActive = true
 		self.view.bottomAnchor.constraint(equalTo: self.zoomContainer.bottomAnchor).isActive = true
 
-		UIView.animateKeyframes(withDuration: duration * 10, delay: 0, options: [.layoutSubviews], animations: {
+		UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
 			UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.1, animations: {
 				self.zoomContainer.transform = CGAffineTransform(translationX: 0, y: 20).scaledBy(x: 0.95, y: 0.95)
 			})
 			UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.9, animations: {
-				self.view.heightConstraint.constant = controller.view.bounds.height
-				self.view.widthConstraint.constant = controller.view.bounds.width
+//				self.view.heightConstraint.constant = controller.view.bounds.height
+//				self.view.widthConstraint.constant = controller.view.bounds.width
 
 				self.zoomContainer.transform = .identity
 				self.zoomContainer.frame = controller.view.bounds
@@ -85,7 +98,6 @@ open class FlickCardController: UIViewController {
 			})
 		}) { _ in
 			self.zoomContainer.frame = controller.view.bounds
-			controller.view.addSubview(self.view)
 			self.didMove(toParent: controller)
 			self.containerController?.state = .idle
 		}

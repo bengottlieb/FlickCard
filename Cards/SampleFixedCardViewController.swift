@@ -11,7 +11,8 @@ import UIKit
 class SampleFixedCardViewController: FlickCardController {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var indicatorLabel: UILabel!
-	
+	@IBOutlet var fullScreenButton: UIButton!
+
 	var listHeight: CGFloat = 200
 	//override var listViewHeight: CGFloat { return self.listHeight }
 	var image: UIImage?
@@ -43,12 +44,14 @@ class SampleFixedCardViewController: FlickCardController {
 		guard let parent = self.parentController as? FlickCardContainerViewController else { return }
 		
 		if self.isZoomedToFullScreen {
+			self.fullScreenButton.setTitle("Full Screen", for: .normal)
 			self.returnToParentView(duration: 0.3) {
 				self.view.backgroundColor = .white
 			}
 		} else {
+			self.fullScreenButton.setTitle("Back", for: .normal)
 			self.makeFullScreen(in: parent, duration: 0.3) {
-				self.view.backgroundColor = .clear
+				self.view.backgroundColor = .gray
 			}
 		}
 	}

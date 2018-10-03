@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SampleCardViewController" customModule="FlickCard" customModuleProvider="target">
             <connections>
+                <outlet property="fullScreenButton" destination="bD3-Ce-arb" id="IM8-7c-4nr"/>
                 <outlet property="imageView" destination="4M9-cc-pmg" id="XuK-al-RJF"/>
                 <outlet property="indicatorLabel" destination="bu9-uU-A6J" id="FsR-m8-pxd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

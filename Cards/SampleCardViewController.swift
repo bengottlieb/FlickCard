@@ -11,7 +11,8 @@ import UIKit
 class SampleCardViewController: FlickCardController {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var indicatorLabel: UILabel!
-	
+	@IBOutlet var fullScreenButton: UIButton!
+
 	var image: UIImage?
 	var parentController: UIViewController?
 	
@@ -44,12 +45,14 @@ class SampleCardViewController: FlickCardController {
 		guard let parent = self.parentController as? FlickCardPileViewController else { return }
 		
 		if self.isZoomedToFullScreen {
+			self.fullScreenButton.setTitle("Full Screen", for: .normal)
 			self.returnToParentView(duration: 0.3) {
 				self.view.backgroundColor = .white
 			}
 		} else {
+			self.fullScreenButton.setTitle("Back", for: .normal)
 			self.makeFullScreen(in: parent, duration: 0.3) {
-				self.view.backgroundColor = .clear
+				self.view.backgroundColor = .white
 			}
 		}
 	}

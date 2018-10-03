@@ -9,8 +9,6 @@
 import UIKit
 
 open class FlickCardView: UIView {
-	public weak var card: FlickCard!
-	
 	var cardParentController: FlickCardParentViewController?
 	var cardController: FlickCardViewController!
 	

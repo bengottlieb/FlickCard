@@ -40,7 +40,7 @@ class SampleFixedCardViewController: FlickCardViewController {
 		guard let parent = self.parentController as? FlickCardParentViewController else { return }
 		
 		if self.isZoomedToFullScreen {
-			self.returnToParentView(in: parent, duration: 0.3) {
+			self.returnToParentView(duration: 0.3) {
 				self.view.backgroundColor = .white
 			}
 		} else {

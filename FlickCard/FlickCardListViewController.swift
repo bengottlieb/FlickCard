@@ -38,6 +38,23 @@ open class FlickCardListViewController: FlickCardParentViewController {
 		self.cards = cards
 		self.tableView.reloadData()
 	}
+
+	func cell(for card: FlickCard) -> FlickCardListTableViewCell? {
+		for cell in self.tableView.visibleCells as? [FlickCardListTableViewCell] ?? [] {
+			if cell.card == card { return cell }
+		}
+		return nil
+	}
+	
+	override public func targetView(for card: FlickCard) -> UIView? { return self.cell(for: card)?.contentView }
+	
+	override public func restore(_ controller: FlickCardViewController, in targetView: UIView) {
+		if let cell = self.cell(for: controller.card) {
+			cell.card = controller.card
+		}
+		self.state = .idle
+	}
+
 }
 
 
@@ -57,6 +74,14 @@ extension FlickCardListViewController: UITableViewDataSource {
 	open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 300
 	}
+	
+	func indexPath(for card: FlickCard) -> IndexPath? {
+		if let index = self.cards.index(of: card) {
+			return IndexPath(row: index, section: 0)
+		}
+		return nil
+	}
+	
 }
 
 extension FlickCardListViewController: UITableViewDelegate {

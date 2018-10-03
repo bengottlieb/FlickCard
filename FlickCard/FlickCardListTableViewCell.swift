@@ -10,7 +10,7 @@ import UIKit
 
 class FlickCardListTableViewCell: UITableViewCell {
 	static let identifier = "FlickCardListTableViewCell"
-	var card: FlickCard? { didSet { if self.card != oldValue { self.updateUI() }}}
+	var card: FlickCard? { didSet { if self.card != oldValue || self.cardView?.superview != self.contentView { self.updateUI() }}}
 	var cardView: FlickCardView?
 	var heightConstraint: NSLayoutConstraint!
 	var listViewController: FlickCardListViewController?

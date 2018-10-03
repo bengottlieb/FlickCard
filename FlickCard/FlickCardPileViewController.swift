@@ -37,7 +37,7 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 	var draggingView: UIView!
 	var dragStartPoint = CGPoint.zero
 
-	var cardViews: [FlickCardView] = []
+	var cardViewControllers: [FlickCardViewController] = []
 	var panGestureRecognizer: UIPanGestureRecognizer!
 	var cardsNeedLayout = false { didSet { if self.cardsNeedLayout { self.pileView.setNeedsLayout() }}}
 	var firstCardIsInteracting: Bool { return self.state == .draggingTopCard }
@@ -46,6 +46,13 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 	var pendingCards: [PendingCard] = []
 	override open func targetView(for card: FlickCard) -> UIView? { return self.pileView }
 
+	override public func restore(_ controller: FlickCardViewController, in targetView: UIView) {
+		self.addChild(controller)
+		targetView.addSubview(controller.view)
+		controller.view.frame = self.firstCardFrame
+		controller.didMove(toParent: self)
+		self.state = .idle
+	}
 
 	open override func viewDidLoad() {
 		super.viewDidLoad()
@@ -79,37 +86,37 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 	func updateUI() {
 		let visible = self.visibleCards
 		
-		for view in self.cardViews {
-			if view.card == nil || !visible.contains(view.card) {
-				view.removeFromSuperview()
-				if let index = self.cardViews.index(of: view) { self.cardViews.remove(at: index) }
+		for controller in self.cardViewControllers {
+			if controller.card == nil || !visible.contains(controller.card) {
+				controller.view.removeFromSuperview()
+				if let index = self.cardViewControllers.index(of: controller) { self.cardViewControllers.remove(at: index) }
 			}
 		}
 		
 		
-		self.cardViews = self.visibleCards.map { card in
-			if let view = self.view(for: card ) { return view }
-			let cardView = card.buildCardView(ofSize: self.firstCardFrame.size)
-			self.applyCardStyling(to: cardView)
-			self.pileView.addSubview(cardView)
-			return cardView
+		self.cardViewControllers = self.visibleCards.map { card in
+			if let controller = self.viewController(for: card ) { return controller }
+			let controller = card.buildCardViewController(ofSize: self.firstCardFrame.size)
+			self.applyCardStyling(to: controller.cardView)
+			self.pileView.addSubview(controller.view)
+			return controller
 		}
 		
 		self.gesturesEnabled = self.cards.count > 0
 		for i in 0..<self.visibleCards.count {
-			guard let view = self.view(for: self.cards[i]) else { continue }
+			guard let view = self.viewController(for: self.cards[i])?.view else { continue }
 			
 			if i == 0 {
 				self.pileView.bringSubviewToFront(view)
 			} else {
 				view.removeFromSuperview()
-				self.pileView.insertSubview(view, belowSubview: self.cardViews[i - 1])
+				self.pileView.insertSubview(view, belowSubview: self.cardViewControllers[i - 1].view)
 			}
 		}
 
 		self.cardsNeedLayout = true
 		
-		let frontCard = self.cardViews.first?.card
+		let frontCard = self.cardViewControllers.first?.card
 		if !self.firstCardIsInteracting {
 			if frontCard != self.lastFrontCard {
 				self.lastFrontCard?.didResignFrontCard(in: self, animated: true)
@@ -180,7 +187,8 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 		var newCards = self.cards
 		if first.toTop { newCards.insert(first.card, at: 0) } else { newCards.append(first.card) }
 		if first.animated {
-			let cardView = first.card.buildCardView(ofSize: self.firstCardFrame.size)
+			let cardController = first.card.buildCardViewController(ofSize: self.firstCardFrame.size)
+			let cardView = cardController.cardView
 			cardView.center = first.source ?? CGPoint(x: self.pileView.bounds.width / 2, y: -self.pileView.bounds.height)
 			if first.toTop { self.pileView.addSubview(cardView) } else { self.pileView.insertSubview(cardView, at: 0) }
 			self.state = .addingCards
@@ -190,7 +198,7 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 				cardView.percentageLifted = 0
 			}) { _ in
 				self.state = .idle
-				self.cardViews.append(cardView)
+				self.cardViewControllers.append(cardController)
 				self.cards = newCards
 				self.updateUI()
 				first.completion?()
@@ -205,7 +213,8 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 	}
 	
 	func animateCardOut(_ card: FlickCard, to destination: CGPoint?, duration: TimeInterval = 0.2) {
-		if let cardView = self.view(for: card) {
+		if let cardViewController = self.viewController(for: card) {
+			let cardView = cardViewController.cardView
 			let dest = destination ?? CGPoint(x: self.pileView.bounds.width * 1, y: self.pileView.bounds.height * -1)
 			
 			self.willRemove(card: card, to: destination, viaFlick: false)
@@ -232,8 +241,8 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 	
 	func remove(card: FlickCard) {
 		if let index = self.cards.index(of: card) { self.cards.remove(at: index) }
-		if let cardView = self.view(for: card) {
-			if let index = self.cardViews.index(of: cardView) { self.cardViews.remove(at: index) }
+		if let controller = self.viewController(for: card) {
+			if let index = self.cardViewControllers.index(of: controller) { self.cardViewControllers.remove(at: index) }
 		}
 	}
 	
@@ -251,8 +260,8 @@ open class FlickCardPileViewController: FlickCardParentViewController {
 		}
 	}
 	
-	func view(for card: FlickCard) -> FlickCardView? {
-		for view in self.cardViews { if view.card == card { return view }}
+	func viewController(for card: FlickCard) -> FlickCardViewController? {
+		for controller in self.cardViewControllers { if controller.card == card { return controller }}
 		return nil
 	}
 	
@@ -305,14 +314,14 @@ extension FlickCardPileViewController {
 				let firstIndex = self.pileViewController.firstCardIsInteracting ? 1 : 0
 				let cardFrame = self.pileViewController.firstCardFrame
 				
-				if firstIndex < self.pileViewController.cardViews.count {
-					for i in firstIndex..<self.pileViewController.cardViews.count {
-						let card = self.pileViewController.cardViews[i].card!
-						if self.pileViewController.cardViews[i] == self.pileViewController.animatingCardView { continue }
-						self.pileViewController.cardViews[i].bounds.size = cardFrame.size
-						self.pileViewController.cardViews[i].transform = self.pileViewController.calculateTransform(for: card, at: i - firstIndex)
-						self.pileViewController.cardViews[i].alpha = self.pileViewController.calculateAlpha(for: card, at: i - firstIndex)
-						self.pileViewController.cardViews[i].center = center
+				if firstIndex < self.pileViewController.cardViewControllers.count {
+					for i in firstIndex..<self.pileViewController.cardViewControllers.count {
+						let card = self.pileViewController.cardViewControllers[i].card!
+						if self.pileViewController.cardViewControllers[i] == self.pileViewController.animatingCardView { continue }
+						self.pileViewController.cardViewControllers[i].view.bounds.size = cardFrame.size
+						self.pileViewController.cardViewControllers[i].view.transform = self.pileViewController.calculateTransform(for: card, at: i - firstIndex)
+						self.pileViewController.cardViewControllers[i].view.alpha = self.pileViewController.calculateAlpha(for: card, at: i - firstIndex)
+						self.pileViewController.cardViewControllers[i].view.center = center
 					}
 				}
 				

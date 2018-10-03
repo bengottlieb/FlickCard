@@ -103,8 +103,8 @@
 		B5D3947821572EDB00747AA3 /* FlickCard */ = {
 			isa = PBXGroup;
 			children = (
-				B5D3947A21572EDB00747AA3 /* FlickCardPileViewController.swift */,
 				B50CDF9D2164321B00399540 /* FlickCardParentViewController.swift */,
+				B5D3947A21572EDB00747AA3 /* FlickCardPileViewController.swift */,
 				B5B7928721637CE7001AB808 /* FlickCardListViewController.swift */,
 				B5D3947921572EDB00747AA3 /* FlickCard.swift */,
 				B5D3947C21572EDB00747AA3 /* FlickCardView.swift */,

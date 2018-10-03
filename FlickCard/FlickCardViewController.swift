@@ -9,6 +9,7 @@
 import UIKit
 
 open class FlickCardViewController: UIViewController {
+	public weak var card: FlickCard!
 	public var cardView: FlickCardView { return self.view as! FlickCardView }
 	var originalFrame: CGRect?
 	var isZoomedToFullScreen: Bool { return self.originalFrame != nil }
@@ -18,23 +19,19 @@ open class FlickCardViewController: UIViewController {
 		self.cardView.cardController = self
 	}
 	
-	public func returnToParentView(in controller: FlickCardParentViewController, duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
-		guard let pileView = self.cardView.cardParentController?.targetView(for: self.cardView.card), let finalFrame = self.originalFrame else { return }
+	public func returnToParentView(duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
+		guard let parent = (self.parent as? FlickCardParentViewController), let targetView = parent.targetView(for: self.card), let finalFrame = self.originalFrame else { return }
 
-		self.willMove(toParent: controller)
+		self.willMove(toParent: parent)
 		
 		DispatchQueue.main.async {
 			UIView.animate(withDuration: duration, animations: {
-				self.view.frame = pileView.convert(finalFrame, to: self.view.superview)
+				self.view.frame = targetView.convert(finalFrame, to: self.view.superview)
 				concurrentAnimations?()
-				controller.applyCardStyling(to: self.cardView)
+				parent.applyCardStyling(to: self.cardView)
 				self.view.layoutIfNeeded()
 			}) { _ in
-				controller.addChild(self)
-				pileView.addSubview(self.view)
-				self.view.frame = finalFrame
-				self.didMove(toParent: controller)
-				self.cardView.cardParentController?.state = .idle
+				parent.restore(self, in: targetView)
 				self.originalFrame = nil
 			}
 		}

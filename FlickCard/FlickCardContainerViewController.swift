@@ -11,7 +11,7 @@ import UIKit
 open class FlickCardContainerViewController: UIViewController {
 	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn, zoomingCard }
 	
-	public func applyCardStyling(to cardView: UIView) { }
+	public func applyCardStyling(to cardView: UIView?) { }
 	open var state: State = .idle
 	
 	public func targetView(for card: FlickCardController) -> UIView? { return nil }

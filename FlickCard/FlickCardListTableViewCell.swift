@@ -35,10 +35,7 @@ class FlickCardListTableViewCell: UITableViewCell {
 
 		if let controller = self.listViewController {
 			self.backgroundColor = controller.tableView.backgroundColor
-			self.cardView?.layer.cornerRadius = controller.cardCornerRadius
-			self.cardView?.layer.borderWidth = controller.cardBorderWidth
-			self.cardView?.layer.borderColor = controller.cardBorderColor.cgColor
-			self.cardView?.layer.masksToBounds = true
+			controller.applyCardStyling(to: self.cardView)
 		}
 		
 		self.contentView.addSubview(self.cardView!)

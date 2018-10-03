@@ -38,6 +38,13 @@ open class FlickCardListViewController: FlickCardContainerViewController {
 		self.cards = cards
 		self.tableView.reloadData()
 	}
+	
+	override public func applyCardStyling(to view: UIView?) {
+		view?.layer.cornerRadius = self.cardCornerRadius
+		view?.layer.borderColor = self.cardBorderColor.cgColor
+		view?.layer.borderWidth = self.cardBorderWidth
+		view?.layer.masksToBounds = true
+	}
 
 	func cell(for card: FlickCardController) -> FlickCardListTableViewCell? {
 		for cell in self.tableView.visibleCells as? [FlickCardListTableViewCell] ?? [] {

@@ -74,13 +74,12 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 		}
 	}
 	
-	override public func applyCardStyling(to view: UIView) {
-		view.layer.cornerRadius = self.cardCornerRadius
-		view.layer.borderColor = self.cardBorderColor.cgColor
-		view.layer.borderWidth = self.cardBorderWidth
+	override public func applyCardStyling(to view: UIView?) {
+		view?.layer.cornerRadius = self.cardCornerRadius
+		view?.layer.borderColor = self.cardBorderColor.cgColor
+		view?.layer.borderWidth = self.cardBorderWidth
+		view?.layer.masksToBounds = true
 	}
-	
-
 
 	func updateUI() {
 		let visible = self.visibleCards

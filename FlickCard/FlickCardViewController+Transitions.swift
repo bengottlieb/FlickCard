@@ -110,7 +110,7 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 					parent.restore(fromVC, in: targetView)
 				}
 			} else {
-				guard let toVC = transitionContext.toVC?.root as? FlickCardController else {
+				guard let toVC = transitionContext.toVC, toVC.root is FlickCardController else {
 						return
 				}
 				

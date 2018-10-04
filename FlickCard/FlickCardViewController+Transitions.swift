@@ -9,8 +9,30 @@
 import UIKit
 
 extension FlickCardController {
-	func prepareToPresent() {
-		self.transitioningDelegate = self
+	open func prepareToPresent(wrappingInNavigationController: Bool) -> UIViewController {
+		if !wrappingInNavigationController {
+			self.transitioningDelegate = self
+			return self
+		}
+		
+		let parent = self.parent
+		let superview = self.view.superview
+		let frame = self.view.frame
+		
+		self.removeFromParent()
+		self.view.removeFromSuperview()
+		
+		let nav = UINavigationController(rootViewController: self)
+		nav.setNavigationBarHidden(true, animated: false)
+		
+		self.view.translatesAutoresizingMaskIntoConstraints = true
+		self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		parent?.addChild(nav)
+		nav.view.frame = frame
+		superview?.addSubview(nav.view)
+		nav.transitioningDelegate = self
+
+		return nav
 	}
 	
 	func willBecomeFrontCard(in parent: FlickCardPileViewController, animated: Bool) {
@@ -68,16 +90,12 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 			let duration = self.transitionDuration(using: transitionContext)
 
 			if self.dismissing {
-				guard let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) else { return }
-				var destination = toVC
-				if let nav = toVC as? UINavigationController { destination = nav.viewControllers.first! }
-				guard let parent = destination as? FlickCardContainerViewController, let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as? FlickCardController, let zoomContainer = self.zoomContainer else {
+				guard let parent = transitionContext.toVC?.root as? FlickCardContainerViewController, let fromVC = transitionContext.fromVC?.root as? FlickCardController, let zoomContainer = self.zoomContainer else {
 						return
 				}				
 				
 				guard let targetView = parent.targetView(for: fromVC) else { return }
-				
-				containerView.insertSubview(toVC.view, at: 0)
+				if let background = parent.view.snapshotView(afterScreenUpdates: true) { containerView.insertSubview(background, at: 0) }
 				let finalFrame = targetView.convert(targetView.bounds, to: containerView)
 				
 				UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
@@ -87,10 +105,12 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 					})
 				}) { _ in
 					transitionContext.completeTransition(true)
+					fromVC.view.removeFromSuperview()
+					fromVC.removeFromParent()
 					parent.restore(fromVC, in: targetView)
 				}
 			} else {
-				guard let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as? FlickCardController else {
+				guard let toVC = transitionContext.toVC?.root as? FlickCardController else {
 						return
 				}
 				
@@ -127,3 +147,14 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 	
 }
 
+extension UIViewController {
+	var root: UIViewController {
+		if let nav = self as? UINavigationController, let first = nav.viewControllers.first { return first }
+		return self
+	}
+}
+
+extension UIViewControllerContextTransitioning {
+	var fromVC: UIViewController? { return self.viewController(forKey: UITransitionContextViewControllerKey.from) }
+	var toVC: UIViewController? { return self.viewController(forKey: UITransitionContextViewControllerKey.to) }
+}

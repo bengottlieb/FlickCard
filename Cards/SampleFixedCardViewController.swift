@@ -44,7 +44,7 @@ class SampleFixedCardViewController: FlickCardController {
 		guard let parent = self.parentController as? FlickCardContainerViewController else { return }
 
 		if true {
-			self.dismiss(animated: true, completion: nil)
+			(self.navigationController ?? self).dismiss(animated: true, completion: nil)
 			return
 		}
 

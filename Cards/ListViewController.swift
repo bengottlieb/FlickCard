@@ -23,9 +23,9 @@ class ListViewController: FlickCardTableViewController {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let card = self.cards[indexPath.row]
 		
-		card.prepareToPresent()
+		let controller = card.prepareToPresent(wrappingInNavigationController: true)
 //		self.navigationController?.pushViewController(card, animated: true)
-		self.present(card, animated: true, completion: nil)
+		self.present(controller, animated: true, completion: nil)
 	}
 	
 	func reloadCards(animated: Bool) {

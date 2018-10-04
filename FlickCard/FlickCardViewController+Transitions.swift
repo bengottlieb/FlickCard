@@ -73,13 +73,11 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 	}
 	
 	class Presenter: NSObject, UIViewControllerAnimatedTransitioning {
-		func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-			return 0.2
-		}
-		
 		var zoomContainer: UIView!
-		
 		var dismissing = false
+		
+		func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval { return 0.2 }
+		
 		init(forDismissing: Bool) {
 			super.init()
 			self.dismissing = forDismissing
@@ -110,9 +108,7 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 					parent.restore(fromVC, in: targetView)
 				}
 			} else {
-				guard let toVC = transitionContext.toVC, toVC.root is FlickCardController else {
-						return
-				}
+				guard let toVC = transitionContext.toVC, toVC.root is FlickCardController else { return }
 				
 				let frame = toVC.view.convert(toVC.view.bounds, to: containerView)
 				self.zoomContainer = UIView(frame: frame)
@@ -126,7 +122,6 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 				self.zoomContainer.topAnchor.constraint(equalTo: toVC.view.topAnchor).isActive = true
 				self.zoomContainer.bottomAnchor.constraint(equalTo: toVC.view.bottomAnchor).isActive = true
 				
-				
 				UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
 					UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0, animations: {
 						self.zoomContainer.frame = containerView.bounds
@@ -134,13 +129,6 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 				}) { _ in
 					transitionContext.completeTransition(true)
 				}
-				
-//				UIView.animate(withDuration: duration * 10, animations: {
-//					toVC.view.frame = containerView.bounds
-//					toVC.view.setNeedsLayout()
-//				}) { _ in
-//					transitionContext.completeTransition(true)
-//				}
 			}
 		}
 	}

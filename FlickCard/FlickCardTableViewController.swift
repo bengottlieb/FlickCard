@@ -16,7 +16,6 @@ open class FlickCardTableViewController: FlickCardContainerViewController {
 	@IBOutlet public var tableView: UITableView!
 	open weak var flickCardDelegate: FlickCardTableViewControllerDelegate?
 	open var cardInset = UIEdgeInsets.zero
-	open var cards: [FlickCardController] = []
 	public var shadowGlowRadius: CGFloat = 5
 	
 	open override func viewDidLoad() {
@@ -35,8 +34,8 @@ open class FlickCardTableViewController: FlickCardContainerViewController {
 		}
 	}
 	
-	open func load(cards: [FlickCardController]) {
-		self.cards = cards
+	override open func load(cards: [FlickCardController], animated: Bool = false) {
+		super.load(cards: cards, animated: animated)
 		self.tableView.reloadData()
 	}
 	

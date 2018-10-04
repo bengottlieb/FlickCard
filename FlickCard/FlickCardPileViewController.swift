@@ -26,7 +26,6 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 	public var arrangement: Arrangment = .tiered(offset: -20, alphaStep: 0.05) { didSet { self.updateUI() }}
 	public var avoidKeyboard = false { didSet { if self.avoidKeyboard != oldValue { self.updateKeyboardNotifications() }}}
 	public var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
-	public private(set) var cards: [FlickCardController] = []
 	public weak var flickCardPileViewDelegate: FlickCardPileViewDelegate?
 	open var defaultCardCenter: CGPoint { return CGPoint(x: self.firstCardFrame.midX, y: self.firstCardFrame.midY) }
 	public var cardInset = UIEdgeInsets.zero
@@ -63,13 +62,14 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 		self.pileView.pileViewController = self
 	}
 	
-	func load(cards: [FlickCardController], animated: Bool = false) {
+	open override func load(cards: [FlickCardController], animated: Bool = false) {
 		if animated {
 			for card in cards {
+				card.containerController = self
 				self.add(card: card, toTop: false, animated: true, from: nil, duration: 0.2) { }
 			}
 		} else {
-			self.cards += cards
+			super.load(cards: cards, animated: false)
 			self.updateUI()
 		}
 	}

@@ -16,13 +16,11 @@ class SampleFixedCardViewController: FlickCardController {
 	var listHeight: CGFloat = 200
 	//override var listViewHeight: CGFloat { return self.listHeight }
 	var image: UIImage?
-	var parentController: UIViewController?
 	
-	convenience init(image: UIImage, parent: UIViewController, id: ID) {
+	convenience init(image: UIImage, id: ID) {
 		self.init(nibName: "SampleFixedCardViewController", bundle: nil)
 		self.image = image
 		self.id = id
-		self.parentController = parent
 	}
 		
     override func viewDidLoad() {
@@ -41,9 +39,9 @@ class SampleFixedCardViewController: FlickCardController {
 	}
 	
 	@IBAction func goFullScreen() {
-		guard let parent = self.parentController as? FlickCardContainerViewController else { return }
+		guard let parent = self.containerController else { return }
 
-		if true {
+		if !self.isInsideContainer {
 			(self.navigationController ?? self).dismiss(animated: true, completion: nil)
 			return
 		}

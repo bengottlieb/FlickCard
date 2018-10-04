@@ -14,13 +14,11 @@ class SampleCardViewController: FlickCardController {
 	@IBOutlet var fullScreenButton: UIButton!
 
 	var image: UIImage?
-	var parentController: UIViewController?
 	
-	convenience init(image: UIImage, parent: UIViewController, id: ID) {
+	convenience init(image: UIImage, id: ID) {
 		self.init(nibName: "SampleCardViewController", bundle: nil)
 		self.image = image
 		self.id = id
-		self.parentController = parent
 	}
 		
     override func viewDidLoad() {
@@ -42,8 +40,13 @@ class SampleCardViewController: FlickCardController {
 	}
 	
 	@IBAction func goFullScreen() {
-		guard let parent = self.parentController as? FlickCardPileViewController else { return }
+		guard let parent = self.containerController as? FlickCardPileViewController else { return }
 		
+		if !self.isInsideContainer {
+			self.dismiss(animated: true, completion: nil)
+			return
+		}
+
 		if self.isZoomedToFullScreen {
 			self.fullScreenButton.setTitle("Full Screen", for: .normal)
 			self.returnToParentView(duration: 0.3) {

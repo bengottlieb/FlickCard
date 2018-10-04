@@ -18,8 +18,9 @@ open class FlickCardController: UIViewController {
 	var containerController: FlickCardContainerViewController?
 	var originalFrame: CGRect?
 	var zoomContainer: UIView!
-	var isZoomedToFullScreen: Bool { return self.originalFrame != nil }
+	var isZoomedToFullScreen: Bool { return self.view.bounds == self.parent?.view.bounds }
 	var animationController: Presenter!
+	var isInsideContainer: Bool { return self.parent == self.containerController }
 		
 	public func returnToParentView(duration: TimeInterval = 0, concurrentAnimations: (() -> Void)? = nil) {
 		guard let parent = (self.parent as? FlickCardContainerViewController), let targetView = parent.targetView(for: self), let finalFrame = self.originalFrame else { return }

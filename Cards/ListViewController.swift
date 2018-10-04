@@ -35,7 +35,7 @@ class ListViewController: FlickCardTableViewController {
 		
 		let cards: [FlickCardController] = imageNames.map { name in
 			let image = UIImage(named: name)!
-			let controller = SampleFixedCardViewController(image: image, parent: self, id: name + "-\(self.count)")
+			let controller = SampleFixedCardViewController(image: image, id: name + "-\(self.count)")
 			controller.listHeight = height
 			height += 30
 			self.count += 1

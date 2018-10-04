@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2dM-lA-WL3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vio-tx-3M2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -34,7 +34,7 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="4" translatesAutoresizingMaskIntoConstraints="NO" id="EZX-uK-aja">
-                                <rect key="frame" x="3" y="29" width="369" height="29"/>
+                                <rect key="frame" x="3" y="73" width="369" height="29"/>
                                 <segments>
                                     <segment title="Single"/>
                                     <segment title="Tight"/>
@@ -70,6 +70,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="xIw-h7-Hvb"/>
                     <connections>
                         <outlet property="arrangmentSegments" destination="EZX-uK-aja" id="c5J-nc-IlR"/>
                         <outlet property="pileView" destination="iZV-Hr-cWz" id="fef-aY-M8E"/>
@@ -77,7 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1376.8" y="133.5832083958021"/>
+            <point key="canvasLocation" x="2316" y="133.5832083958021"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="lqM-xU-zep">
@@ -95,10 +96,10 @@
             </objects>
             <point key="canvasLocation" x="423.19999999999999" y="133.5832083958021"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--List-->
         <scene sceneID="dhl-jP-s9R">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2dM-lA-WL3" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Listnav" title="List" automaticallyAdjustsScrollViewInsets="NO" id="2dM-lA-WL3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xbc-wc-hee">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -112,6 +113,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gWf-BM-uIq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-516" y="133.5832083958021"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VKF-eJ-yGj">
+            <objects>
+                <navigationController storyboardIdentifier="pileNav" automaticallyAdjustsScrollViewInsets="NO" id="vio-tx-3M2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WLy-cW-1lV">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="DrV-ql-tbu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gpr-ge-dlv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1376.8" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>

@@ -17,6 +17,14 @@ class PileViewController: FlickCardPileViewController {
 		self.flickCardPileViewDelegate = self
 		self.pileView.backgroundColor = .lightGray
 		self.reloadCards(animated: false)
+		
+		let recog = UITapGestureRecognizer(target: self, action: #selector(pileTapped))
+		self.pileView.addGestureRecognizer(recog)
+	}
+	
+	@objc func pileTapped() {
+		guard let controller = self.topCard?.prepareToPresent(wrappingInNavigationController: true) else { return }
+		self.present(controller, animated: true, completion: nil)
 	}
 	
 	@IBAction func segmentsChanged() {
@@ -36,7 +44,7 @@ class PileViewController: FlickCardPileViewController {
 
 		let cards: [FlickCardController] = imageNames.map { name in
 			let image = UIImage(named: name)!
-			let controller = SampleCardViewController(image: image, parent: self, id: name + "-\(self.count)")
+			let controller = SampleCardViewController(image: image, id: name + "-\(self.count)")
 			
 			self.count += 1
 			return controller

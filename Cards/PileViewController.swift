@@ -16,6 +16,7 @@ class PileViewController: FlickCardPileViewController {
 		self.cardInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		self.flickCardPileViewDelegate = self
 		self.reloadCards(animated: false)
+		self.avoidKeyboard = true
 		
 		let recog = UITapGestureRecognizer(target: self, action: #selector(pileTapped))
 		self.pileView.addGestureRecognizer(recog)
@@ -43,7 +44,7 @@ class PileViewController: FlickCardPileViewController {
 
 		let cards: [FlickCardController] = imageNames.map { name in
 			let image = UIImage(named: name)!
-			let controller = SampleCardViewController(image: image, id: name + "-\(self.count)")
+			let controller = SampleFixedCardViewController(image: image, id: name + "-\(self.count)")
 			
 			self.count += 1
 			return controller

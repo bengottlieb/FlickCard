@@ -24,7 +24,6 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 	public var dragAcceleration: CGFloat = 1.25
 	public var returnFlickedCardsToBackOfPile = false
 	public var arrangement: Arrangment = .tiered(offset: -20, alphaStep: 0.05) { didSet { self.updateUI() }}
-	public var avoidKeyboard = false { didSet { if self.avoidKeyboard != oldValue { self.updateKeyboardNotifications() }}}
 	public var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
 	public weak var flickCardPileViewDelegate: FlickCardPileViewDelegate?
 	open var defaultCardCenter: CGPoint { return CGPoint(x: self.firstCardFrame.midX, y: self.firstCardFrame.midY) }
@@ -32,16 +31,16 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 	public var topCard: FlickCardController? { return self.cards.first }
 	public var visibleCards: [FlickCardController] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
 	
-	var keyboardInsets = UIEdgeInsets.zero
 	var draggingView: UIView!
 	var dragStartPoint = CGPoint.zero
-
 	var panGestureRecognizer: UIPanGestureRecognizer!
-	var cardsNeedLayout = false { didSet { if self.cardsNeedLayout { self.pileView.setNeedsLayout() }}}
+	override var cardsNeedLayout: Bool { didSet { if self.cardsNeedLayout { self.pileView.setNeedsLayout() }}}
 	var firstCardIsInteracting: Bool { return self.state == .draggingTopCard }
 	weak var animatingCardView: UIView?
 	weak var lastFrontCard: FlickCardController?
 	var pendingCards: [PendingCard] = []
+	override var contentView: UIView { return self.pileView }
+
 	override open func targetViewAndFrame(for card: FlickCardController) -> (UIView, CGRect)? { return (self.pileView, self.firstCardFrame) }
 
 	override public func restore(_ controller: FlickCardController, in targetView: UIView) {
@@ -283,7 +282,6 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 			let translate = CGAffineTransform(translationX: 0, y: translation * offsetFactor * 1.2)
 			return scale.concatenating(translate)
 		}
-		
 	}
 }
 

@@ -1,5 +1,5 @@
 //
-//  UIView+Liftable.swift
+//  UIView+FlickCard.swift
 //  Cards
 //
 //  Created by Ben Gottlieb on 9/22/18.

@@ -8,9 +8,7 @@
 
 import UIKit
 
-public protocol FlickCardTableViewControllerDelegate: class {
-	
-}
+public protocol FlickCardTableViewControllerDelegate: class { }
 
 open class FlickCardTableViewController: FlickCardContainerViewController {
 	@IBOutlet public var tableView: UITableView!
@@ -18,6 +16,8 @@ open class FlickCardTableViewController: FlickCardContainerViewController {
 	open var cardInset = UIEdgeInsets.zero
 	public var shadowGlowRadius: CGFloat = 5
 	
+	override var contentView: UIView { return self.tableView }
+
 	open override func viewDidLoad() {
 		if self.tableView == nil {
 			self.tableView = UITableView(frame: self.view.bounds)

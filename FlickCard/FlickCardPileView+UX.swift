@@ -122,34 +122,6 @@ extension FlickCardPileViewController {
 		}
 	}
 
-	func updateKeyboardNotifications() {
-		if self.avoidKeyboard {
-			NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChanged), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-		}
-	}
-	
-	@objc func keyboardFrameChanged(note: Notification) {
-		guard let keyboardFrame = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-			self.pileView.setNeedsLayout()
-			self.keyboardInsets = .zero
-			UIView.animate(withDuration: 0.2) {
-				self.pileView.layoutIfNeeded()
-			}
-			return
-		}
-		let fieldFrame = self.pileView.frame//.insetBy(dx: 0, dy: -10)
-		let finalFrame = self.pileView.convert(keyboardFrame, from: UIScreen.main.coordinateSpace)
-		let intersection = finalFrame.intersection(fieldFrame)
-		let duration = note.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0
-		
-		self.keyboardInsets.bottom = intersection.height
-		self.cardsNeedLayout = true
-		UIView.animate(withDuration: duration) {
-			self.pileView.layoutIfNeeded()
-		}
-
-	}
-	
 	var firstCardFrame: CGRect {
 		let total = UIEdgeInsets(top: self.cardInset.top + self.keyboardInsets.top, left: self.cardInset.left + self.keyboardInsets.left, bottom: self.cardInset.bottom + self.keyboardInsets.bottom, right: self.cardInset.right + self.keyboardInsets.right)
 		let size = CGSize(width: self.pileView.bounds.size.width - (total.left + total.right), height: self.pileView.bounds.size.height - (total.top + total.bottom))

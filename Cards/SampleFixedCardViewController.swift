@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SampleFixedCardViewController: FlickCardController {
+class SampleFixedCardViewController: FlickCardController, UITextFieldDelegate {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var indicatorLabel: UILabel!
 	@IBOutlet var fullScreenButton: UIButton!
@@ -31,6 +31,11 @@ class SampleFixedCardViewController: FlickCardController {
 		self.imageView.layer.borderColor = UIColor.black.cgColor
 		self.imageView.layer.borderWidth = 1
     }
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return false
+	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)

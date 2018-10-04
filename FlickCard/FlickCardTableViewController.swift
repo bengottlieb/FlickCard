@@ -30,7 +30,7 @@ open class FlickCardTableViewController: FlickCardContainerViewController {
 			self.tableView.dataSource = self
 			self.tableView.delegate = self
 			self.tableView.rowHeight = UITableView.automaticDimension
-			self.tableView.register(FlickCardListTableViewCell.self, forCellReuseIdentifier: FlickCardListTableViewCell.identifier)
+			self.tableView.register(FlickCardListTableViewCell.self, forCellReuseIdentifier: FlickCardListTableViewCell.flickCardIdentifier)
 		}
 	}
 	
@@ -74,7 +74,7 @@ extension FlickCardTableViewController: UITableViewDataSource {
 		return self.cards.count
 	}
 	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: FlickCardListTableViewCell.identifier, for: indexPath) as! FlickCardListTableViewCell
+		let cell = tableView.dequeueReusableCell(withIdentifier: FlickCardListTableViewCell.flickCardIdentifier, for: indexPath) as! FlickCardListTableViewCell
 		
 		cell.listViewController = self
 		cell.card = self.cards[indexPath.row]

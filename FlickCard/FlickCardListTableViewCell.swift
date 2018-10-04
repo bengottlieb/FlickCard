@@ -9,7 +9,7 @@
 import UIKit
 
 class FlickCardListTableViewCell: UITableViewCell {
-	static let identifier = "FlickCardListTableViewCell"
+	static let flickCardIdentifier = "FlickCardListTableViewCell"
 	var card: FlickCardController? { didSet { self.updateUI() }}
 	var cardContainer: UIView!
 	var cardView: UIView?

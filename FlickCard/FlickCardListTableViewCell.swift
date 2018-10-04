@@ -68,22 +68,23 @@ class FlickCardListTableViewCell: UITableViewCell {
 		self.cardContainer.layer.shadowColor = UIColor.black.cgColor
 		self.cardContainer.layer.shadowOpacity = 0.5
 
-		self.cardView = card.view
+		guard let cardView = card.view else { return }
+		self.cardView = cardView
 		if let height = self.card?.listViewHeight { self.cardView?.heightConstraint.constant = height }
 		self.card?.containerController = self.listViewController
 
 		if let controller = self.listViewController {
 			self.backgroundColor = controller.tableView.backgroundColor
-			controller.applyCardStyling(to: self.cardView)
+			controller.applyCardStyling(to: cardView)
 		}
 		
-		self.cardContainer.addSubview(self.cardView!)
-		self.cardView!.translatesAutoresizingMaskIntoConstraints = false
-		self.cardView!.leadingAnchor.constraint(equalTo: self.cardContainer.leadingAnchor).isActive = true
-		self.cardView!.trailingAnchor.constraint(equalTo: self.cardContainer.trailingAnchor).isActive = true
-		self.cardView!.topAnchor.constraint(equalTo: self.cardContainer.topAnchor).isActive = true
-		self.cardView!.bottomAnchor.constraint(equalTo: self.cardContainer.bottomAnchor).isActive = true
+		self.cardContainer.addSubview(cardView)
+		cardView.translatesAutoresizingMaskIntoConstraints = false
+		cardView.leadingAnchor.constraint(equalTo: self.cardContainer.leadingAnchor).isActive = true
+		cardView.trailingAnchor.constraint(equalTo: self.cardContainer.trailingAnchor).isActive = true
+		cardView.topAnchor.constraint(equalTo: self.cardContainer.topAnchor).isActive = true
+		cardView.bottomAnchor.constraint(equalTo: self.cardContainer.bottomAnchor).isActive = true
 		
-		self.cardView?.setNeedsLayout()
+		cardView.setNeedsLayout()
 	}
 }

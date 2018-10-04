@@ -20,6 +20,14 @@ class ListViewController: FlickCardTableViewController {
 	var count = 0
 	@IBAction func reload() { self.reloadCards(animated: true) }
 	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let card = self.cards[indexPath.row]
+		
+		card.prepareToPresent()
+//		self.navigationController?.pushViewController(card, animated: true)
+		self.present(card, animated: true, completion: nil)
+	}
+	
 	func reloadCards(animated: Bool) {
 		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "aquaman.png", "he-man.png", "superman.png"]
 		

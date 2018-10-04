@@ -42,7 +42,12 @@ class SampleFixedCardViewController: FlickCardController {
 	
 	@IBAction func goFullScreen() {
 		guard let parent = self.parentController as? FlickCardContainerViewController else { return }
-		
+
+		if true {
+			self.dismiss(animated: true, completion: nil)
+			return
+		}
+
 		if self.isZoomedToFullScreen {
 			self.fullScreenButton.setTitle("Full Screen", for: .normal)
 			self.returnToParentView(duration: 0.3) {

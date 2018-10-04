@@ -1,5 +1,5 @@
 //
-//  FlickCardViewController+Container.swift
+//  FlickCardController+Container.swift
 //  Bee
 //
 //  Created by Ben Gottlieb on 9/25/18.
@@ -33,7 +33,7 @@ extension FlickCardController {
 		nav.view.frame = frame
 		superview?.addSubview(nav.view)
 		nav.transitioningDelegate = self
-
+		
 		return nav
 	}
 	
@@ -46,10 +46,10 @@ extension FlickCardController {
 		controller.didMove(toParent: parent)
 		controller.viewDidAppear(animated)
 	}
-
+	
 	func didResignFrontCard(in pileView: FlickCardPileViewController, animated: Bool) {
 		let controller = self
-
+		
 		controller.willMove(toParent: nil)
 		controller.viewWillDisappear(animated)
 		controller.removeFromParent()
@@ -69,7 +69,7 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 	
 	public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 		if self.animationController == nil { self.animationController = Presenter(forDismissing: false) }
-
+		
 		self.animationController.dismissing = true
 		return self.animationController
 	}
@@ -90,14 +90,14 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 		func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 			let containerView = transitionContext.containerView
 			let duration = self.transitionDuration(using: transitionContext)
-
+			
 			if self.dismissing {
-				guard let parent = transitionContext.toVC?.root as? FlickCardContainerViewController, let fromVC = transitionContext.fromVC?.root as? FlickCardController, let zoomContainer = self.zoomContainer else {
-						return
-				}				
+				guard let toVC = transitionContext.toVC, let parent = toVC.top as? FlickCardContainerViewController, let fromVC = transitionContext.fromVC?.top as? FlickCardController, let zoomContainer = self.zoomContainer else {
+					return
+				}
 				
 				guard let (targetView, targetFrame) = parent.targetViewAndFrame(for: fromVC) else { return }
-				if let background = parent.view.snapshotView(afterScreenUpdates: true) { containerView.insertSubview(background, at: 0) }
+				if let background = toVC.view.snapshotView(afterScreenUpdates: true) { containerView.insertSubview(background, at: 0) }
 				let finalFrame = targetView.convert(targetFrame, to: containerView)
 				
 				UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews, .calculationModeCubicPaced], animations: {
@@ -116,14 +116,14 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 					parent.restore(fromVC, in: targetView)
 				}
 			} else {
-				guard let toVC = transitionContext.toVC, toVC.root is FlickCardController else { return }
+				guard let toVC = transitionContext.toVC, toVC.top is FlickCardController else { return }
 				
 				let frame = toVC.view.convert(toVC.view.bounds, to: containerView)
 				self.zoomContainer = UIView(frame: frame)
 				
 				toVC.view.frame = self.zoomContainer.bounds
 				self.zoomContainer.addSubview(toVC.view)
-
+				
 				containerView.addSubview(self.zoomContainer)
 				self.zoomContainer.leadingAnchor.constraint(equalTo: toVC.view.leadingAnchor).isActive = true
 				self.zoomContainer.trailingAnchor.constraint(equalTo: toVC.view.trailingAnchor).isActive = true
@@ -150,6 +150,11 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 extension UIViewController {
 	var root: UIViewController {
 		if let nav = self as? UINavigationController, let first = nav.viewControllers.first { return first }
+		return self
+	}
+	
+	var top: UIViewController {
+		if let nav = self as? UINavigationController, let last = nav.viewControllers.last { return last }
 		return self
 	}
 }

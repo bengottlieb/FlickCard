@@ -76,13 +76,15 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 	
 	class Presenter: NSObject, UIViewControllerAnimatedTransitioning {
 		var zoomContainer: UIView!
-		var dismissing = false
+		var dismissing: Bool
+		var duration: TimeInterval
 		
-		func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval { return 0.6 }
+		func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval { return self.duration }
 		
-		init(forDismissing: Bool) {
-			super.init()
+		init(forDismissing: Bool, duration: TimeInterval = 0.5) {
+			self.duration = duration
 			self.dismissing = forDismissing
+			super.init()
 		}
 		
 		func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -98,7 +100,7 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 				if let background = parent.view.snapshotView(afterScreenUpdates: true) { containerView.insertSubview(background, at: 0) }
 				let finalFrame = targetView.convert(targetView.bounds, to: containerView)
 				
-				UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
+				UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews, .calculationModeCubicPaced], animations: {
 					UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.9, animations: {
 						zoomContainer.frame = finalFrame
 						parent.applyCardStyling(to: fromVC.view)
@@ -128,7 +130,7 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 				self.zoomContainer.topAnchor.constraint(equalTo: toVC.view.topAnchor).isActive = true
 				self.zoomContainer.bottomAnchor.constraint(equalTo: toVC.view.bottomAnchor).isActive = true
 				
-				UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews, .calculationModeCubic], animations: {
+				UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews, .calculationModeCubicPaced], animations: {
 					UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.9, animations: {
 						self.zoomContainer.frame = containerView.bounds
 						self.zoomContainer.transform = CGAffineTransform(translationX: 0, y: -40)

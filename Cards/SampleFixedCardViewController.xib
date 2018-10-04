@@ -38,10 +38,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bD3-Ce-arb">
-                    <rect key="frame" x="283" y="207" width="76" height="30"/>
-                    <state key="normal" title="Full Screen"/>
+                    <rect key="frame" x="325" y="207" width="34" height="30"/>
+                    <state key="normal" title="Back"/>
                     <connections>
-                        <action selector="goFullScreen" destination="-1" eventType="touchUpInside" id="emx-ll-zcI"/>
+                        <action selector="back" destination="-1" eventType="touchUpInside" id="erP-vi-ZqR"/>
                     </connections>
                 </button>
             </subviews>

@@ -36,27 +36,11 @@ class SampleFixedCardViewController: FlickCardController {
 		super.viewDidAppear(animated)
 		
 		self.indicatorLabel.isHidden = self.parent == nil
+		self.fullScreenButton.isHidden = self.isInsideContainer
 	}
 	
-	@IBAction func goFullScreen() {
-		guard let parent = self.containerController else { return }
-
-		if !self.isInsideContainer {
-			(self.navigationController ?? self).dismiss(animated: true, completion: nil)
-			return
-		}
-
-		if self.isZoomedToFullScreen {
-			self.fullScreenButton.setTitle("Full Screen", for: .normal)
-			self.returnToParentView(duration: 0.3) {
-				self.view.backgroundColor = .white
-			}
-		} else {
-			self.fullScreenButton.setTitle("Back", for: .normal)
-			self.makeFullScreen(in: parent, duration: 0.3) {
-				self.view.backgroundColor = .gray
-			}
-		}
+	@IBAction func back() {
+		self.dismiss(animated: true, completion: nil)
 	}
     /*
     // MARK: - Navigation

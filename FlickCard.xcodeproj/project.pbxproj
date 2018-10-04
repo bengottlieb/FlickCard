@@ -24,7 +24,7 @@
 		B5D3947F21572EDB00747AA3 /* UIView+FlickCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3947B21572EDB00747AA3 /* UIView+FlickCard.swift */; };
 		B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D394812157300600747AA3 /* SampleCardViewController.swift */; };
 		B5D394842157300600747AA3 /* SampleCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D394822157300600747AA3 /* SampleCardViewController.xib */; };
-		B5F7B66C215D16FC00BE1955 /* FlickCardViewController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F7B66B215D16FC00BE1955 /* FlickCardViewController+Transitions.swift */; };
+		B5F7B66C215D16FC00BE1955 /* FlickCardController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F7B66B215D16FC00BE1955 /* FlickCardController+Transitions.swift */; };
 		B5F7B66F215DC12D00BE1955 /* FlickCardPileView+UX.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F7B66E215DC12D00BE1955 /* FlickCardPileView+UX.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +48,7 @@
 		B5D3947B21572EDB00747AA3 /* UIView+FlickCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+FlickCard.swift"; sourceTree = "<group>"; };
 		B5D394812157300600747AA3 /* SampleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCardViewController.swift; sourceTree = "<group>"; };
 		B5D394822157300600747AA3 /* SampleCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SampleCardViewController.xib; sourceTree = "<group>"; };
-		B5F7B66B215D16FC00BE1955 /* FlickCardViewController+Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlickCardViewController+Transitions.swift"; sourceTree = "<group>"; };
+		B5F7B66B215D16FC00BE1955 /* FlickCardController+Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlickCardController+Transitions.swift"; sourceTree = "<group>"; };
 		B5F7B66E215DC12D00BE1955 /* FlickCardPileView+UX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickCardPileView+UX.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,12 +102,12 @@
 			isa = PBXGroup;
 			children = (
 				B5B79285216231D0001AB808 /* FlickCardController.swift */,
+				B5F7B66B215D16FC00BE1955 /* FlickCardController+Transitions.swift */,
 				B50CDF9D2164321B00399540 /* FlickCardContainerViewController.swift */,
 				B5D3947A21572EDB00747AA3 /* FlickCardPileViewController.swift */,
 				B5B7928721637CE7001AB808 /* FlickCardTableViewController.swift */,
 				B5B7928B21638283001AB808 /* FlickCardListTableViewCell.swift */,
 				B5F7B66E215DC12D00BE1955 /* FlickCardPileView+UX.swift */,
-				B5F7B66B215D16FC00BE1955 /* FlickCardViewController+Transitions.swift */,
 				B5D3947B21572EDB00747AA3 /* UIView+FlickCard.swift */,
 				B50CDF9F21657DB400399540 /* UIPanGesture+FlickCard.swift */,
 			);
@@ -195,7 +195,7 @@
 				B5D3947F21572EDB00747AA3 /* UIView+FlickCard.swift in Sources */,
 				B5B79286216231D0001AB808 /* FlickCardController.swift in Sources */,
 				B50CDF9B21642E4400399540 /* SampleFixedCardViewController.swift in Sources */,
-				B5F7B66C215D16FC00BE1955 /* FlickCardViewController+Transitions.swift in Sources */,
+				B5F7B66C215D16FC00BE1955 /* FlickCardController+Transitions.swift in Sources */,
 				B51C1CE32156640D002FD654 /* AppDelegate.swift in Sources */,
 				B5D394832157300600747AA3 /* SampleCardViewController.swift in Sources */,
 				B5B7928821637CE7001AB808 /* FlickCardTableViewController.swift in Sources */,

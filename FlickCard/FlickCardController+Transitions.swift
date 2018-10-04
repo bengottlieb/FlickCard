@@ -96,9 +96,9 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 						return
 				}				
 				
-				guard let targetView = parent.targetView(for: fromVC) else { return }
+				guard let (targetView, targetFrame) = parent.targetViewAndFrame(for: fromVC) else { return }
 				if let background = parent.view.snapshotView(afterScreenUpdates: true) { containerView.insertSubview(background, at: 0) }
-				let finalFrame = targetView.convert(targetView.bounds, to: containerView)
+				let finalFrame = targetView.convert(targetFrame, to: containerView)
 				
 				UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.layoutSubviews, .calculationModeCubicPaced], animations: {
 					UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.9, animations: {

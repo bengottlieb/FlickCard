@@ -16,7 +16,7 @@ open class FlickCardContainerViewController: UIViewController {
 	open var state: State = .idle
 	
 	
-	public func targetView(for card: FlickCardController) -> UIView? { return nil }
+	public func targetViewAndFrame(for card: FlickCardController) -> (UIView, CGRect)? { return nil }
 	public func restore(_ card: FlickCardController, in targetView: UIView) { }
 	open func load(cards: [FlickCardController], animated: Bool = false) {
 		for card in cards {

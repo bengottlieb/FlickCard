@@ -53,7 +53,10 @@ open class FlickCardTableViewController: FlickCardContainerViewController {
 		return nil
 	}
 	
-	override public func targetView(for card: FlickCardController) -> UIView? { return self.cell(for: card)?.cardContainer }
+	override public func targetViewAndFrame(for card: FlickCardController) -> (UIView, CGRect)? {
+		guard let view = self.cell(for: card)?.cardContainer else { return nil }
+		return (view, view.bounds)
+	}
 	
 	override public func restore(_ controller: FlickCardController, in targetView: UIView) {
 		if let cell = self.cell(for: controller) {

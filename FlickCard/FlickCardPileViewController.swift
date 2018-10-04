@@ -42,7 +42,7 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 	weak var animatingCardView: UIView?
 	weak var lastFrontCard: FlickCardController?
 	var pendingCards: [PendingCard] = []
-	override open func targetView(for card: FlickCardController) -> UIView? { return self.pileView }
+	override open func targetViewAndFrame(for card: FlickCardController) -> (UIView, CGRect)? { return (self.pileView, self.firstCardFrame) }
 
 	override public func restore(_ controller: FlickCardController, in targetView: UIView) {
 		self.addChild(controller)

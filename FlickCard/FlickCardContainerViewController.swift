@@ -51,7 +51,7 @@ open class FlickCardContainerViewController: UIViewController {
 	}
 	
 	@objc func keyboardFrameChanged(note: Notification) {
-		guard let keyboardFrame = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+		guard self.view.window != nil, let keyboardFrame = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
 			self.contentView.setNeedsLayout()
 			self.keyboardInsets = .zero
 			UIView.animate(withDuration: 0.2) {

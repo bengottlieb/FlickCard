@@ -28,10 +28,9 @@ class PileViewController: FlickCardPileViewController {
 	}
 	
 	@IBAction func flipTopCard() {
-		let flipside = SampleCardViewController(image: UIImage(named: "antman.png")!, id: UUID().uuidString)
+		let flipside = self.topCard?.flipsideController ?? SampleCardViewController(image: UIImage(named: "antman.png")!, id: UUID().uuidString)
 		
-		self.flip(card: self.topCard!, overTo: self.topCard?.flipsideController ?? flipside, duration: 1.0) {
-			print("All Done")
+		self.flip(card: self.topCard!, overTo: flipside, duration: 1.0, direction: flipside is SampleCardViewController ? .fromLeft : .fromRight) {
 		}
 	}
 	

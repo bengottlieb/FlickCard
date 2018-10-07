@@ -12,7 +12,8 @@ class SampleFixedCardViewController: FlickCardController, UITextFieldDelegate {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var indicatorLabel: UILabel!
 	@IBOutlet var fullScreenButton: UIButton!
-
+	@IBOutlet weak var entryField: UITextField!
+	
 	var listHeight: CGFloat = 200
 	//override var listViewHeight: CGFloat { return self.listHeight }
 	var image: UIImage?
@@ -42,6 +43,10 @@ class SampleFixedCardViewController: FlickCardController, UITextFieldDelegate {
 		
 		self.indicatorLabel.isHidden = self.parent == nil
 		self.fullScreenButton.isHidden = self.isInsideContainer
+		
+		if self.parent != nil {
+			self.entryField.becomeFirstResponder()
+		}
 	}
 	
 	@IBAction func back() {

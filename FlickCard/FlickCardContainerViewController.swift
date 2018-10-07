@@ -9,6 +9,16 @@
 import UIKit
 
 open class FlickCardContainerViewController: UIViewController {
+	public enum FlipDirection: Int { case fromRight, fromLeft, fromTop, fromBottom
+		var animationOptions: UIView.AnimationOptions {
+			switch self {
+			case .fromRight: return .transitionFlipFromRight
+			case .fromLeft: return .transitionFlipFromLeft
+			case .fromTop: return .transitionFlipFromTop
+			case .fromBottom: return .transitionFlipFromBottom
+			}
+		}
+	}
 	public enum State { case idle, addingCards, draggingTopCard, animatingTopCardOut, animatingTopCardIn, zoomingCard }
 	public internal(set) var cards: [FlickCardController] = []
 	public var avoidKeyboard = false { didSet { if self.avoidKeyboard != oldValue { self.updateKeyboardNotifications() }}}
@@ -16,7 +26,7 @@ open class FlickCardContainerViewController: UIViewController {
 	public func applyCardStyling(to cardView: UIView?) { }
 	open var state: State = .idle
 	var cardsNeedLayout = false
-	
+	public func flip(card: FlickCardController, overTo flipside: FlickCardController, duration: TimeInterval = 0.2, direction: FlipDirection? = nil, completion: (() -> Void)? = nil) { }
 	
 	public func targetViewAndFrame(for card: FlickCardController) -> (UIView, CGRect)? { return nil }
 	public func restore(_ card: FlickCardController, in targetView: UIView) { }

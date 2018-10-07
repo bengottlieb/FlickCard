@@ -34,7 +34,7 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="4" translatesAutoresizingMaskIntoConstraints="NO" id="EZX-uK-aja">
-                                <rect key="frame" x="3" y="73" width="369" height="29"/>
+                                <rect key="frame" x="3" y="29" width="369" height="29"/>
                                 <segments>
                                     <segment title="Single"/>
                                     <segment title="Tight"/>
@@ -53,6 +53,13 @@
                                     <action selector="removeTopCard" destination="BYZ-38-t0r" eventType="touchUpInside" id="GeJ-zH-gFQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MOP-6a-Fpe">
+                                <rect key="frame" x="16" y="630" width="30" height="30"/>
+                                <state key="normal" title="Flip"/>
+                                <connections>
+                                    <action selector="flipTopCard" destination="BYZ-38-t0r" eventType="touchUpInside" id="fez-ol-lzE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -62,9 +69,12 @@
                             <constraint firstItem="iZV-Hr-cWz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GNu-Mr-asd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SeC-F0-vbj" secondAttribute="bottom" constant="7" id="LOo-U3-f4r"/>
                             <constraint firstItem="iZV-Hr-cWz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="M3Y-8E-v5F"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="MOP-6a-Fpe" secondAttribute="bottom" constant="7" id="RoX-1c-2Vq"/>
+                            <constraint firstItem="MOP-6a-Fpe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="hI8-is-iLM"/>
                             <constraint firstItem="EZX-uK-aja" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="ie2-qg-s94"/>
                             <constraint firstItem="SeC-F0-vbj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7Ds-hb-y0f" secondAttribute="trailing" constant="10" id="nGl-8j-zIf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EZX-uK-aja" secondAttribute="trailing" id="qGD-Fn-iNr"/>
+                            <constraint firstItem="7Ds-hb-y0f" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MOP-6a-Fpe" secondAttribute="trailing" constant="10" id="qev-cE-IIK"/>
                             <constraint firstItem="7Ds-hb-y0f" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="rsS-zu-uhm"/>
                             <constraint firstItem="EZX-uK-aja" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="uaK-PU-QWl"/>
                         </constraints>
@@ -117,10 +127,9 @@
         <!--Navigation Controller-->
         <scene sceneID="VKF-eJ-yGj">
             <objects>
-                <navigationController storyboardIdentifier="pileNav" automaticallyAdjustsScrollViewInsets="NO" id="vio-tx-3M2" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="pileNav" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="vio-tx-3M2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WLy-cW-1lV">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

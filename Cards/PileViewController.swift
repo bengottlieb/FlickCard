@@ -27,6 +27,14 @@ class PileViewController: FlickCardPileViewController {
 		self.present(controller, animated: true, completion: nil)
 	}
 	
+	@IBAction func flipTopCard() {
+		let flipside = SampleCardViewController(image: UIImage(named: "antman.png")!, id: UUID().uuidString)
+		
+		self.flip(card: self.topCard!, overTo: self.topCard?.flipsideController ?? flipside, duration: 1.0) {
+			print("All Done")
+		}
+	}
+	
 	@IBAction func segmentsChanged() {
 		let arrangments: [FlickCardPileViewController.Arrangment] = [.single, .tight, .loose, .scattered, .tiered(offset: -20, alphaStep: 0.1)]
 		
@@ -40,7 +48,7 @@ class PileViewController: FlickCardPileViewController {
 	@IBAction func reload() { self.reloadCards(animated: true) }
 	
 	func reloadCards(animated: Bool) {
-		let imageNames = ["ironman.png", "spider-man.png", "antman.png", "aquaman.png", "he-man.png", "superman.png"]
+		let imageNames = ["ironman.png", "spider-man.png", "aquaman.png", "he-man.png", "superman.png"]
 
 		let cards: [FlickCardController] = imageNames.map { name in
 			let image = UIImage(named: name)!

@@ -79,6 +79,61 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 		view?.layer.borderWidth = self.cardBorderWidth
 		view?.layer.masksToBounds = true
 	}
+	
+	override public func flip(card: FlickCardController, overTo flipside: FlickCardController?, duration: TimeInterval = 0.2, direction: FlipDirection? = nil, completion: (() -> Void)? = nil) {
+		if card != self.topCard { print("Can only flip the top card of a pile."); completion?(); return }
+		
+		guard let superview = card.view.superview else {
+			completion?()
+			return
+		}
+		
+		guard let otherCard = flipside ?? card.flipsideController else {
+			print("Nothign to flip to")
+			return
+		}
+		
+		self.applyCardStyling(to: otherCard.view)
+		let container = UIView(frame: card.view.frame)
+		container.backgroundColor = .clear
+		superview.addSubview(container)
+		
+		container.addSubview(card.view)
+		card.view.frame = container.bounds
+
+		container.addSubview(otherCard.view)
+		otherCard.view.frame = container.bounds
+		otherCard.view.isHidden = true
+
+		var transitionOptions: UIView.AnimationOptions = [.showHideTransitionViews]
+		if let opt = direction {
+			transitionOptions.insert(opt.animationOptions)
+		} else {
+			transitionOptions.insert(card.flipsideController == nil ? .transitionFlipFromRight : .transitionFlipFromLeft)
+		}
+		
+		
+		card.flipsideController = otherCard
+		otherCard.flipsideController = card
+
+		DispatchQueue.main.async {
+			UIView.transition(with: container, duration: duration, options: transitionOptions, animations: {
+				card.view.isHidden = true
+				card.didResignFrontCard(in: self, animated: true)
+			})
+			
+			otherCard.willBecomeFrontCard(in: self, animated: true)
+			UIView.transition(with: container, duration: duration, options: transitionOptions, animations: {
+				otherCard.view.isHidden = false
+			}) { _ in
+				self.pileView.addSubview(otherCard.view)
+				otherCard.view.frame = container.frame
+				container.removeFromSuperview()
+				self.cards[0] = otherCard
+				completion?()
+			}
+		}
+	}
 
 	func updateUI() {
 		let visible = self.visibleCards
@@ -317,3 +372,5 @@ extension FlickCardPileViewController {
 
 	}
 }
+
+

@@ -13,6 +13,7 @@ open class FlickCardController: UIViewController {
 	
 	open var id: ID!
 
+	open var flipsideController: FlickCardController?
 	public var listViewHeight: CGFloat? { return nil }
 
 	var containerController: FlickCardContainerViewController?

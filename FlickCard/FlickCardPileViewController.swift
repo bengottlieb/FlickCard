@@ -27,7 +27,7 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 	public var numberOfVisibleCards = 5 { didSet { self.updateUI() }}
 	public weak var flickCardPileViewDelegate: FlickCardPileViewDelegate?
 	open var defaultCardCenter: CGPoint { return CGPoint(x: self.firstCardFrame.midX, y: self.firstCardFrame.midY) }
-	public var cardInset = UIEdgeInsets.zero
+	public var cardInset = UIEdgeInsets.zero { didSet { if self.cardInset != oldValue { self.updateUI() }}}
 	public var topCard: FlickCardController? { return self.cards.first }
 	public var visibleCards: [FlickCardController] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
 	

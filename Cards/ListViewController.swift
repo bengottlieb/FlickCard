@@ -25,7 +25,9 @@ class ListViewController: FlickCardTableViewController {
 		
 		let controller = card.prepareToPresent(wrappingInNavigationController: true)
 //		self.navigationController?.pushViewController(card, animated: true)
-		self.present(controller, animated: true, completion: nil)
+		self.present(controller, animated: true, completion: {
+			(controller as? UINavigationController)?.setNavigationBarHidden(false, animated: true)
+		})
 	}
 	
 	func reloadCards(animated: Bool) {

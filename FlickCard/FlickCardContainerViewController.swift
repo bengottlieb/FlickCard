@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class FlickCardContainerViewController: UIViewController {
+open class FlickCardContainerViewController: FlickCardController {
 	public enum FlipDirection: Int { case fromRight, fromLeft, fromTop, fromBottom
 		var animationOptions: UIView.AnimationOptions {
 			switch self {

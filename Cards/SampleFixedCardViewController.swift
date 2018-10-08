@@ -31,6 +31,8 @@ class SampleFixedCardViewController: FlickCardController, UITextFieldDelegate {
 		self.imageView.image = self.image
 		self.imageView.layer.borderColor = UIColor.black.cgColor
 		self.imageView.layer.borderWidth = 1
+		
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(back))
     }
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -50,6 +52,7 @@ class SampleFixedCardViewController: FlickCardController, UITextFieldDelegate {
 	}
 	
 	@IBAction func back() {
+		self.navigationController?.setNavigationBarHidden(true, animated: true)
 		self.dismiss(animated: true, completion: nil)
 	}
     /*

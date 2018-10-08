@@ -13,9 +13,10 @@ extension FlickCardPileViewController {
 	@objc func panned(recog: UIPanGestureRecognizer) {
 		guard let cardViewController = self.cards.first, let cardView = cardViewController.view else { return }
 		
-		
 		switch recog.state {
 		case .began:
+			let pt = recog.location(in: cardViewController.view)
+			if !cardViewController.view.bounds.contains(pt) { return }
 			let window = self.view.window
 			if let root = window?.rootViewController?.view, let dragged = cardView.snapshotView(afterScreenUpdates: false) {
 				let center = root.convert(cardView.center, from: self.pileView)

@@ -31,7 +31,9 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 	public var topCard: FlickCardController? { return self.cards.first }
 	public var visibleCards: [FlickCardController] { return Array(self.cards[0..<(min(self.cards.count, self.numberOfVisibleCards))]) }
 	
+	var draggingCard: FlickCardController? { return self.topCard }
 	var draggingView: UIView!
+	var lastFlickPercentage: CGFloat = 0.0
 	var dragStartPoint = CGPoint.zero
 	var panGestureRecognizer: UIPanGestureRecognizer!
 	override var cardsNeedLayout: Bool { didSet { if self.cardsNeedLayout { self.pileView.setNeedsLayout() }}}

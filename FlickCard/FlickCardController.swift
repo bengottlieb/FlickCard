@@ -9,6 +9,7 @@
 import UIKit
 
 open class FlickCardController: UIViewController {
+	public enum FlickDirection { case left, right }
 	public typealias ID = String
 	
 	open var id: ID!
@@ -22,4 +23,7 @@ open class FlickCardController: UIViewController {
 	var isZoomedToFullScreen: Bool { return self.view.bounds == self.parent?.view.bounds }
 	var animationController: Presenter!
 	var isInsideContainer: Bool { return self.parent == self.containerController }
+	
+	open func resetAfterDragging() { }
+	open func shouldUpdateFlickedImageAfterDragging(percentage: CGFloat, direction: FlickDirection) -> Bool { return false }
 }

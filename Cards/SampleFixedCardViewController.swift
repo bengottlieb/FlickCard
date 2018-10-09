@@ -51,6 +51,16 @@ class SampleFixedCardViewController: FlickCardController, UITextFieldDelegate {
 		}
 	}
 	
+	override func shouldUpdateFlickedImageAfterDragging(percentage: CGFloat, direction: FlickCardController.FlickDirection) -> Bool {
+		let color = direction == .left ? UIColor.red : UIColor.green
+		self.view.backgroundColor = color.withAlphaComponent(percentage)
+		return true
+	}
+	
+	override func resetAfterDragging() {
+		self.view.backgroundColor = .white
+	}
+	
 	@IBAction func back() {
 		self.navigationController?.setNavigationBarHidden(true, animated: true)
 		self.dismiss(animated: true, completion: nil)

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension FlickCardPileViewController {
+	
 	@objc func panned(recog: UIPanGestureRecognizer) {
 		guard let cardViewController = self.cards.first, let cardView = cardViewController.view else { return }
 		
@@ -17,9 +18,11 @@ extension FlickCardPileViewController {
 		case .began:
 			let pt = recog.location(in: cardViewController.view)
 			if !cardViewController.view.bounds.contains(pt) { return }
-			if let root = self.rootViewController.view, let dragged = cardView.snapshotView(afterScreenUpdates: false) {
+			if let root = self.rootViewController.view, let draggedImage = cardView.snapshotView(afterScreenUpdates: false) {
 				let center = root.convert(cardView.center, from: self.pileView)
-				cardView.isHidden = true
+				let dragged = UIView(frame: draggedImage.bounds)
+				dragged.addSubview(draggedImage)
+				cardView.transform = CGAffineTransform(translationX: -1000, y: -1000)
 				root.addSubview(dragged)
 				dragged.center = center
 				self.draggingView = dragged
@@ -32,13 +35,20 @@ extension FlickCardPileViewController {
 			
 		case .changed:
 			guard let dragging = self.draggingView else { return }
-			let liftDistance: CGFloat = 20
+			let liftDistance: CGFloat = self.view.bounds.width / 2
 			let delta = recog.translation(in: self.pileView)
 			let dragDistance = delta.magnitudeFromOrigin
 			let maxDragScaleBoost = self.maxDragScale - 1.0
 			dragging.percentageLifted = (dragDistance / liftDistance)
 			
-			
+			let newPercentage =  CGFloat(Int(dragging.percentageLifted * 100)) / 100.0
+			if self.lastFlickPercentage != newPercentage {
+				self.lastFlickPercentage = newPercentage
+				if  self.draggingCard?.shouldUpdateFlickedImageAfterDragging(percentage: dragging.percentageLifted, direction: delta.x < 0 ? .left : .right) == true, let newImage = self.draggingCard?.view.snapshotView(afterScreenUpdates: false) {
+					dragging.subviews.first?.removeFromSuperview()
+					dragging.addSubview(newImage)
+				}
+			}
 			let centerOnScreen = self.pileView.convert(dragging.center, to: nil)
 			var rotation = min(abs(delta.x / (self.pileView.bounds.width * 1.5)), self.maxDragRotation)
 			var scaleBoost = min(1, ((delta.magnitudeFromOrigin * 5) / centerOnScreen.magnitudeFromOrigin)) * maxDragScaleBoost
@@ -56,7 +66,7 @@ extension FlickCardPileViewController {
 	}
 	
 	func finishFlick(with recog: UIPanGestureRecognizer) {
-		guard let cardViewController = self.cards.first, let cardView = cardViewController.view, let dragged = self.draggingView else {
+		guard let cardViewController = self.draggingCard, let cardView = cardViewController.view, let dragged = self.draggingView else {
 			return
 		}
 		
@@ -67,11 +77,11 @@ extension FlickCardPileViewController {
 			let speed = velocity.magnitudeFromOrigin * 0.5
 			let distance = sqrt(pow(self.pileView.bounds.width, 2) + pow(self.pileView.bounds.height, 2)) * 2.5
 			var duration = distance/speed
-			var destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
+			let destination = CGPoint(x: current.x + velocity.x * duration, y: current.y + velocity.y * duration)
 			
 			if duration > maxDuration {
-				let factor = maxDuration / duration
-				destination = CGPoint(x: current.x + velocity.x * duration * factor, y: current.y + velocity.y * duration * factor)
+				//let factor = maxDuration / duration
+				//destination = CGPoint(x: current.x + velocity.x * duration * factor, y: current.y + velocity.y * duration * factor)
 				duration = maxDuration
 			}
 			
@@ -112,8 +122,9 @@ extension FlickCardPileViewController {
 			}) { _ in
 				if cardView != dragged {
 					let center = self.pileView.convert(dragged.center, from: dragged.superview)
+					self.draggingCard?.resetAfterDragging()
 					cardView.center = center
-					cardView.isHidden = false
+					cardView.transform = .identity
 					dragged.removeFromSuperview()
 					if dragged === self.draggingView { self.draggingView = nil }
 				}

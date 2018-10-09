@@ -92,7 +92,8 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 			let duration = self.transitionDuration(using: transitionContext)
 			
 			if self.dismissing {
-				guard let toVC = transitionContext.toVC, let parent = toVC.top as? FlickCardContainerViewController, let fromVC = transitionContext.fromVC?.top as? FlickCardController, let zoomContainer = self.zoomContainer else {
+				guard let toVC = transitionContext.toVC, let parent = toVC.topContainer, let fromVC = transitionContext.fromVC?.top as? FlickCardController, let zoomContainer = self.zoomContainer else {
+					transitionContext.completeTransition(false)
 					return
 				}
 				
@@ -116,7 +117,10 @@ extension FlickCardController: UIViewControllerTransitioningDelegate {
 					parent.restore(fromVC, in: targetView)
 				}
 			} else {
-				guard let toVC = transitionContext.toVC, toVC.top is FlickCardController else { return }
+				guard let toVC = transitionContext.toVC, toVC.top is FlickCardController else {
+					transitionContext.completeTransition(false)
+					return
+				}
 				
 				let frame = toVC.view.convert(toVC.view.bounds, to: containerView)
 				self.zoomContainer = UIView(frame: frame)
@@ -151,6 +155,14 @@ extension UIViewController {
 	var root: UIViewController {
 		if let nav = self as? UINavigationController, let first = nav.viewControllers.first { return first }
 		return self
+	}
+	
+	var topContainer: FlickCardContainerViewController? {
+		if let me = self.top as? FlickCardContainerViewController { return me }
+		for viewController in self.top.children {
+			if let container = viewController as? FlickCardContainerViewController { return container }
+		}
+		return nil
 	}
 	
 	var top: UIViewController {

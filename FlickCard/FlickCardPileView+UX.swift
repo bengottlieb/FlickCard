@@ -17,8 +17,7 @@ extension FlickCardPileViewController {
 		case .began:
 			let pt = recog.location(in: cardViewController.view)
 			if !cardViewController.view.bounds.contains(pt) { return }
-			let window = self.view.window
-			if let root = window?.rootViewController?.view, let dragged = cardView.snapshotView(afterScreenUpdates: false) {
+			if let root = self.rootViewController.view, let dragged = cardView.snapshotView(afterScreenUpdates: false) {
 				let center = root.convert(cardView.center, from: self.pileView)
 				cardView.isHidden = true
 				root.addSubview(dragged)
@@ -131,3 +130,9 @@ extension FlickCardPileViewController {
 	}
 }
 
+extension UIViewController {
+	var rootViewController: UIViewController {
+		if let parent = self.parent { return parent.rootViewController }
+		return self
+	}
+}

@@ -261,7 +261,16 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 		}
 	}
 	
-	func animateCardOut(_ card: FlickCardController, to destination: CGPoint?, duration: TimeInterval = 0.2) {
+	public func animateCardOut(_ card: FlickCardController, direction: FlickDirection, duration: TimeInterval = 0.2, animations: (() -> Void)? = nil) {
+		
+		let size = self.view.bounds.size
+		let dst = direction == .left ? CGPoint(x: -size.width, y: 0) : CGPoint(x: 2 * size.width, y: 0)
+		
+		self.animateCardOut(card, to: dst, duration: duration, animations: animations)
+	}
+
+	
+	public func animateCardOut(_ card: FlickCardController, to destination: CGPoint?, duration: TimeInterval = 0.2, animations: (() -> Void)? = nil) {
 		let cardViewController = card
 		guard let cardView = cardViewController.view else { return }
 		let dest = destination ?? CGPoint(x: self.pileView.bounds.width * 1, y: self.pileView.bounds.height * -1)
@@ -278,6 +287,7 @@ open class FlickCardPileViewController: FlickCardContainerViewController {
 				self.pileView.layoutIfNeeded()
 				cardView.center = dest
 				cardView.transformForAnimation(in: self, location: dest)
+				animations?()
 			}) { _ in
 				self.state = .idle
 				cardView.removeFromSuperview()
